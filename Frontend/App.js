@@ -1,22 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, ActivityIndicator, TouchableOpacity, Button, SafeAreaView, Image } from 'react-native';
 import * as Location from 'expo-location';
 import Footer from './Component/UI/Footer';
 import FirstPage from './Component/FirstPage';
 import SecondPage from './Component/SecondPage';
 import ThirdPage from './Component/ThirdPage';
+import CameraView from './Component/UI/CameraView';
+import Setting from './Component/Setting';
 import { Ionicons } from '@expo/vector-icons';
+
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 const API_KEY = '0b20db5a1f789dfe29844f8329c061f7';
 
 
 export default function App() {
+  const [mode, SetMode] = useState( ''|| 'home');
   const [city, setCity] = useState("...Loading");
   const [days, setDays] = useState([]);
   // const [clock, setClock] = useState("...Loading")
   const [ok, setOk] = useState(true);
+  const [rendered, setRenderState] = useState(false);
 
   const GetWeather = async() => {
     try{
@@ -27,7 +32,10 @@ export default function App() {
       setCity(location[0].city); // GetCity
       await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`)
       .then(res => res.json())
-      .then(data => setDays(data))
+      .then(data => {
+        setDays(data)
+        if(days) setRenderState(true)
+      })
       .catch(console.log)
 
     }catch(err){
@@ -39,16 +47,28 @@ export default function App() {
     GetWeather();
   }, [])
 
-  return (
+  const OnCameraMode = () => {
+    SetMode('camera')
+  }
+
+  const OnSettingMode = () => {
+    SetMode('setting')
+  }
+
+  return (<>
+    { days ?
     <View style={styles.container}>
-      <Ionicons style={styles.setting} name="settings-sharp" size={28} color="snow"/>
-      <Ionicons style={{position:'absolute', right: 0, bottom: 60, zIndex: 5, backgroundColor:'white',
+      <TouchableOpacity style={styles.setting} onPress={OnSettingMode}>
+      <Ionicons name="settings-sharp" size={28} color="snow"/></TouchableOpacity>
+
+      <TouchableOpacity style={{position:'absolute', right: 0, bottom: 60, zIndex: 5, backgroundColor:'white',
       width: 55, height: 55, 
       borderRadius: 20,
       overflow: 'hidden', 
       paddingLeft: 3,
       margin: 10,
-      }} name="md-camera" size={50} color="tomato" />
+      }} onPress={OnCameraMode}>
+      <Ionicons name="md-camera" size={50} color="tomato" /></TouchableOpacity>
       <View style = {{flex: 8 , position: 'relative'}}>
         {days.length === 0 ? 
         <View style={{...styles.slider, justifyContent:'center', 
@@ -56,22 +76,27 @@ export default function App() {
           <ActivityIndicator size="large" color="white"/>
         </View>
         :
-        <ScrollView 
-        pagingEnabled
-        horizontal 
-        showsHorizontalScrollIndicator = {false}
-        contentContainerStyle={styles.slider}> 
+        <View className = 'ContentLayout' style={{
+          position:'absolute',
+        }}> 
         {/* Content */}
-          <FirstPage city = {city.toUpperCase()} desc = {days.weather[0].description} temp ={parseFloat(days.main.temp).toFixed(1)} weather = {days.weather[0].main}/>
-          <SecondPage/>
-          <ThirdPage/>
+        { mode === 'home' ?
+          <FirstPage city = {city.toUpperCase()} desc = {days.weather[0].description} temp ={parseFloat(days.main.temp).toFixed(1)} weather = {days.weather[0].main} rendered = {rendered}/>
+          : ''}
+          { mode === 'album' ? <SecondPage rendered = {rendered}/> : ''}
+          { mode === 'music' ? <ThirdPage/> : '' }
+          { mode === 'camera' ? <CameraView/> : ''}
+          { mode === 'setting' ? <Setting/> :''}
         {/* Content */}
-        </ScrollView>
+        </View>
         }
       </View>
-      <Footer width={SCREEN_WIDTH}/>
+      <Footer width={SCREEN_WIDTH} chaingingMode = {SetMode}/>
       <StatusBar style='light'/>
     </View>
+    : <Text>에러발생</Text>
+    }
+      </>
   );
 }
 
@@ -82,19 +107,20 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   slider: {
-    position : 'absolute',
-    top: 0,
-    left: 0,
-    height: SCREEN_HEIGHT/9*8,
-    width: SCREEN_WIDTH*3,
+    // position : 'absolute',
+    // top: 0,
+    // left: 0,
+    height: SCREEN_HEIGHT,
+    width: SCREEN_WIDTH,
   }, // Sky Image
   setting : {
     position : 'absolute',
     top: 30,
     right:15,
     zIndex: 5,
-    opacity: 0.5
-  }
+    opacity: 0.9,
+  },
+  
 });
 
 // TODO: 스크롤 위치로 스크롤 위치 세는 함수 작성 -> 랜덤 하늘 사진, slider indicator

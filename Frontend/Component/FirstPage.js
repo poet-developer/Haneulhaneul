@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, View, Dimensions, Image, Text} from 'react-native';
 import { Fontisto } from '@expo/vector-icons';
-import { loadAsync, useFonts } from 'expo-font';
+import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
@@ -15,14 +15,13 @@ const icons = {
      "Tunderstorm" : "lightning",
  }
 
-
 const styles = StyleSheet.create({
         weather : {
           flexDirection: 'row', 
           alignItems: 'flex-end', 
           justifyContent:'space-between', 
           width : SCREEN_WIDTH, 
-          flex:1.3, 
+          flex:1, 
         },
         city : {
           color: 'azure',
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
           fontSize: 34,
           color : 'snow',
           fontWeight : "600",
-          width: 144,
+          width: 149,
         },
         intro : {
           height: SCREEN_HEIGHT/9*8.5,
@@ -63,11 +62,12 @@ const styles = StyleSheet.create({
         },
         page: {
           width: SCREEN_WIDTH,
+          height: SCREEN_HEIGHT,
         }
 })
 
-const FirstPage = ({city, desc, temp, weather}) => {
-     const [clock, setClock] = useState("...Loading")
+const FirstPage = ({city, desc, temp, weather, rendered}) => {
+     const [clock, setClock] = useState()
 
      const GetTime = () => {
           const date = new Date();
@@ -81,8 +81,10 @@ const FirstPage = ({city, desc, temp, weather}) => {
         }
      
         useEffect(()=>{
-          GetTime();
-        }, [])
+          if(clock){
+            GetTime();
+          }
+        }, [rendered])
 
         setTimeout(GetTime,1000) // Live Clock
 
@@ -114,10 +116,10 @@ const FirstPage = ({city, desc, temp, weather}) => {
               <View style={{flexDirection: 'column',justifyContent: 'space-between'}}>
                <Text style={styles.clock}>
                     {clock}</Text>
-               <Text style={{
+               <Text className='byUser' style={{
                  width: 135,
                  fontSize: 16, textAlign: 'right', fontFamily: 'title' , color: 'snow', backgroundColor: 'rgba(50,50,50,0.9)',
-              marginBottom: 80, marginRight: 3,}}>
+              marginBottom: 180, marginRight: 3,}}>
                {`Photo by.이로${'\n'}2022년 10월 21일 `}</Text>
                </View>
             </View>

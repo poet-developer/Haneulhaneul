@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, View, Text, Dimensions} from 'react-native';
+import axios from 'axios';
+import { StyleSheet, ScrollView, View, Text, Dimensions} from 'react-native';
 import { Fontisto } from '@expo/vector-icons';
 import { loadAsync, useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
@@ -14,29 +15,65 @@ const styles = StyleSheet.create({
        
        justifyContent: 'center',
        alignItems : 'center',
+     },
+     photoContainer : {
+      backgroundColor : 'gold',
+     },
+     slider: {
+      height: SCREEN_HEIGHT,
+      backgroundColor: 'red'
      }
 })
 
-const FirstPage = ({}) => {
-        const [fontsLoaded] = useFonts({
-          'title' : require('../assets/Fonts/Pak_Yong_jun.ttf'),
-        })
-      
-        const onLayoutRootView = useCallback(async () => {
-          if (fontsLoaded) {
-            await SplashScreen.hideAsync();
-          } // 글꼴 파일을 미리 렌더
-        }, [fontsLoaded]); 
-      
-        if (!fontsLoaded) return null;
+const SecondPage = ({rendered}) => {
+  const [data, setData] = useState({}) // Object
+  
+    const ReadContent = async() => {
+      try {
+        // if (id) {
+          await axios
+            .get("http://localhost:5000/read")
+            .then(setData)
+            .catch(console.log)
+        // }
+      } catch (err) {
+        throw new Error(err);
+      }
+    }; //Read
+
+    useEffect(()=>{
+      ReadContent();
+    }, [rendered])
+
+    const [fontsLoaded] = useFonts({
+      'title' : require('../assets/Fonts/Pak_Yong_jun.ttf'),
+    })
+  
+    const onLayoutRootView = useCallback(async () => {
+      if (fontsLoaded) {
+        await SplashScreen.hideAsync();
+      } // 글꼴 파일을 미리 렌더
+    }, [fontsLoaded]); 
+  
+    if (!fontsLoaded) return null;
 
      return(
-     <View style={styles.page} onLayout = {onLayoutRootView}>
-            <Text style={{color: 'snow', fontSize: 30}}>Second</Text>
+      <View style={styles.page} onLayout = {onLayoutRootView}>
+     <View style={styles.photoContainer}>
+       <ScrollView 
+      pagingEnabled
+      horizontal 
+      showsHorizontalScrollIndicator = {false}
+      contentContainerStyle={styles.slider}
+      >
+        <Text style={{color: 'snow', fontSize: 30}}>Second</Text>
+      </ScrollView>
      </View>
+     </View>
+     
      )
 
 }
 
 
-export default FirstPage
+export default SecondPage

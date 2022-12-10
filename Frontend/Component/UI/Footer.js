@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, View, Text} from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const styles = StyleSheet.create({
@@ -12,29 +12,59 @@ const styles = StyleSheet.create({
           flex: 1,
      },
 
-     sliderBtn : {
+     sliderBar : {
           flexDirection: 'row',
           marginTop : 13,
           justifyContent: 'space-around',
           alignItems : 'center',
-     },     
+          flex: 1,
+     }, 
+     
+     sliderBtn :{
+          width: 80,
+          alignItems: 'center',
+          marginTop : -10,
+     },
+
+     circle : {
+          fontSize: 7, 
+          color: 'snow',  
+          marginTop: 3,
+     }
 })
 
-const Footer = () => {
+const Footer = ({width, chaingingMode}) => {
+
+     const ChangeMode = (mode) => {
+          chaingingMode(mode);
+     }
+
      return(
           <View style={styles.footer}>
                <View style={styles.container}>
-                    <View style={styles.sliderBtn}>
-                         <Ionicons name="home-sharp" size={24} color="snow"/>
-
-                         <Ionicons name="albums" size={24} color="snow" />
-
-                         <Ionicons name="musical-notes" size={24} color="snow" />
-                    </View>
-                    <View style={{...styles.sliderBtn, marginTop: 4}}>
-                         <Text style={{fontSize: 7, color: 'snow'}}>●</Text>
-                         <Text style={{fontSize: 7}}>●</Text>
-                         <Text style={{fontSize: 7}}>●</Text>
+                    <View style={styles.sliderBar}>
+                         <TouchableOpacity onPress={()=>{
+                              ChangeMode('home')
+                         }}>
+                         <View style={styles.sliderBtn}>
+                              <Ionicons name="home-sharp" size={24} color="snow"/>
+                              <Text style={styles.circle}>●</Text>
+                         </View>
+                         </TouchableOpacity>
+                         <TouchableOpacity onPress={()=>{
+                              ChangeMode('album')
+                         }}>
+                         <View style={styles.sliderBtn}>
+                              <Ionicons name="albums" size={24} color="snow" />
+                              <Text style={styles.circle}>●</Text>
+                         </View></TouchableOpacity>
+                         <TouchableOpacity onPress={()=>{
+                              ChangeMode('music')
+                         }}>
+                         <View style={styles.sliderBtn}>
+                              <Ionicons name="musical-notes" size={24} color="snow" />
+                              <Text style={styles.circle}>●</Text>
+                         </View></TouchableOpacity>
                     </View>
                </View>
           </View>
