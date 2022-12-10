@@ -1,35 +1,30 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
-import { loadAsync, useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
 import * as Location from 'expo-location';
-import { Fontisto } from '@expo/vector-icons';
+import Footer from './Component/UI/Footer';
+import FirstPage from './Component/FirstPage';
+import SecondPage from './Component/SecondPage';
+import ThirdPage from './Component/ThirdPage';
+import { Ionicons } from '@expo/vector-icons';
 
-const {width : SCREEN_WIDTH} = Dimensions.get('window');
+const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 const API_KEY = '0b20db5a1f789dfe29844f8329c061f7';
-const icons = {
-  "Clouds" : "cloudy",
-  "Clear" : "day-sunny",
-  "Snow" : "snowflake",
-  "Drizzle" : "rain",
-  "Rain" : "rains",
-  "Tunderstorm" : "lightning",
-}
+
 
 export default function App() {
   const [city, setCity] = useState("...Loading");
   const [days, setDays] = useState([]);
+  // const [clock, setClock] = useState("...Loading")
   const [ok, setOk] = useState(true);
 
   const GetWeather = async() => {
     try{
       const { granted } = await Location.requestForegroundPermissionsAsync()
       if(!granted) setOk(false)
-      // TODO: 객체 표기 방법 공부
       const{coords:{latitude, longitude}} = await Location.getCurrentPositionAsync()
       const location = await Location.reverseGeocodeAsync({latitude,longitude},{useGoogleMaps:false})
-      setCity(location[0].timezone.split("/")[1]); // GetCity
+      setCity(location[0].city); // GetCity
       await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`)
       .then(res => res.json())
       .then(data => setDays(data))
@@ -44,48 +39,36 @@ export default function App() {
     GetWeather();
   }, [])
 
-  const [fontsLoaded] = useFonts({
-    'title' : require('./assets/Fonts/Pak_Yong_jun.ttf'),
-  })
-
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    } // 글꼴 파일을 미리 렌더
-  }, [fontsLoaded]); 
-
-  if (!fontsLoaded) {
-    return null;
-  }
-
   return (
-    <View style={styles.container} onLayout = {onLayoutRootView}>
-      {/* <Image style={styles.intro} source ={require(`./assets/sky/day.jpg`)}/>
-      <Text style={styles.title}>하늘하늘</Text>
-      <StatusBar style="light" /> */}
-      <View style={styles.location}>
-        <Text style={styles.city}>{city}</Text>
-      </View>
-      <ScrollView 
-      pagingEnabled
-      horizontal 
-      showsHorizontalScrollIndicator = {false}
-      contentContainerStyle={styles.weather}>
+    <View style={styles.container}>
+      <Ionicons style={{position:'absolute', right: 0, bottom: 60, zIndex: 5, backgroundColor:'white',
+      width: 55, height: 55, 
+      borderRadius: 20,
+      overflow: 'hidden', 
+      paddingLeft: 3,
+      margin: 10,
+      }} name="md-camera" size={50} color="tomato" />
+      <View style = {{flex: 8 , position: 'relative'}}>
         {days.length === 0 ? 
-        <View style={styles.day}>
-          <ActivityIndicator size="large" color="gold"/>
+        <View style={{...styles.slider, justifyContent:'center', 
+        alignItems: 'center'}}>
+          <ActivityIndicator size="large" color="white"/>
         </View>
         :
-        <View style={styles.day}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text style={styles.temp}>{parseFloat(days.main.temp).toFixed(1)}</Text>
-          <Fontisto name={icons[days.weather[0].main]} size={70} color="white" />
-          </View>
-          <Text style={styles.main}>{days.weather[0].main}</Text>
-          <Text style={styles.desc}>{days.weather[0].description}</Text>
-        </View>
+        <ScrollView 
+        pagingEnabled
+        horizontal 
+        showsHorizontalScrollIndicator = {false}
+        contentContainerStyle={styles.slider}> 
+        {/* Content */}
+          <FirstPage city = {city.toUpperCase()} desc = {days.weather[0].description} temp ={parseFloat(days.main.temp).toFixed(1)} weather = {days.weather[0].main}/>
+          <SecondPage/>
+          <ThirdPage/>
+        {/* Content */}
+        </ScrollView>
         }
-      </ScrollView>
+      </View>
+      <Footer width={SCREEN_WIDTH}/>
       <StatusBar style='light'/>
     </View>
   );
@@ -95,50 +78,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'midnightblue',
+    position: 'relative',
   },
-  // title : {
-  //   position : 'absolute',
-  //   flex: 1,
-  //   top: '50%',
-  //   fontSize : 50,
-  //   fontFamily : 'title',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  //   color : 'white',
-  // },
-  location : {
-    flex: 1,
-    color : 'white',
-    justifyContent: 'center',
-    alignItems : 'center'
-  },
-  city : {
-    color: 'azure',
-    fontSize : 40,
-    fontWeight : "600"
-  },
-  weather : {}, 
-  day : {
-    alignItems : 'center',
-    width: SCREEN_WIDTH,
-  },  
-  temp : {
-    color: 'snow',
-    fontSize: 102,
-    marginTop: 50,
-    marginRight: 10,
-  },
-  main : {
-    color: 'gold',
-    fontSize: 42,
-    marginTop: -10,
-  },
-  desc : {
-    color: 'snow',
-    fontSize: 22,
-  }
-  // intro : {
-  //   width: '100%',
-  //   height : '100%',
-  // }
+  slider: {
+    position : 'absolute',
+    top: 0,
+    left: 0,
+    height: SCREEN_HEIGHT/9*8,
+    width: SCREEN_WIDTH*3,
+  }, // Sky Image
+  
 });
+
+// TODO: 스크롤 위치로 스크롤 위치 세는 함수 작성 -> 랜덤 하늘 사진, slider indicator
+// TODO: 슬라이더 점 활성화 애니메이션
+// TODO: 왼쪽 끝으로 이동할때 3번째 모드로 돌아갈것
+
