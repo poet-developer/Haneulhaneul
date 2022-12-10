@@ -114,9 +114,11 @@ const FirstPage = ({city, desc, temp, weather}) => {
               <View style={{flexDirection: 'column',justifyContent: 'space-between'}}>
                <Text style={styles.clock}>
                     {clock}</Text>
-               <Text style={{fontSize: 16, textAlign: 'right', fontFamily: 'title' , 
-              marginBottom: 95, marginRight: 10}}>
-               {`2022년 10월 21일 ${'\n'}이로님이 찍은 사진`}</Text>
+               <Text style={{
+                 width: 135,
+                 fontSize: 16, textAlign: 'right', fontFamily: 'title' , color: 'snow', backgroundColor: 'rgba(50,50,50,0.9)',
+              marginBottom: 80, marginRight: 3,}}>
+               {`Photo by.이로${'\n'}2022년 10월 21일 `}</Text>
                </View>
             </View>
         </View>

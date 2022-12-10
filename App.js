@@ -41,6 +41,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <Ionicons style={styles.setting} name="settings-sharp" size={28} color="snow"/>
       <Ionicons style={{position:'absolute', right: 0, bottom: 60, zIndex: 5, backgroundColor:'white',
       width: 55, height: 55, 
       borderRadius: 20,
@@ -77,7 +78,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'midnightblue',
+    backgroundColor: '#888',
     position: 'relative',
   },
   slider: {
@@ -87,10 +88,17 @@ const styles = StyleSheet.create({
     height: SCREEN_HEIGHT/9*8,
     width: SCREEN_WIDTH*3,
   }, // Sky Image
-  
+  setting : {
+    position : 'absolute',
+    top: 30,
+    right:15,
+    zIndex: 5,
+    opacity: 0.5
+  }
 });
 
 // TODO: 스크롤 위치로 스크롤 위치 세는 함수 작성 -> 랜덤 하늘 사진, slider indicator
 // TODO: 슬라이더 점 활성화 애니메이션
 // TODO: 왼쪽 끝으로 이동할때 3번째 모드로 돌아갈것
+// TODO: BTN
 

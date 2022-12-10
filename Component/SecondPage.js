@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, View, Dimensions} from 'react-native';
+import { StyleSheet, View, Text, Dimensions} from 'react-native';
 import { Fontisto } from '@expo/vector-icons';
 import { loadAsync, useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
@@ -11,6 +11,9 @@ const styles = StyleSheet.create({
        backgroundColor : 'black',
        width: SCREEN_WIDTH,
        height: SCREEN_HEIGHT/9*8.5,
+       
+       justifyContent: 'center',
+       alignItems : 'center',
      }
 })
 
@@ -29,7 +32,7 @@ const FirstPage = ({}) => {
 
      return(
      <View style={styles.page} onLayout = {onLayoutRootView}>
-            
+            <Text style={{color: 'snow', fontSize: 30}}>Second</Text>
      </View>
      )
 
