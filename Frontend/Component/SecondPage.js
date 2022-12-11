@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
-import { StyleSheet, ScrollView, View, Text, Dimensions} from 'react-native';
-import { Fontisto } from '@expo/vector-icons';
+import { StyleSheet, ScrollView, View, Text, Dimensions, Image} from 'react-native';
 import { loadAsync, useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
@@ -22,20 +21,27 @@ const styles = StyleSheet.create({
      slider: {
       height: SCREEN_HEIGHT,
       backgroundColor: 'red'
-     }
+     },
+     intro : {
+      height: SCREEN_HEIGHT/9*8.5,
+      width: SCREEN_WIDTH,
+      position: 'absolute',
+    },
 })
 
 const SecondPage = ({rendered}) => {
-  const [data, setData] = useState({}) // Object
+  const [data, setData] = useState() // Object
   
     const ReadContent = async() => {
       try {
-        // if (id) {
           await axios
-            .get("http://localhost:5000/read")
-            .then(setData)
+          //TODO: .env 처리
+            .get("http://192.168.0.26:5000/read")
+            .then(res => {
+              setData(res.data)
+              console.log(data);
+            })
             .catch(console.log)
-        // }
       } catch (err) {
         throw new Error(err);
       }
@@ -43,7 +49,8 @@ const SecondPage = ({rendered}) => {
 
     useEffect(()=>{
       ReadContent();
-    }, [rendered])
+      console.log(data)
+    }, [rendered, data])
 
     const [fontsLoaded] = useFonts({
       'title' : require('../assets/Fonts/Pak_Yong_jun.ttf'),
@@ -66,7 +73,10 @@ const SecondPage = ({rendered}) => {
       showsHorizontalScrollIndicator = {false}
       contentContainerStyle={styles.slider}
       >
-        <Text style={{color: 'snow', fontSize: 30}}>Second</Text>
+        <View style={styles.page}>
+        <Image style={styles.intro} source ={{uri : `http://192.168.0.26:5000/uploads/${data}`}}/>
+        <Text>{data}</Text>
+        </View>
       </ScrollView>
      </View>
      </View>

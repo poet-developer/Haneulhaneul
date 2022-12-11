@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         }
 })
 
-const FirstPage = ({}) => {
+const ThirdPage = ({}) => {
         const [fontsLoaded] = useFonts({
           'title' : require('../assets/Fonts/Pak_Yong_jun.ttf'),
         })
@@ -39,4 +39,4 @@ const FirstPage = ({}) => {
 }
 
 
-export default FirstPage
+export default ThirdPage

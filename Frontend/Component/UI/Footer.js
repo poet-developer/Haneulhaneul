@@ -33,6 +33,8 @@ const styles = StyleSheet.create({
      }
 })
 
+const mode = ['home', 'album', 'people', 'music']
+
 const Footer = ({width, chaingingMode}) => {
 
      const ChangeMode = (mode) => {
@@ -44,7 +46,7 @@ const Footer = ({width, chaingingMode}) => {
                <View style={styles.container}>
                     <View style={styles.sliderBar}>
                          <TouchableOpacity onPress={()=>{
-                              ChangeMode('home')
+                              ChangeMode(mode[0])
                          }}>
                          <View style={styles.sliderBtn}>
                               <Ionicons name="home-sharp" size={24} color="snow"/>
@@ -52,14 +54,21 @@ const Footer = ({width, chaingingMode}) => {
                          </View>
                          </TouchableOpacity>
                          <TouchableOpacity onPress={()=>{
-                              ChangeMode('album')
+                              ChangeMode(mode[1])
                          }}>
                          <View style={styles.sliderBtn}>
                               <Ionicons name="albums" size={24} color="snow" />
                               <Text style={styles.circle}>●</Text>
                          </View></TouchableOpacity>
                          <TouchableOpacity onPress={()=>{
-                              ChangeMode('music')
+                              ChangeMode(mode[2])
+                         }}>
+                         <View style={styles.sliderBtn}>
+                              <Ionicons name="ios-people" size={24} color="snow" />
+                              <Text style={styles.circle}>●</Text>
+                         </View></TouchableOpacity>
+                         <TouchableOpacity onPress={()=>{
+                              ChangeMode(mode[3])
                          }}>
                          <View style={styles.sliderBtn}>
                               <Ionicons name="musical-notes" size={24} color="snow" />

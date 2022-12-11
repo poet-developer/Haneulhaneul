@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Dimensions, ActivityIndicator, TouchableOpacity
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library'
 import { shareAsync } from 'expo-sharing';
+import axios from 'axios';
+import { Buffer } from "buffer";
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
@@ -14,7 +16,6 @@ const CameraView = () => {
      
      useEffect(()=>{
       GetCamera();
-      console.log(photo)
      },[])
 
      const GetCamera = async() =>{
@@ -38,20 +39,28 @@ const CameraView = () => {
       
         if(photo){
           let sharePic = () => {
-            shareAsync(photo.url).then(()=>{
+            shareAsync(photo.uri).then(()=>{
               setPhoto(undefined)
             });
           }
       
-          let savePhoto = () => {
-            MediaLibrary.saveToLibraryAsync(photo.url).then(()=>{
-              setPhoto(undefined);
-            })
+          let savePhoto = async () => {
+            const formData = new FormData();
+            let bf = Buffer.from(photo.base64,"base64")
+            formData.append('image',bf)
+            await axios
+            .post("http://192.168.0.26:5000/create_process", formData, {headers: { "Content-Type": "multipart/form-data"}}).then(setPhoto(undefined))
+            alert('저장완료')
+            // MediaLibrary.saveToLibraryAsync(photo.uri).then(()=>{
+            //   alert('저장완료')
+            //   // 서버로 보내기(Create)
+            //   setPhoto(undefined);
+            // })
           }
       
           return (
             <SafeAreaView>
-              <Image style ={styles.preview} source={{url: "data:image/jpg;base64," + photo.base64}}/>
+              <Image style ={styles.preview} source={{url: `data:image/jpg;base64,${photo.base64}`}}/>
               <Button title = "Share" onPress={sharePic}/>
               <Button title = "Save" onPress={savePhoto}/>
               <Button title = "Cancel" onPress={() => {
@@ -67,7 +76,7 @@ const CameraView = () => {
             ref ={cameraRef}
           >
             <View style={styles.container}>
-              <Button title="Take Pic" opPress={takePic}/>
+              <Button style={styles.buttonContainer} title="Take Pic" onPress={takePic}/>
             </View>
           </Camera>
      )
@@ -88,8 +97,11 @@ const styles = StyleSheet.create({
   },
 
   preview : {
-    alignSelf : 'stretch',
-    flex: 1
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
   }
 })
 

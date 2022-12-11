@@ -1,0 +1,38 @@
+{
+  "name": "haneulhaneul_backend",
+  "version": "1.0.0",
+  "description": "server",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "nodemon server.js",
+    "dev:client": "cd ../Frontend && expo start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/poet-developer/Haneulhaneul.git"
+  },
+  "keywords": [
+    "react-native"
+  ],
+  "author": "poet-developer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/poet-developer/Haneulhaneul/issues"
+  },
+  "homepage": "https://github.com/poet-developer/Haneulhaneul#readme",
+  "dependencies": {
+    "concurrently": "^7.6.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mime-types": "^2.1.35",
+    "multer": "^1.4.5-lts.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20",
+    "pm2": "^5.2.2"
+  }
+}

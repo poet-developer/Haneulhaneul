@@ -6,14 +6,11 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
  
  const Setting = () => {
-      
-      
       return(
            <View style={styles.container}>
                 <Text>Setting</Text>
           </View>
      )
-     
 }
 export default Setting
 

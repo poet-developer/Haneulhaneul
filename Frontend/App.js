@@ -6,6 +6,7 @@ import Footer from './Component/UI/Footer';
 import FirstPage from './Component/FirstPage';
 import SecondPage from './Component/SecondPage';
 import ThirdPage from './Component/ThirdPage';
+import FourthPage from './Component/FourthPage';
 import CameraView from './Component/UI/CameraView';
 import Setting from './Component/Setting';
 import { Ionicons } from '@expo/vector-icons';
@@ -84,7 +85,8 @@ export default function App() {
           <FirstPage city = {city.toUpperCase()} desc = {days.weather[0].description} temp ={parseFloat(days.main.temp).toFixed(1)} weather = {days.weather[0].main} rendered = {rendered}/>
           : ''}
           { mode === 'album' ? <SecondPage rendered = {rendered}/> : ''}
-          { mode === 'music' ? <ThirdPage/> : '' }
+          { mode === 'people' ? <ThirdPage rendered = {rendered}/> : ''}
+          { mode === 'music' ? <FourthPage/> : '' }
           { mode === 'camera' ? <CameraView/> : ''}
           { mode === 'setting' ? <Setting/> :''}
         {/* Content */}
