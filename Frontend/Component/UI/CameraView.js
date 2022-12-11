@@ -5,6 +5,7 @@ import * as MediaLibrary from 'expo-media-library'
 import { shareAsync } from 'expo-sharing';
 import axios from 'axios';
 import { Buffer } from "buffer";
+import ImageResizer from 'react-native-image-resizer';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
@@ -45,19 +46,18 @@ const CameraView = () => {
           }
       
           let savePhoto = async () => {
-            const formData = new FormData();
-            let bf = Buffer.from(photo.base64,"base64")
-            formData.append('image',bf)
-            await axios
-            .post("http://192.168.0.26:5000/create_process", formData, {headers: { "Content-Type": "multipart/form-data"}}).then(setPhoto(undefined))
-            alert('저장완료')
-            // MediaLibrary.saveToLibraryAsync(photo.uri).then(()=>{
-            //   alert('저장완료')
-            //   // 서버로 보내기(Create)
-            //   setPhoto(undefined);
-            // })
-          }
-      
+            let uri = photo.base64
+            // 사이즈를 줄여야만 전송이 가능
+            try {
+              await axios.post("http://192.168.0.26:5000/create_process", {uri})
+                .then (alert('저장'))
+                .catch(console.log)
+                .then(setPhoto(undefined))
+              }catch (err) {
+              throw new Error(err);
+            }
+        }; //Create
+
           return (
             <SafeAreaView>
               <Image style ={styles.preview} source={{url: `data:image/jpg;base64,${photo.base64}`}}/>

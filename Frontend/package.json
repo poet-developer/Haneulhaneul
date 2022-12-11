@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "axios": "^1.2.1",
-    "expo": "~47.0.8",
+    "base-64": "^1.0.0",
+    "expo": "^47.0.8",
     "expo-camera": "^13.1.0",
     "expo-location": "~15.0.1",
     "expo-media-library": "^15.0.0",
@@ -19,10 +20,12 @@
     "expo-status-bar": "~1.4.2",
     "http-proxy-middleware": "^2.0.6",
     "react": "^18.1.0",
-    "react-native": "0.70.5"
+    "react-native": "^0.70.6",
+    "react-native-image-resizer": "^1.4.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
   },
+  "proxy": "http://192.168.0.26:5000",
   "private": true
 }

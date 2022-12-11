@@ -4,6 +4,7 @@ const { v4:uuid } = require('uuid');
 const mime = require("mime-types");
 const cors = require("cors");
 const idTomulterS3 = 'test';
+const fs = require('fs')
 
 const storage = multer.diskStorage({
      destination : (req, file, cb) => cb(null, "./uploads"),
@@ -12,7 +13,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage,
           fileFilter : (req, file, cb) =>{
-          if(['image/png', 'image/jpeg', 'image/jpg', 'image/gif'].includes(file.mimetype)) cb(null, true)
+          if(['image/png', 'image/jpeg', 'image/jpg', 'image/gif'].includes(file.mimetype)) {
+               console.log(file)
+               console.log(req)
+               // cb(null, true)
+          }
           else cb(new Error("Invalid file type."),false)
         },
         limits:{
@@ -21,6 +26,8 @@ const upload = multer({storage,
 })
 const app = express();
 const PORT = 5000;
+app.use(express.urlencoded({limit: '50mb', extended: true}));
+app.use(express.json({limit: '50mb'}));
 
 app.use("/uploads", express.static("uploads")); //show my image
 
@@ -38,10 +45,12 @@ app.get("/read", async(req, res) => {
 });
 app.post("/create_process", 
 // upload.single('image'), 
-(req, res)=>{
+async (req, res)=>{
      console.log('전송신호');
-     console.log(req.body)
      // res.json(req.file)
+     let buff = Buffer.from(req.body.uri, 'base64');
+     await fs.writeFileSync(`./uploads/${uuid()}.jpg`, buff);
+
 }); // create
 
 app.listen(PORT, () => console.log(
