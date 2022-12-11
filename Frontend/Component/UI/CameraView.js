@@ -4,8 +4,6 @@ import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library'
 import { shareAsync } from 'expo-sharing';
 import axios from 'axios';
-import { Buffer } from "buffer";
-import ImageResizer from 'react-native-image-resizer';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 

@@ -36,10 +36,10 @@ const SecondPage = ({rendered}) => {
       try {
           await axios
           //TODO: .env 처리
-            .get("http://192.168.0.26:5000/read")
+            .get("http://192.168.0.26:5000/readImages")
             .then(res => {
-              setData(res.data)
-              console.log(data);
+              console.log(res.data[0].key)
+              setData(res.data[0].key)
             })
             .catch(console.log)
       } catch (err) {
