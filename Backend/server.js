@@ -6,6 +6,7 @@ const cors = require("cors");
 const idTomulterS3 = 'test';
 const mongoose = require('mongoose');
 const imageRouter = require('./routes/imageRouter')
+const userRouter = require('./routes/userRouter');
 
 
 
@@ -39,6 +40,7 @@ mongoose.connect(process.env.MONGO_URI).then(() =>{
      console.log('Conneted to MongoDB.');
      app.use("/uploads", express.static("uploads")); //can show my image
      app.use('/images', imageRouter)
+     app.use('/users', userRouter);
      app.listen(PORT, () => console.log(
           `Express on Port, ${PORT}`
      ))}

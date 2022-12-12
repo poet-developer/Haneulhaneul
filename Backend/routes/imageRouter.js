@@ -13,7 +13,6 @@ router.get("/readImages", async(req, res) => {
      res.status(200).json(images);
      //  });
     }catch(err){
-      console.log(err);
       res.status(400).json({message: err.message})
     }
 });
@@ -29,7 +28,6 @@ async (req, res)=>{
           //save to the database.
           res.json()
      }catch(err){
-          console.log(err);
           res.status(400).json({message: err.message})
     }
 }); // CREATE
@@ -41,7 +39,6 @@ async (req, res)=>{
           await fileUnlink(`./uploads/${image.key}`);
           res.json({message: '삭제완료'})
      }catch(err){
-          console.log(err);
           res.status(400).json({message: err.message})
      }
 }); // DELETE
