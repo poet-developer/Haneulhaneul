@@ -78,13 +78,13 @@ export default function App() {
         </View>
         :
         <View className = 'ContentLayout' style={{
-          position:'absolute',
+          flex: 1,
         }}> 
         {/* Content */}
         { mode === 'home' ?
           <FirstPage city = {city.toUpperCase()} desc = {days.weather[0].description} temp ={parseFloat(days.main.temp).toFixed(1)} weather = {days.weather[0].main} rendered = {rendered}/>
           : ''}
-          { mode === 'album' ? <SecondPage rendered = {rendered}/> : ''}
+          { mode === 'album' ? <SecondPage/> : ''}
           { mode === 'people' ? <ThirdPage rendered = {rendered}/> : ''}
           { mode === 'music' ? <FourthPage/> : '' }
           { mode === 'camera' ? <CameraView/> : ''}

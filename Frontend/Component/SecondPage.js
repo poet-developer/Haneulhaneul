@@ -3,24 +3,24 @@ import axios from 'axios';
 import { StyleSheet, ScrollView, View, Text, Dimensions, Image} from 'react-native';
 import { loadAsync, useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import ImageList from './lib/ImageList';
+import { AutoFocus } from 'expo-camera';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
      page : {
-       backgroundColor : 'black',
-       width: SCREEN_WIDTH,
-       height: SCREEN_HEIGHT/9*8.5,
-       
-       justifyContent: 'center',
-       alignItems : 'center',
+       position: 'relative',
+       flexDirection : 'row',
+       flexWrap : 'wrap',
+      //  height : 'auto',
+      flex : 1,
      },
      photoContainer : {
-      backgroundColor : 'gold',
+      flex: 1,
      },
      slider: {
-      height: SCREEN_HEIGHT,
-      backgroundColor: 'red'
+      flexGrow: 1,
      },
      intro : {
       height: SCREEN_HEIGHT/9*8.5,
@@ -29,28 +29,11 @@ const styles = StyleSheet.create({
     },
 })
 
-const SecondPage = ({rendered}) => {
-  const [data, setData] = useState() // Object
-  
-    const ReadContent = async() => {
-      try {
-          await axios
-          //TODO: .env 처리
-            .get("http://192.168.0.26:5000/readImages")
-            .then(res => {
-              console.log(res.data[0].key)
-              setData(res.data[0].key)
-            })
-            .catch(console.log)
-      } catch (err) {
-        throw new Error(err);
-      }
-    }; //Read
-
+const SecondPage = () => {
+  const [images, setImages] = useState([]) // Array
+  let imageList;
     useEffect(()=>{
-      ReadContent();
-      console.log(data)
-    }, [rendered, data])
+    }, [])
 
     const [fontsLoaded] = useFonts({
       'title' : require('../assets/Fonts/Pak_Yong_jun.ttf'),
@@ -65,21 +48,13 @@ const SecondPage = ({rendered}) => {
     if (!fontsLoaded) return null;
 
      return(
-      <View style={styles.page} onLayout = {onLayoutRootView}>
-     <View style={styles.photoContainer}>
-       <ScrollView 
-      pagingEnabled
-      horizontal 
-      showsHorizontalScrollIndicator = {false}
-      contentContainerStyle={styles.slider}
-      >
+      // <View style={styles.page} onLayout = {onLayoutRootView}>
+       <ScrollView>
         <View style={styles.page}>
-        <Image style={styles.intro} source ={{uri : `http://192.168.0.26:5000/uploads/${data}`}}/>
-        <Text>{data}</Text>
+        <ImageList/>
         </View>
       </ScrollView>
-     </View>
-     </View>
+      // </View>
      
      )
 
