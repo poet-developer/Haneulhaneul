@@ -81,8 +81,9 @@ export default function App() {
           : ''}
           { mode === 'album' || mode === 'view' ? <SecondPage viewMode={()=>{
               setDisplay('none')
-            }} setMode = {() =>{
+            }} setMode = {(mode) =>{
               setDisplay('auto');
+              setMode(mode);
             }}/> : ''}
           { mode === 'people' ? <ThirdPage rendered = {rendered}/> : ''}
           { mode === 'camera' ? <CameraView/> : ''}

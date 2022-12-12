@@ -8,6 +8,10 @@ const idTomulterS3 = 'test';
 const fs = require('fs');
 const mongoose = require('mongoose');
 const ImageSchema = require('./models/imageSchema')
+const {promisify} = require('util');
+const imageSchema = require('./models/imageSchema');
+
+const fileUnlink = promisify(fs.unlink)
 
 const storage = multer.diskStorage({
      destination : (req, file, cb) => cb(null, "./uploads"),
@@ -53,12 +57,37 @@ mongoose.connect(process.env.MONGO_URI).then(() =>{
      
      app.post("/create_process", 
      async (req, res)=>{
-          let _key = uuid();
-          let buff = Buffer.from(req.body.uri, 'base64');
-          fs.writeFileSync(`./uploads/${_key}.jpg`, buff);
-          await new ImageSchema({key: `${_key}.jpg`}).save(); // 객체로 커밋, Promise Return.
-          //save to the database.
-          res.json()
+          try{
+               let _key = uuid();
+               let buff = Buffer.from(req.body.uri, 'base64');
+               fs.writeFileSync(`./uploads/${_key}.jpg`, buff);
+               await new ImageSchema({key: `${_key}.jpg`
+               }).save(); // 객체로 커밋, Promise Return.
+               //save to the database.
+               res.json()
+          }catch(err){
+          console.log(err);
+           res.status(400).json({message: err.message})
+         }
+     }); // CREATE
+
+     app.post("/delete_process", 
+     async (req, res)=>{
+          try{
+               const image = await imageSchema.findOneAndDelete({_id: req.body.id})
+               await fileUnlink(`./uploads/${image.key}`);
+               res.json({message: '삭제완료'})
+          }catch(err){
+               console.log(err);
+               res.status(400).json({message: err.message})
+          }
+          // let _key = uuid();
+          // let buff = Buffer.from(req.body.uri, 'base64');
+          // fs.writeFileSync(`./uploads/${_key}.jpg`, buff);
+          // await new ImageSchema({key: `${_key}.jpg`
+          // }).save(); // 객체로 커밋, Promise Return.
+          // //save to the database.
+          // res.json()
      }); // CREATE
      
      app.listen(PORT, () => console.log(

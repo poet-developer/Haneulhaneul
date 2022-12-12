@@ -120,7 +120,7 @@ const FirstPage = ({city, desc, temp, weather, rendered}) => {
                  width: 135,
                  fontSize: 16, textAlign: 'right', fontFamily: 'title' , color: 'snow', backgroundColor: 'rgba(50,50,50,0.9)',
               marginBottom: 180, marginRight: 3,}}>
-               {`Photo by.이로${'\n'}2022년 10월 21일 `}</Text>
+               {`Photo by.이로${'\n'}2022년 10월 21일 `}</Text> 
                </View>
             </View>
         </View>
