@@ -47,7 +47,7 @@ const CameraView = () => {
             let uri = photo.base64
             // 사이즈를 줄여야만 전송이 가능
             try {
-              await axios.post("http://192.168.174.253:5000/create_process", {uri})
+              await axios.post("http://192.168.0.26:5000/create_process", {uri})
                 .then (alert('저장'))
                 .catch(console.log)
                 .then(setPhoto(undefined))

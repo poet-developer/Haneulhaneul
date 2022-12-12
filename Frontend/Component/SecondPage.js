@@ -10,11 +10,11 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
      page : {
-       position: 'relative',
+      //  position: 'relative',
        flexDirection : 'row',
        flexWrap : 'wrap',
       //  height : 'auto',
-      flex : 1,
+      // flex : 1,
      },
      photoContainer : {
       flex: 1,
@@ -22,16 +22,10 @@ const styles = StyleSheet.create({
      slider: {
       flexGrow: 1,
      },
-     intro : {
-      height: SCREEN_HEIGHT/9*8.5,
-      width: SCREEN_WIDTH,
-      position: 'absolute',
-    },
 })
 
-const SecondPage = () => {
+const SecondPage = ({viewMode, setMode}) => {
   const [images, setImages] = useState([]) // Array
-  let imageList;
     useEffect(()=>{
     }, [])
 
@@ -48,14 +42,11 @@ const SecondPage = () => {
     if (!fontsLoaded) return null;
 
      return(
-      // <View style={styles.page} onLayout = {onLayoutRootView}>
        <ScrollView>
         <View style={styles.page}>
-        <ImageList/>
+        <ImageList page={'second'} viewMode={viewMode} setMode = {setMode}/>
         </View>
-      </ScrollView>
-      // </View>
-     
+      </ScrollView>   
      )
 
 }
