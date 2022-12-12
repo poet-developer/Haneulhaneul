@@ -15,7 +15,7 @@ const ImageList = ({page, viewMode, setMode}) => {
        setTimeout(() => {
         axios
         //TODO: .env 처리
-          .get("http://192.168.0.26:5000/readImages")
+          .get("http://192.168.0.26:5000/images/readImages")
           .then(res => {
             setImages(res.data.reverse()); //Latest Order
           })

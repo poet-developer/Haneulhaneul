@@ -35,11 +35,11 @@ const ViewPic = ({keyId, id, exit, viewMode, share, finDelete}) => {
                [
                  {
                    text: "네",
-                   onPress: () => {
-                    axios
-                         .post("http://192.168.0.26:5000/delete_process", {id})
-                         .then(alert('삭제완료')
-                         ).then(finDelete)
+                   onPress: async () => {
+                    await axios
+                         .post("http://192.168.0.26:5000/images/delete_process", {id})
+                         .then(alert('삭제완료'))
+                         .then(finDelete)
                          .catch(console.log)
                // TODO: AWS cloud 사용
                    },
