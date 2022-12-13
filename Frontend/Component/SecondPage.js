@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, ScrollView, View, Text, Dimensions, Image} from 'react-native';
-import { loadAsync, useFonts } from 'expo-font';
+import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import ImageList from './lib/ImageList';
 import { AutoFocus } from 'expo-camera';

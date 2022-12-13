@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useState, useRef } from 'react';
-import { StyleSheet, Text, View, Dimensions, ActivityIndicator, TouchableOpacity, Button, SafeAreaView, Image, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import { useFonts } from 'expo-font';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');

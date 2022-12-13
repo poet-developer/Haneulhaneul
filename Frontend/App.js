@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Dimensions, ActivityIndicator, TouchableOpacity, Button, SafeAreaView, Image, Pressable, Animated } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, ActivityIndicator, TouchableOpacity} from 'react-native';
 import * as Location from 'expo-location';
 import Footer from './Component/UI/Footer';
 import FirstPage from './Component/FirstPage';

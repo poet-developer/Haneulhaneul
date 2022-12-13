@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState, useRef, useContext } from 'react';
-import { StyleSheet, Text, View, Dimensions, ActivityIndicator, TouchableOpacity, Button, SafeAreaView, Image, Pressable, TextInput, TouchableHighlight } from 'react-native';
+import { useCallback, useEffect, useState, useContext } from 'react';
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, SafeAreaView,TextInput, } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { Ionicons } from '@expo/vector-icons';
@@ -18,7 +18,7 @@ const SignupPage = ({setDisplay, setMode, setLogined}) => {
         });
      const [me, setMe] = useContext(CheckAuth);
      useEffect(()=>{
-          // setDisplay(false);
+          setDisplay(false);
      },[])
 
      const inputHandler = (key, value) => {

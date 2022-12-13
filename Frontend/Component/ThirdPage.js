@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, View, Text, Dimensions, ScrollView} from 'react-native';
-import { Fontisto } from '@expo/vector-icons';
-import { loadAsync, useFonts } from 'expo-font';
+import { StyleSheet, View, Text, Dimensions, ScrollView} from 'react-native';;
+import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import ImageList from './lib/ImageList';
 

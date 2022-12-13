@@ -1,4 +1,4 @@
-import {useContext, useEffect } from 'react';
+import {useContext} from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Animated} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { CheckAuth } from '../lib/CheckAuth'
