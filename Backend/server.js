@@ -39,7 +39,7 @@ mongoose.connect(process.env.MONGO_URI).then(() =>{
      app.use(express.urlencoded({limit: '50mb', extended: true}));
      //https://2dubbing.tistory.com/50 해결
      app.use(express.json({limit: '50mb'}));
-     app.user(authenticate);
+     app.use(authenticate);
      app.use('/images', imageRouter);
      app.use('/users', userRouter);
      app.listen(PORT, () => console.log(

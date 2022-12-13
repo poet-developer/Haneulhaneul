@@ -4,6 +4,7 @@ import { StyleSheet, Image, Dimensions, View , TouchableOpacity, Text, Pressable
 import { Fontisto } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { AntDesign } from '@expo/vector-icons';
+import {SERVER} from "@env"
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
@@ -37,7 +38,7 @@ const ViewPic = ({keyId, id, exit, viewMode, share, finDelete}) => {
                    text: "네",
                    onPress: async () => {
                     await axios
-                         .post("http://192.168.0.26:5000/images/delete_process", {id})
+                         .post(`${SERVER}/images/delete_process`, {id})
                          .then(alert('삭제완료'))
                          .then(finDelete)
                          .catch(console.log)
@@ -58,7 +59,7 @@ const ViewPic = ({keyId, id, exit, viewMode, share, finDelete}) => {
 
      return(
           <View style ={styles.view}>
-          <Image source = {{uri: `http://192.168.0.26:5000/uploads/${keyId}`}} style={styles.view}/>
+          <Image source = {{uri: `${SERVER}/uploads/${keyId}`}} style={styles.view}/>
           <Pressable style={styles.btn} onPress={exit} color = {'snow'}>
           <Fontisto name="close-a" size={20} color="white" /></Pressable>
           <Pressable style={styles.btn} onPress={ConfirmDelete} color = {'snow'}>

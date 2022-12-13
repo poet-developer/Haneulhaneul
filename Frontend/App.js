@@ -10,10 +10,10 @@ import CameraView from './Component/UI/CameraView';
 import Setting from './Component/Setting';
 import { Ionicons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
-
+import LoginPage from './Component/LoginPage';
+import {API_KEY} from '@env';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
-const API_KEY = '0b20db5a1f789dfe29844f8329c061f7';
 
 export default function App() {
   const [mode, setMode] = useState( ''|| 'home');
@@ -76,6 +76,10 @@ export default function App() {
           position: 'relative'
         }}> 
         {/* Content */}
+        { mode === 'login' ?
+          <LoginPage/>
+          : ''
+        }
         { mode === 'home' ?
           <FirstPage city = {city.toUpperCase()} desc = {days.weather[0].description} temp ={parseFloat(days.main.temp).toFixed(1)} weather = {days.weather[0].main} rendered = {rendered}/>
           : ''}

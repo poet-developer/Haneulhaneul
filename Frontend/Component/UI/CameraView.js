@@ -4,6 +4,7 @@ import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library'
 import { shareAsync } from 'expo-sharing';
 import axios from 'axios';
+import {SERVER} from '@env';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
@@ -47,7 +48,7 @@ const CameraView = () => {
             let uri = photo.base64;
             // 사이즈를 줄여야만 전송이 가능
             try {
-              await axios.post("http://192.168.0.26:5000/images/create_process", {uri})
+              await axios.post(`${SERVER}/images/create_process`, {uri})
                 .then (alert('저장'))
                 .catch(console.log)
                 .then(setPhoto(undefined))
