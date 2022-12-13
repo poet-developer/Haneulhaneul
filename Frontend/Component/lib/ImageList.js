@@ -6,7 +6,7 @@ import {SERVER} from '@env';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
-const ImageList = ({page, viewMode, setMode}) => {
+const ImageList = ({page, setDisplay, setMode}) => {
      const [images, setImages] = useState([]);
      const [preview, setPreview] = useState(false);
      const [targetKey, setTargetKey] = useState('');
@@ -38,13 +38,14 @@ const ImageList = ({page, viewMode, setMode}) => {
     if(preview){
       return <ViewPic keyId = {targetKey} id = {targetId} exit = {()=>{
       setPreview(false);
+      setDisplay(true)
       setMode('album')
       }} 
       finDelete = {()=>{
         setPreview(false);
         setMode('home')
         }} 
-      viewMode ={viewMode}
+      setDisplay ={setDisplay}
       share = {()=>{
        setMode('people')
      }}

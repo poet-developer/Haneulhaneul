@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useContext } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Dimensions, ActivityIndicator, TouchableOpacity, Button, SafeAreaView, Image, Pressable, Animated } from 'react-native';
 import * as Location from 'expo-location';
@@ -13,6 +13,7 @@ import { Fontisto } from '@expo/vector-icons';
 import SinginPage from './Component/SigninPage';
 import SingupPage from './Component/SignupPage'
 import {API_KEY} from '@env';
+import { AuthProviider} from './Component/lib/CheckAuth';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
@@ -24,6 +25,7 @@ export default function App() {
   // const [clock, setClock] = useState("...Loading")
   const [ok, setOk] = useState(true);
   const [rendered, setRenderState] = useState(false);
+  const [logined, setLogined] = useState()
 
   const GetWeather = async() => {
     try{
@@ -58,12 +60,24 @@ export default function App() {
     setMode('setting')
   }
 
+  const displayHandler = (target) => {
+      if(target){
+        setDisplay('auto');
+      }else{
+        setDisplay('none');
+      }
+  }
 
-  return (<>
-    { days ?
+  const modeHandler = (mode) => {
+    setMode(mode)
+  }
+
+
+  return (<AuthProviider>
+    {/* { days ? */}
     <View style={styles.container}>
-      {/* <TouchableOpacity style={styles.setting} onPress={OnSettingMode}>
-      <Ionicons name="settings-sharp" size={28} color="snow"/></TouchableOpacity> */}
+      <TouchableOpacity style={{...styles.setting, display: display}} onPress={OnSettingMode}>
+      <Ionicons name="settings-sharp" size={28} color="snow"/></TouchableOpacity>
       <TouchableOpacity style={{...styles.carmeraBtn, display: display }} onPress={OnCameraMode}>
       <Ionicons name="md-camera" size={50} color="tomato" /></TouchableOpacity>
       <View style = {{flex: 8 , position: 'relative'}}>
@@ -79,16 +93,9 @@ export default function App() {
         }}> 
         {/* Content */}
         { mode === 'signup' ?
-          <SingupPage setDisplay={(e)=>{
-            if(e){
-              setDisplay('auto');
-            }else{
-              setDisplay('none');
-            }
-          }} 
-          setMode = {(mode)=>{
-            setMode(mode)
-          }}/>
+          <SingupPage setLogined ={setLogined} setDisplay={displayHandler
+          } 
+          setMode = {modeHandler}/>
           : ''
         }
         { mode === 'signin' ?
@@ -98,15 +105,13 @@ export default function App() {
         { mode === 'home' ?
           <FirstPage city = {city.toUpperCase()} desc = {days.weather[0].description} temp ={parseFloat(days.main.temp).toFixed(1)} weather = {days.weather[0].main} rendered = {rendered}/>
           : ''}
-          { mode === 'album' || mode === 'view' ? <SecondPage viewMode={()=>{
-              setDisplay('none')
-            }} setMode = {(mode) =>{
-              setDisplay('auto');
-              setMode(mode);
-            }}/> : ''}
+          
+            { mode === 'album' || mode === 'view' ? <SecondPage setDisplay= {displayHandler}
+            setMode = {modeHandler}/> : ''}
+            { mode === 'camera' ? <CameraView/> : ''}
+            { mode === 'setting' ? <Setting logined = {logined} setDisplay={displayHandler} setMode ={modeHandler}/> :''}
+          
           { mode === 'people' ? <ThirdPage rendered = {rendered}/> : ''}
-          { mode === 'camera' ? <CameraView/> : ''}
-          { mode === 'setting' ? <Setting/> :''}
         {/* Content */}
         </View>
         }
@@ -114,9 +119,9 @@ export default function App() {
       <Footer display = {display} chaingingMode = {setMode}/>
       <StatusBar style='light'/>
     </View>
-    : <Text>에러발생</Text>
-    }
-      </>
+    {/* : <Text>에러발생</Text> */}
+    {/* } */}
+      </AuthProviider>
   );
 }
  // TODO: style Object 

@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
      },
 })
 
-const SecondPage = ({viewMode, setMode}) => {
+const SecondPage = ({setDisplay, setMode}) => {
   const [images, setImages] = useState([]) // Array
     useEffect(()=>{
     }, [])
@@ -43,7 +43,7 @@ const SecondPage = ({viewMode, setMode}) => {
      return(
        <ScrollView>
         <View style={styles.page}>
-        <ImageList page={'second'} viewMode={viewMode} setMode = {setMode}/>
+        <ImageList page={'second'} setDisplay={setDisplay} setMode = {setMode}/>
         </View>
       </ScrollView>   
      )

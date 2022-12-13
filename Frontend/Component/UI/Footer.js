@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState, useRef } from 'react';
+import {useContext, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Animated} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { CheckAuth } from '../lib/CheckAuth'
 
 const styles = StyleSheet.create({
      footer : {
@@ -36,6 +37,7 @@ const styles = StyleSheet.create({
 const mode = ['home', 'album', 'people']
 
 const Footer = ({ chaingingMode, display}) => {
+     const [me, setMe] = useContext(CheckAuth)
 
      const ChangeMode = (mode) => {
           chaingingMode(mode);

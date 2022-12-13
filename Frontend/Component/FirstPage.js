@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useContext } from 'react';
 import { StyleSheet, View, Dimensions, Image, Text} from 'react-native';
 import { Fontisto } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import { CheckAuth } from './lib/CheckAuth';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
@@ -68,6 +69,7 @@ const styles = StyleSheet.create({
 
 const FirstPage = ({city, desc, temp, weather, rendered}) => {
      const [clock, setClock] = useState()
+     const [me, setMe] = useContext(CheckAuth)
 
      const GetTime = () => {
           const date = new Date();
@@ -83,8 +85,9 @@ const FirstPage = ({city, desc, temp, weather, rendered}) => {
         useEffect(()=>{
           if(clock){
             GetTime();
+            console.log(me)
           }
-        }, [rendered])
+        }, [rendered,me])
 
         setTimeout(GetTime,1000) // Live Clock
 

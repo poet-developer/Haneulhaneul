@@ -3,18 +3,19 @@ const router = express.Router();
 const UserSchema = require("../models/userSchema")
 const { compare, hash } = require("bcryptjs");
 
-router.post('/signin', async (req, res) => {
-     console.log(req.body)
+router.post('/signup', async (req, res) => {
+     console.log(req.body.data)
      try{
-          if(req.body.name.lenght<2) throw new Error("아이디는 최소 3자 이상으로 등록")
-          if(req.body.password.lenght<6) throw new Error("비밀번호는 최소 6자 이상으로 등록")
-          const hashedPW = await hash(req.body.password, 10)
+          if(req.body.data.name.lenght<3) throw new Error("아이디는 최소 3자 이상으로 등록")
+          if(req.body.data.nick.lenght<2) throw new Error("닉네임은 최소 2자 이상으로 등록")
+          if(req.body.data.password.lenght<6) throw new Error("비밀번호는 최소 6자 이상으로 등록")
+          const hashedPW = await hash(req.body.data.password, 10)
           
           // option num은 높을 수록 좋지만 성능이 저하될수있다.
           const user = await new UserSchema(
                {
-                    name : req.body.name,
-                    nick : req.body.nick,
+                    name : req.body.data.name,
+                    nick : req.body.data.nick,
                     hashedPassword : hashedPW,
                     sessions : [{
                          created_at : new Date()
@@ -25,6 +26,7 @@ router.post('/signin', async (req, res) => {
           res.json({message: 'user Signin', sessionId: session._id, name : user.name})
      }catch(err){
           res.status(400).json({message : err.message})
+          console.log(err)
      }
 })
 

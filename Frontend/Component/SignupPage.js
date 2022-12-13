@@ -1,24 +1,24 @@
-import { useCallback, useEffect, useState, useRef } from 'react';
+import { useCallback, useEffect, useState, useRef, useContext } from 'react';
 import { StyleSheet, Text, View, Dimensions, ActivityIndicator, TouchableOpacity, Button, SafeAreaView, Image, Pressable, TextInput, TouchableHighlight } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { Ionicons } from '@expo/vector-icons';
+import axios from 'axios'
+import {SERVER} from '@env';
+import { CheckAuth } from '../Component/lib/CheckAuth';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
-const SignupPage = ({setDisplay, setMode}) => {
+const SignupPage = ({setDisplay, setMode, setLogined}) => {
      const [data, setData] = useState({
           name: '',
           nick: '',
           password: '',
           re_password: '',
         });
-
-     const [isChecked, setCheck] = useState(false)
-     const [vaild, setValid] = useState(true);
-
+     const [me, setMe] = useContext(CheckAuth);
      useEffect(()=>{
-          setDisplay(false);
+          // setDisplay(false);
      },[])
 
      const inputHandler = (key, value) => {
@@ -26,6 +26,41 @@ const SignupPage = ({setDisplay, setMode}) => {
                ...prevState,
                [key]: value,
              }));
+     }
+
+     const submitHandler = async(data) => {
+          try {
+               if(data.name.length < 3) {
+                    alert("아이디는 3자 이상입니다.")
+                    throw new Error("아이디는 3자 이상입니다.")
+               }
+               if(data.nick.length < 2 ) {
+                    alert("별명은 2자 이상입니다.")
+                    throw new Error("별명은 2자 이상입니다.")
+               }
+               if(data.password.length < 6 || data.re_password.length <6){
+                    alert("비밀번호는 6자 이상입니다.")
+                    throw new Error ("비밀번호는 6자 이상입니다.")
+               } 
+               if(data.password !== data.re_password){
+                    alert('비밀번호 확인 오류')
+                    throw new Error ("비밀번호 확인 오류.")
+               }
+               const result = await axios.post(`${SERVER}/users/signup`,{data})
+               setLogined({
+                    name: result.data.name,
+                    sessionId : result.data.sessionId
+               })
+
+               setMe({
+                    name: result.data.name,
+                    sessionId : result.data.sessionId
+               })
+               alert("회원가입 완료!")
+               // console.log('setMe',me)
+          }catch(err){
+               console.log(err);
+          }
      }
 
      const [fontsLoaded] = useFonts({
@@ -40,39 +75,6 @@ const SignupPage = ({setDisplay, setMode}) => {
      
      if (!fontsLoaded) return null;
 
-     if(isChecked){
-          return (
-               <SafeAreaView style={styles.container}>
-                    <TouchableOpacity onPress={()=>{
-                         setCheck(false)
-                    }} style={{position:'absolute', top: 30, left: 10,}}>
-                    <Ionicons name="chevron-back" size={40} color="teal" /></TouchableOpacity>
-                    <View style={styles.titleContainer}>
-                    <Text style={styles.title}>비밀번호 확인</Text>
-                    </View>
-                    <TextInput
-                    defaultValue={' '}
-                    style={styles.input}
-                    secureTextEntry
-                    clearTextOnFocus
-                    onChangeText={(text) => {inputHandler('re_password',text)}}
-                    placeholder={'re-check password'}
-                    />
-                    <Pressable style={styles.button} onPress={() => {
-                         console.log(data)
-                         if(data.password !== data.re_password){
-                              setValid(false);
-                              console.log('불일치')
-                         }else{
-                              setValid(true)
-                         }
-                    }}> 
-                    {/* 서버에 데이터 전송 */}
-                    <Text style={styles.btnText}> 가입하기 </Text>
-                    </Pressable>
-               </SafeAreaView>
-          )
-     }
 
      return ( 
           <SafeAreaView style={styles.container} onLayout = {onLayoutRootView}>
@@ -107,13 +109,21 @@ const SignupPage = ({setDisplay, setMode}) => {
                onChangeText={(text) => {inputHandler('password',text)}}
                // value={number}
                />
-               <Pressable style={styles.button} onPress={() => {
-                    console.log(data)
-                    setCheck(true)
-               }}> 
-               {/* 서버에 데이터 전송 */}
-               <Text style={styles.btnText}> 입력 </Text>
-               </Pressable>
+               <View style={styles.titleContainer}>
+                    <Text style={{...styles.title, fontSize: 20}}>비밀번호 확인</Text>
+                    </View>
+                    <TextInput
+                    defaultValue={''}
+                    style={styles.input}
+                    secureTextEntry
+                    clearTextOnFocus
+                    onChangeText={(text) => {inputHandler('re_password',text)}}
+                    placeholder={'Check password'}
+                    />
+                    <TouchableOpacity style={styles.button} onPress={() => {
+                              submitHandler(data);
+               }}><Text style={styles.btnText}> 가입하기 </Text>
+               </TouchableOpacity>
     </SafeAreaView>
      )
 }

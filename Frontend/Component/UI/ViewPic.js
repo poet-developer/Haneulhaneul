@@ -8,7 +8,7 @@ import {SERVER} from "@env"
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
-const ViewPic = ({keyId, id, exit, viewMode, share, finDelete}) => {
+const ViewPic = ({keyId, id, exit, setDisplay, share, finDelete}) => {
 
      const modal = () => {
           Alert.alert(
@@ -54,7 +54,7 @@ const ViewPic = ({keyId, id, exit, viewMode, share, finDelete}) => {
 
 
      useEffect(()=>{
-          viewMode();
+          setDisplay(false)
      },[])
 
      return(
