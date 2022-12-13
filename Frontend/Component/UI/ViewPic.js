@@ -62,10 +62,10 @@ const ViewPic = ({keyId, id, exit, viewMode, share, finDelete}) => {
           <Image source = {{uri: `${SERVER}/uploads/${keyId}`}} style={styles.view}/>
           <Pressable style={styles.btn} onPress={exit} color = {'snow'}>
           <Fontisto name="close-a" size={20} color="white" /></Pressable>
-          <Pressable style={styles.btn} onPress={ConfirmDelete} color = {'snow'}>
-          <AntDesign name="delete" size={20} color="white" /></Pressable>
-          <Pressable style={styles.earth} onPress={modal} color = {'snow'}>
-          <MaterialCommunityIcons name="earth-arrow-right" size={45} color="tomato" /></Pressable>
+          <TouchableOpacity style={styles.btn} onPress={ConfirmDelete} color = {'snow'}>
+          <AntDesign name="delete" size={20} color="white" /></TouchableOpacity>
+          <TouchableOpacity style={styles.earth} onPress={modal} color = {'snow'}>
+          <MaterialCommunityIcons name="earth-arrow-right" size={45} color="tomato" /></TouchableOpacity>
           </View>
      )
 }

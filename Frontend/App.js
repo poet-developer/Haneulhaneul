@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Dimensions, ActivityIndicator, TouchableOpacity, Button, SafeAreaView, Image, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, ActivityIndicator, TouchableOpacity, Button, SafeAreaView, Image, Pressable, Animated } from 'react-native';
 import * as Location from 'expo-location';
 import Footer from './Component/UI/Footer';
 import FirstPage from './Component/FirstPage';
@@ -10,13 +10,14 @@ import CameraView from './Component/UI/CameraView';
 import Setting from './Component/Setting';
 import { Ionicons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
-import LoginPage from './Component/LoginPage';
+import SinginPage from './Component/SigninPage';
+import SingupPage from './Component/SignupPage'
 import {API_KEY} from '@env';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
 export default function App() {
-  const [mode, setMode] = useState( ''|| 'home');
+  const [mode, setMode] = useState( ''|| 'signup');
   const [city, setCity] = useState("...Loading");
   const [days, setDays] = useState([]);
   const [display, setDisplay] = useState('auto');
@@ -46,6 +47,7 @@ export default function App() {
 
   useEffect(()=>{
     GetWeather();
+    setDisplay('auto');
   }, [])
 
   const OnCameraMode = () => {
@@ -76,8 +78,21 @@ export default function App() {
           position: 'relative'
         }}> 
         {/* Content */}
-        { mode === 'login' ?
-          <LoginPage/>
+        { mode === 'signup' ?
+          <SingupPage setDisplay={(e)=>{
+            if(e){
+              setDisplay('auto');
+            }else{
+              setDisplay('none');
+            }
+          }} 
+          setMode = {(mode)=>{
+            setMode(mode)
+          }}/>
+          : ''
+        }
+        { mode === 'signin' ?
+          <SinginPage/>
           : ''
         }
         { mode === 'home' ?
@@ -108,8 +123,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#888',
-    // position: 'relative',
+    backgroundColor: '#bbbb',
+    position: 'relative',
   },
   slider: {
     height: SCREEN_HEIGHT,

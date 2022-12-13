@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import { useCallback, useEffect, useState, useRef } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity, Animated} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const styles = StyleSheet.create({
