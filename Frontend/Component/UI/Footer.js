@@ -1,4 +1,4 @@
-import {useContext} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Animated} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { CheckAuth } from '../lib/CheckAuth'
@@ -34,40 +34,46 @@ const styles = StyleSheet.create({
      }
 })
 
-const mode = ['home', 'album', 'people']
+const modeText = ['home', 'album', 'people']
 
-const Footer = ({ chaingingMode, display}) => {
+const Footer = ({ chaingingMode, display, mode}) => {
      const [me, setMe] = useContext(CheckAuth)
+     const [on, setOn] = useState(false)
 
      const ChangeMode = (mode) => {
           chaingingMode(mode);
      }
+
+     useEffect(()=>{
+          modeText.forEach((item)=>{
+               if(item === mode){
+                    setOn(modeText.indexOf(item))
+               }
+          })
+     },[mode])
 
      return(
           <View style={{...styles.footer, display: display}}>
                <View style={styles.container}>
                     <View style={styles.sliderBar}>
                          <TouchableOpacity onPress={()=>{
-                              ChangeMode(mode[0])
-                         }}>
+                              ChangeMode(modeText[0])
+                         }} style={on === 0 ? {opacity:1} : {opacity:0.5}}>
                          <View style={styles.sliderBtn}>
                               <Ionicons name="home-sharp" size={24} color="snow"/>
-                              <Text style={styles.circle}>●</Text>
                          </View>
                          </TouchableOpacity>
                          <TouchableOpacity onPress={()=>{
-                              ChangeMode(mode[1])
-                         }}>
+                              ChangeMode(modeText[1])
+                         }} style={on === 1 ? {opacity:1} : {opacity:0.5}}>
                          <View style={styles.sliderBtn}>
                               <Ionicons name="albums" size={24} color="snow" />
-                              <Text style={styles.circle}>●</Text>
                          </View></TouchableOpacity>
                          <TouchableOpacity onPress={()=>{
-                              ChangeMode(mode[2])
-                         }}>
+                              ChangeMode(modeText[2])
+                         }} style={on === 2 ? {opacity:1} : {opacity:0.5}}>
                          <View style={styles.sliderBtn}>
                               <Ionicons name="ios-people" size={24} color="snow" />
-                              <Text style={styles.circle}>●</Text>
                          </View></TouchableOpacity>
                     </View>
                </View>

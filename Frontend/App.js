@@ -18,7 +18,7 @@ import { AuthProvider} from './Component/lib/CheckAuth';
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
 export default function App() {
-  const [mode, setMode] = useState( ''|| 'login');
+  const [mode, setMode] = useState( ''|| 'setting');
   const [city, setCity] = useState("...Loading");
   const [days, setDays] = useState([]);
   const [display, setDisplay] = useState('auto');
@@ -49,7 +49,8 @@ export default function App() {
   useEffect(()=>{
     GetWeather();
     displayHandler(false);
-  }, [])
+    displayHandler(rendered)
+  }, [rendered])
 
   const OnCameraMode = () => {
     setMode('camera')
@@ -119,7 +120,7 @@ export default function App() {
         </View>
         }
       </View>
-      <Footer display = {display} chaingingMode = {setMode}/>
+      <Footer mode = {mode} display = {display} chaingingMode = {setMode}/>
       <StatusBar style='light'/>
     </View>
     {/* : <Text>에러발생</Text> */}

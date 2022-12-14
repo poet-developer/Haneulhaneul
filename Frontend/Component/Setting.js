@@ -1,9 +1,11 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useCallback } from 'react';
 import { TouchableOpacity, StyleSheet, View, Dimensions, Text, Alert} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { CheckAuth } from './lib/CheckAuth';
 import axios from 'axios';
 import {SERVER} from '@env';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
@@ -46,9 +48,19 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
                     ]
                   );
      }
-     
+
+     const [fontsLoaded] = useFonts({
+          'main' : require('../assets/Fonts/Pak_Yong_jun.ttf'),
+        })
+
+     const onLayoutRootView = useCallback(async () => {
+          if (fontsLoaded) {
+               await SplashScreen.hideAsync();
+          }}, [fontsLoaded]); 
+          
+          if (!fontsLoaded) return null;
       return(
-           <View style={styles.container}>
+           <View style={styles.container} onLayout={onLayoutRootView}>
                 
                 <TouchableOpacity onPress={()=>{
                          setDisplay(true)
@@ -71,6 +83,18 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
                     </>
                     :
                     <>
+                    <View style={{flex: 3, justifyContent:'center'}}>
+                    <Text style={{
+                         fontFamily: 'main',
+                         fontSize: 30,
+                         color: 'snow'
+                    }}>한 숨 돌리는 시간,</Text>
+                    <Text style={{
+                         fontFamily: 'main',
+                         fontSize: 70,
+                         color: 'snow'
+                    }}>하늘하늘</Text></View>
+                    <View style={{flex:2}}>
                     <TouchableOpacity onPress={()=>{
                          setMode('login')
                     }}
@@ -84,6 +108,7 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
                     style={styles.logBtn}>
                     <Text style={styles.btnText}>회원가입</Text> 
                     </TouchableOpacity>
+                    </View>
                     </>
                     }
           </View>

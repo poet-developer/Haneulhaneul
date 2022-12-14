@@ -20,57 +20,6 @@ const icons = {
      "Tunderstorm" : "lightning",
  }
 
-const styles = StyleSheet.create({
-        weather : {
-          flexDirection: 'row', 
-          alignItems: 'flex-end', 
-          justifyContent:'space-between', 
-          width : SCREEN_WIDTH, 
-          flex:1, 
-        },
-        city : {
-          color: 'azure',
-          fontSize : 32,
-          flex : 1,
-          marginLeft : 10,
-          marginTop : 5,
-          fontWeight : "500",
-        },
-        temp : {
-          color: 'snow',
-          fontSize: 96,
-          marginTop: 50,
-          marginRight: 10,
-          marginTop: -30,
-        },
-        main : {
-          color: 'blue',
-          fontSize: 42,
-          marginTop: -10,
-          // flex: 1,
-        },
-        desc : {
-          color: 'snow',
-          fontSize: 16,
-          marginRight: 9
-        },
-        clock : {
-          fontSize: 34,
-          color : 'snow',
-          fontWeight : "600",
-          width: 149,
-        },
-        intro : {
-          height: SCREEN_HEIGHT/9*8.5,
-          width: SCREEN_WIDTH,
-          position: 'absolute',
-        },
-        page: {
-          width: SCREEN_WIDTH,
-          height: SCREEN_HEIGHT,
-        }
-})
-
 const FirstPage = ({city, desc, temp, weather, rendered}) => {
      const [clock, setClock] = useState()
      const [imagesInfo , setInfo] = useState();
@@ -137,10 +86,7 @@ const FirstPage = ({city, desc, temp, weather, rendered}) => {
               <View style={{flexDirection: 'column',justifyContent: 'space-between'}}>
                <Text style={styles.clock}>
                     {clock}</Text>
-               <Text className='byUser' style={{
-                 width: 135,
-                 fontSize: 16, textAlign: 'right', fontFamily: 'title' , color: 'snow', backgroundColor: 'rgba(50,50,50,0.9)',
-              marginBottom: 180, marginRight: 3,}}>
+               <Text className='byUser' style={styles.byUser}>
                {`Photo by.${cover.author}${'\n'}${coverDate}`}</Text> 
                </View>
             </View>
@@ -151,3 +97,65 @@ const FirstPage = ({city, desc, temp, weather, rendered}) => {
 
 
 export default FirstPage
+
+const styles = StyleSheet.create({
+  weather : {
+    flexDirection: 'row', 
+    alignItems: 'flex-end', 
+    justifyContent:'space-between', 
+    width : SCREEN_WIDTH, 
+    flex:1, 
+  },
+  city : {
+    color: 'azure',
+    fontSize : 32,
+    flex : 1,
+    marginLeft : 10,
+    marginTop : 5,
+    fontWeight : "500",
+  },
+  temp : {
+    color: 'snow',
+    fontSize: 96,
+    marginTop: 50,
+    marginRight: 10,
+    marginTop: -30,
+  },
+  main : {
+    color: 'blue',
+    fontSize: 42,
+    marginTop: -10,
+    // flex: 1,
+  },
+  desc : {
+    color: 'snow',
+    fontSize: 16,
+    marginRight: 9
+  },
+  clock : {
+    fontSize: 34,
+    color : 'snow',
+    fontWeight : "600",
+    width: 149,
+  },
+  intro : {
+    height: SCREEN_HEIGHT/9*8.5,
+    width: SCREEN_WIDTH,
+    position: 'absolute',
+  },
+  page: {
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+  },
+
+  byUser : {
+      width: 135,
+      fontSize: 16, 
+      textAlign: 'right', 
+      fontFamily: 'title', 
+      color: 'snow', 
+      backgroundColor: 'rgba(50,50,50,0.9)',
+      marginBottom: 180,
+      marginRight: 3
+  }
+})

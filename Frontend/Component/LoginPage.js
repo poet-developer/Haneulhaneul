@@ -53,8 +53,7 @@ const Signin = ({setDisplay, setMode}) => {
      const onLayoutRootView = useCallback(async () => {
      if (fontsLoaded) {
           await SplashScreen.hideAsync();
-     } // 글꼴 파일을 미리 렌더
-     }, [fontsLoaded]); 
+     }}, [fontsLoaded]); 
      
      if (!fontsLoaded) return null;
 
@@ -73,6 +72,7 @@ const Signin = ({setDisplay, setMode}) => {
                style={styles.input}
                placeholder={'username'}
                defaultValue={data.name||''}
+               autoCapitalize={'none'}
                onChangeText={(text) => {inputHandler('name',text)}}
                // value={text}
                />

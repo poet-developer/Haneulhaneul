@@ -90,6 +90,7 @@ const SignupPage = ({setDisplay, setMode}) => {
                style={styles.input}
                placeholder={'ID'}
                defaultValue={data.name||''}
+               autoCapitalize={'none'}
                onChangeText={(text) => {inputHandler('name',text)}}
                // value={text}
                />
@@ -97,6 +98,7 @@ const SignupPage = ({setDisplay, setMode}) => {
                style={styles.input}
                placeholder={'nickname'}
                defaultValue={data.nick || ''}
+               autoCapitalize={'none'}
                onChangeText={(text) => {inputHandler('nick',text)}}
                // value={text}
                />
@@ -104,7 +106,7 @@ const SignupPage = ({setDisplay, setMode}) => {
                style={styles.input}
                placeholder={'password'}
                secureTextEntry
-               defaultValue={''}
+               defaultValue={''}autoCapitalize={'none'}
                onChangeText={(text) => {inputHandler('password',text)}}
                // value={number}
                />
