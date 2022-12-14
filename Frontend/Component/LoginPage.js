@@ -33,7 +33,8 @@ const Signin = ({setDisplay, setMode}) => {
                const result = await axios.patch(`${SERVER}/users/login`,{data})
                setMe({
                     name: result.data.name,
-                    sessionId : result.data.sessionId
+                    sessionId : result.data.sessionId,
+                    nick : result.data.nick
                })
                alert("로그인 성공!")
                setMode('home');

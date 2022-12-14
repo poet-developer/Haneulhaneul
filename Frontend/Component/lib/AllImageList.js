@@ -1,17 +1,25 @@
 import axios from "axios";
-import React,{ useState, useEffect } from "react";
+import React,{ useState, useEffect, useContext } from "react";
 import { StyleSheet, Image, Dimensions, View , TouchableOpacity, Text, ActivityIndicator} from "react-native";
 import ViewPic from "../UI/ViewPic";
 import {SERVER} from '@env';
+import { CheckAuth } from "./CheckAuth";
+import { Ionicons } from '@expo/vector-icons';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
-const ImageList = ({page, setDisplay, setMode}) => {
+const ALLImageList = ({page, setDisplay, setMode, currentMode}) => {
      const [images, setImages] = useState([]);
-     const [preview, setPreview] = useState(false);
-     const [targetKey, setTargetKey] = useState('');
-     const [targetId, setTargetId] = useState('')
+     const [preview, setPreview] = useState(false)
+     const [targetData, setTargetData] = useState();
+     const [me, setMe] = useContext(CheckAuth);
      let imageList;
+
+     const ShareHandler = () => {
+       //axios 
+      setMode('people');
+      setDisplay(true)
+     }
      useEffect(()=>{
        setTimeout(() => {
         axios
@@ -22,39 +30,48 @@ const ImageList = ({page, setDisplay, setMode}) => {
           })
           .catch(console.log)
        }, 1000);
+
      },[])
      if(images.length){
-      imageList = images.map(item => {
-      return <TouchableOpacity onPress={()=>{
-        setTargetKey(item.key);
-        setTargetId(item._id)
-        setPreview(true);
-      }} key ={images.indexOf(item)}><Image style={styles.square} source ={{uri : `${SERVER}/uploads/${item.key}`}}/></TouchableOpacity>
-      }) 
+       if(currentMode === 'people'){
+        imageList = images.map(item => {
+            return <TouchableOpacity style = {{position:'relative'}}onPress={()=>{
+              setTargetData({
+                id : item.id,
+                key : item.key,
+                author : item.author,
+                public : item.public,
+              })
+              setPreview(true);
+            }} key ={images.indexOf(item)}>
+              <Image style={item.author !== me.nick ? styles.square: styles.strokeSqure} source ={{uri : `${SERVER}/uploads/${item.key}`}}/>
+              </TouchableOpacity>
+        })
+        }
      }else{
       imageList = <View style ={styles.emptyData}><ActivityIndicator size="large" color="white"/><Text style={styles.text}>{page === 'second' ? '당신의 하늘을 채워주세요:)' : '다른 사람들의 하늘을 감상하세요!'}</Text></View>
     }
 
     if(preview){
-      return <ViewPic keyId = {targetKey} id = {targetId} exit = {()=>{
+      return <ViewPic info = {targetData} exit = {()=>{
       setPreview(false);
       setDisplay(true)
-      setMode('album')
+      setMode('people')
       }} 
       finDelete = {()=>{
         setPreview(false);
-        setMode('home')
+        setMode('people')
+        setDisplay(true);
         }} 
       setDisplay ={setDisplay}
-      share = {()=>{
-       setMode('people')
-     }}
+      share = {ShareHandler}
+      currentMode = {currentMode}
     />
     }
     return imageList
    }; //Read
 
-   export default ImageList
+   export default ALLImageList
 
    const styles = StyleSheet.create({
     square : {
@@ -62,6 +79,15 @@ const ImageList = ({page, setDisplay, setMode}) => {
      width: SCREEN_WIDTH/2 -2,
      borderRadius : 10,
      margin: 1,
+   },
+
+   strokeSqure : {
+    height: SCREEN_WIDTH/2 -2,
+    width: SCREEN_WIDTH/2 -2,
+    borderRadius : 10,
+    margin: 1,
+    borderWidth : 1,
+    borderColor: 'gold',
    },
 
    emptyData : {

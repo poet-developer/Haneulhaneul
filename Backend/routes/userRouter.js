@@ -23,7 +23,7 @@ router.post('/signup', async (req, res) => {
                }
           ).save()
           const session = user.sessions[0];
-          res.json({message: 'user Signin', sessionId: session._id, name : user.name})
+          res.json({message: 'user Signin', sessionId: session._id, name : user.name, nick: user.nick})
      }catch(err){
           console.log(err)
           res.status(400).json({message : err.message})
@@ -38,7 +38,7 @@ router.patch('/login',async (req, res)=>{
           user.sessions.push({created_at: new Date()});
           const session = user.sessions[user.sessions.length-1]; //최신 선택하는 방법
           await user.save();
-          res.json({message: "Login Success!", sessionId: session._id, name : user.name})
+          res.json({message: "Login Success!", sessionId: session._id, name : user.name, nick: user.nick})
      }catch(err){
           res.status(400).json({message : err.message})
      }

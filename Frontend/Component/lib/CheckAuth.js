@@ -3,9 +3,8 @@ import axios from "axios";
 //Context 로 전역변수 관리.
 export const CheckAuth = createContext();
 
-export const AuthProvidder = ({children}) => {
+export const AuthProvider = ({children}) => {
      const [me, setMe] = useState() 
-
      return (
      <CheckAuth.Provider value={[me, setMe]}>
           {children}

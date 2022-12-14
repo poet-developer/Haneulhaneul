@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import { StyleSheet, ScrollView, View, Text, Dimensions, SafeAreaView } from 'react-native';
-import ImageList from './lib/ImageList';
+import MyImageList from './lib/MyImageList';
 import { CheckAuth } from './lib/CheckAuth';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
-const SecondPage = ({setDisplay, setMode}) => {
+const SecondPage = ({setDisplay, setMode, currentMode}) => {
 
   const [me, setMe] = useContext(CheckAuth)
 
@@ -14,7 +14,7 @@ const SecondPage = ({setDisplay, setMode}) => {
         <View style={styles.page}>
           {me 
           ?
-        <ImageList page={'second'} setDisplay={setDisplay} setMode = {setMode}/>
+        <MyImageList page={'second'} setDisplay={setDisplay} setMode = {setMode} currentMode = {currentMode}/>
           :
           <SafeAreaView style={styles.modal} ><Text style={styles.text}>로그인이 필요해요!</Text></SafeAreaView>
           }

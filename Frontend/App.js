@@ -13,7 +13,7 @@ import { Fontisto } from '@expo/vector-icons';
 import LoginPage from './Component/LoginPage';
 import SingupPage from './Component/SignupPage'
 import {API_KEY} from '@env';
-import { AuthProvidder} from './Component/lib/CheckAuth';
+import { AuthProvider} from './Component/lib/CheckAuth';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
@@ -73,7 +73,7 @@ export default function App() {
   }
 
 
-  return (<AuthProvidder>
+  return (<AuthProvider>
     {/* { days ? */}
     <View style={styles.container}>
       <TouchableOpacity style={{...styles.setting, display: display}} onPress={OnSettingMode}>
@@ -107,11 +107,15 @@ export default function App() {
           : ''}
           
             { mode === 'album' || mode === 'view' ? <SecondPage setDisplay= {displayHandler}
-            setMode = {modeHandler}/> : ''}
+            setMode = {modeHandler}
+            currentMode = {mode}
+            /> : ''}
             { mode === 'camera' ? <CameraView/> : ''}
-            { mode === 'setting' ? <Setting logined = {logined} setDisplay={displayHandler} setMode ={modeHandler}/> :''}
+            { mode === 'setting' ? <Setting setDisplay={displayHandler} setMode ={modeHandler}/> :''}
           
-          { mode === 'people' ? <ThirdPage rendered = {rendered}/> : ''}
+          { mode === 'people' ? <ThirdPage setDisplay={displayHandler} setMode={modeHandler} rendered = {rendered}
+          currentMode = {mode}
+          /> : ''}
         {/* Content */}
         </View>
         }
@@ -121,7 +125,7 @@ export default function App() {
     </View>
     {/* : <Text>에러발생</Text> */}
     {/* } */}
-      </AuthProvidder>
+      </AuthProvider>
   );
 }
  // TODO: style Object 

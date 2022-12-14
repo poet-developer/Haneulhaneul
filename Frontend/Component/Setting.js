@@ -7,7 +7,7 @@ import {SERVER} from '@env';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
- const Setting = ({setDisplay, setMode, logined}) => {
+ const Setting = ({setDisplay, setMode}) => {
       const [me, setMe] = useContext(CheckAuth)
 
      useEffect(()=>{
@@ -16,10 +16,9 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
      const LogoutHandler = async() =>{
           try{
+               console.log(me)
                await axios.patch(`${SERVER}/users/logout`,{} //req.body자리
-               ,{headers : {sessionid : me.sessionId}})
-               alert("Logout!")
-               setMe()
+               ,{headers : {sessionid : me.sessionId}}).then(alert("Logout!")).then(setMe())
                setDisplay(true)
                setMode('home')
           }catch(err){
@@ -30,6 +29,7 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
      
       return(
            <View style={styles.container}>
+                
                 <TouchableOpacity onPress={()=>{
                          setDisplay(true)
                          setMode('home')
@@ -37,6 +37,10 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
                     <Ionicons name="chevron-back" size={40} color="snow" /></TouchableOpacity>
                     {me?
                     <>
+                    <View style={{flex:1, paddingTop: 100}}>
+                     <Text style={{fontSize:20, color: 'teal', marginBottom: 20}}>회원 닉네임 : {me.nick || ''}</Text>
+                     <Text style={{fontSize:20, color: 'teal', marginBottom: 20}}>회원 아이디 : {me.name || ''}</Text>
+                    </View>
                     <TouchableOpacity onPress={LogoutHandler} style={styles.logBtn}>
                     <Text style={styles.btnText}>로그아웃</Text> 
                     </TouchableOpacity>

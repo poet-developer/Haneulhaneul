@@ -17,13 +17,22 @@ router.get("/readImages", async(req, res) => {
     }
 });
 
+router.get("/readMyImages", async(req, res) => {
+          try{
+          const images = await ImageSchema.find({author : req.query.author})
+          res.status(200).json(images);
+         }catch(err){
+           res.status(400).json({message: err.message})
+         }
+ });
+
 router.post("/create_process", 
 async (req, res)=>{
      try{
           let _key = uuid();
           let buff = Buffer.from(req.body.uri, 'base64');
           fs.writeFileSync(`./uploads/${_key}.jpg`, buff);
-          await new ImageSchema({key: `${_key}.jpg`
+          await new ImageSchema({key: `${_key}.jpg`, author : req.body.author
           }).save(); // 객체로 커밋, Promise Return.
           //save to the database.
           res.json()

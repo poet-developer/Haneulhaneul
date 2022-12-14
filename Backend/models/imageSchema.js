@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const ImageSchema = new mongoose.Schema(
      {
      key: {type: String, required: true}, //꼭 필요할 때 입력 형식
-     // author : {type: String, required: true},
+     author : {type: String, required: true},
      // withYou : {type: Number, required: true}
      public : {type: Boolean, default: false},
      },

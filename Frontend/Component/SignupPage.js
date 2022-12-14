@@ -50,7 +50,8 @@ const SignupPage = ({setDisplay, setMode}) => {
 
                setMe({
                     name: result.data.name,
-                    sessionId : result.data.sessionId
+                    sessionId : result.data.sessionId,
+                    nick : result.data.nick
                })
                alert("회원가입 완료!")
                setMode('home');
