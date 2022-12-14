@@ -79,7 +79,7 @@ export default function App() {
       <TouchableOpacity style={{...styles.setting, display: display}} onPress={OnSettingMode}>
       <Ionicons name="settings-sharp" size={28} color="snow"/></TouchableOpacity>
       <TouchableOpacity style={{...styles.carmeraBtn, display: display }} onPress={OnCameraMode}>
-      <Ionicons name="md-camera" size={50} color="tomato" /></TouchableOpacity>
+      <Ionicons name="md-camera" size={50} color="teal" /></TouchableOpacity>
       <View style = {{flex: 8 , position: 'relative'}}>
         {days.length === 0 ? 
         <View style={{...styles.slider, justifyContent:'center', 
@@ -132,7 +132,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#bbbb',
+    backgroundColor: '#8bd5d0',
     position: 'relative',
   },
   slider: {

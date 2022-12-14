@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     height: SCREEN_HEIGHT,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'midnightblue',
+    backgroundColor: 'teal',
   },
 
   text:{

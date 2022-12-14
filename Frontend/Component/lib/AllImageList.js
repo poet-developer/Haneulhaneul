@@ -44,7 +44,10 @@ const ALLImageList = ({page, setDisplay, setMode, currentMode}) => {
               })
               setPreview(true);
             }} key ={images.indexOf(item)}>
-              <Image style={item.author !== me.nick ? styles.square: styles.strokeSqure} source ={{uri : `${SERVER}/uploads/${item.key}`}}/>
+              {me 
+              ? <Image style={item.author !== me.nick ? styles.square: styles.strokeSqure} source ={{uri : `${SERVER}/uploads/${item.key}`}}/>
+              : <Image style={styles.square} source ={{uri : `${SERVER}/uploads/${item.key}`}}/>
+              }
               </TouchableOpacity>
         })
         }

@@ -37,7 +37,6 @@ const ViewPic = ({info, exit, setDisplay, share, finDelete, currentMode}) => {
      }
      useEffect(()=>{
           setDisplay(false)
-          console.log(currentMode)
      },[])
 
      return(

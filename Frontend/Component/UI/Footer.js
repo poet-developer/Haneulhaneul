@@ -6,7 +6,7 @@ import { CheckAuth } from '../lib/CheckAuth'
 const styles = StyleSheet.create({
      footer : {
           flex: 0.8,
-          backgroundColor : 'tomato',
+          backgroundColor : 'teal',
      },
 
      container : {

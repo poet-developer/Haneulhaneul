@@ -1,16 +1,9 @@
-import { StyleSheet, View, Text, Dimensions, ScrollView} from 'react-native';;
-
+import { useContext } from 'react';
+import { StyleSheet, ScrollView, View, Text, Dimensions, SafeAreaView } from 'react-native';
 import AllImageList from './lib/AllImageList';
+import { CheckAuth } from './lib/CheckAuth';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
-
-const styles = StyleSheet.create({
-     page : {
-          flexDirection : 'row',
-          flexWrap : 'wrap',
-          position: 'relative'
-        }
-})
 
 const ThirdPage = ({setDisplay, setMode}) => {
 
@@ -23,7 +16,29 @@ const ThirdPage = ({setDisplay, setMode}) => {
      )
 
 }
-
-
 export default ThirdPage
+
+const styles = StyleSheet.create({
+  page : {
+    flexDirection : 'row',
+    flexWrap : 'wrap',
+    position: 'relative'
+  },
+
+  modal : {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'teal',
+  },
+
+  text:{
+    fontSize: 20,
+    color: 'snow',
+  }
+})
 

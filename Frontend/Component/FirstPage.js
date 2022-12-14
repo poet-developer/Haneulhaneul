@@ -4,6 +4,9 @@ import { Fontisto } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { CheckAuth } from './lib/CheckAuth';
+import axios from 'axios';
+import {SERVER} from '@env';
+
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
@@ -69,8 +72,19 @@ const styles = StyleSheet.create({
 
 const FirstPage = ({city, desc, temp, weather, rendered}) => {
      const [clock, setClock] = useState()
+     const [imagesInfo , setInfo] = useState();
      const [me, setMe] = useContext(CheckAuth)
+     const [cover, setCover] = useState({})
+     let allCovers = [];
 
+     const getCoverImage = async() => {
+      const covers = await axios.get(`${SERVER}/images/readImages`)
+      allCovers =  covers.data.map(item => {
+        return { key : item.key, author: item.author }
+      })
+      const num = Math.floor(Math.random() * allCovers.length);
+      setCover(allCovers[num])
+     }
 
      const GetTime = () => {
           const date = new Date();
@@ -86,9 +100,9 @@ const FirstPage = ({city, desc, temp, weather, rendered}) => {
         useEffect(()=>{
           if(clock){
             GetTime();
-            console.log(me)
           }
-        }, [rendered,me])
+          getCoverImage();
+        }, [rendered])
 
         setTimeout(GetTime,1000) // Live Clock
 
@@ -106,7 +120,7 @@ const FirstPage = ({city, desc, temp, weather, rendered}) => {
 
      return(
           <View style={styles.page} onLayout = {onLayoutRootView}>
-            <Image style={styles.intro} source ={require(`../assets/sky/day.jpg`)}/>
+            <Image style={styles.intro} source ={{uri :`${SERVER}/uploads/${cover.key}`}}/>
             {/* <Text style={styles.title}>하늘하늘</Text> */}
             <View style={styles.weather}>
               <View style={{justifyContent:'flex-end', marginBottom: -10, marginLeft: 10}}>
@@ -124,7 +138,7 @@ const FirstPage = ({city, desc, temp, weather, rendered}) => {
                  width: 135,
                  fontSize: 16, textAlign: 'right', fontFamily: 'title' , color: 'snow', backgroundColor: 'rgba(50,50,50,0.9)',
               marginBottom: 180, marginRight: 3,}}>
-               {`Photo by.이로${'\n'}2022년 10월 21일 `}</Text> 
+               {`Photo by.${cover.author}${'\n'}2022년 10월 21일 `}</Text> 
                </View>
             </View>
         </View>

@@ -87,7 +87,7 @@ const SignupPage = ({setDisplay, setMode}) => {
                </View>
                <TextInput
                style={styles.input}
-               placeholder={'username'}
+               placeholder={'ID'}
                defaultValue={data.name||''}
                onChangeText={(text) => {inputHandler('name',text)}}
                // value={text}
