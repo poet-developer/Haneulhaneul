@@ -13,7 +13,7 @@ import { Fontisto } from '@expo/vector-icons';
 import SinginPage from './Component/SigninPage';
 import SingupPage from './Component/SignupPage'
 import {API_KEY} from '@env';
-import { AuthProviider} from './Component/lib/CheckAuth';
+import { AuthProvidder} from './Component/lib/CheckAuth';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
@@ -73,7 +73,7 @@ export default function App() {
   }
 
 
-  return (<AuthProviider>
+  return (<AuthProvidder>
     {/* { days ? */}
     <View style={styles.container}>
       <TouchableOpacity style={{...styles.setting, display: display}} onPress={OnSettingMode}>
@@ -93,13 +93,13 @@ export default function App() {
         }}> 
         {/* Content */}
         { mode === 'signup' ?
-          <SingupPage setLogined ={setLogined} setDisplay={displayHandler
-          } 
+          <SingupPage setLogined ={setLogined} setDisplay={displayHandler} 
           setMode = {modeHandler}/>
           : ''
         }
         { mode === 'signin' ?
-          <SinginPage/>
+          <SinginPage setDisplay={displayHandler} 
+          setMode = {modeHandler}/>
           : ''
         }
         { mode === 'home' ?
@@ -121,7 +121,7 @@ export default function App() {
     </View>
     {/* : <Text>에러발생</Text> */}
     {/* } */}
-      </AuthProviider>
+      </AuthProvidder>
   );
 }
  // TODO: style Object 

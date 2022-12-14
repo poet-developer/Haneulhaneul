@@ -2,16 +2,31 @@ import { useContext, useEffect, useState } from 'react';
 import { TouchableOpacity, StyleSheet, View, Dimensions, Text,} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { CheckAuth } from './lib/CheckAuth';
-
+import axios from 'axios';
+import {SERVER} from '@env';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
- 
  const Setting = ({setDisplay, setMode, logined}) => {
       const [me, setMe] = useContext(CheckAuth)
+
      useEffect(()=>{
           setDisplay(false);
-     },[])
+     },[setMe])
+
+     const LogoutHandler = async() =>{
+          try{
+               await axios.patch(`${SERVER}/users/logout`,{} //req.body자리
+               ,{headers : {sessionid : me.sessionId}})
+               alert("Logout!")
+               setMe()
+               setDisplay(true)
+               setMode('home')
+          }catch(err){
+               console.log(err);
+               alert(err.message);
+          }
+     }
      
       return(
            <View style={styles.container}>
@@ -20,13 +35,10 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
                          setMode('home')
                     }} style={{position:'absolute', top: 30, left: 10,}}>
                     <Ionicons name="chevron-back" size={40} color="snow" /></TouchableOpacity>
-                    {me ?
-                    <TouchableOpacity onPress={()=>{
-                         console.log('logout')
-                    }} style={styles.logBtn}>
+                    {me?
+                    <TouchableOpacity onPress={LogoutHandler} style={styles.logBtn}>
                     <Text style={styles.btnText}>로그아웃</Text> 
                     </TouchableOpacity>
-                    
                     :
                     <>
                     <TouchableOpacity onPress={()=>{

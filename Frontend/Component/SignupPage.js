@@ -19,6 +19,7 @@ const SignupPage = ({setDisplay, setMode, setLogined}) => {
      const [me, setMe] = useContext(CheckAuth);
      useEffect(()=>{
           setDisplay(false);
+          console.log(me)
      },[])
 
      const inputHandler = (key, value) => {
@@ -57,7 +58,8 @@ const SignupPage = ({setDisplay, setMode, setLogined}) => {
                     sessionId : result.data.sessionId
                })
                alert("회원가입 완료!")
-               // console.log('setMe',me)
+               setMode('home');
+               setDisplay(true);
           }catch(err){
                console.log(err);
           }
