@@ -6,11 +6,16 @@ import { CheckAuth } from './lib/CheckAuth';
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
 const ThirdPage = ({setDisplay, setMode}) => {
+  const [me, setMe] = useContext(CheckAuth)
 
      return(
             <ScrollView>
               <View style={styles.page}>
+              {me 
+              ?
               <AllImageList page ={'third'} public= {true} currentMode={'people'} setDisplay={setDisplay} setMode = {setMode} />
+              :<SafeAreaView style={styles.modal} ><Text style={styles.text}>로그인이 필요해요!</Text></SafeAreaView>
+              }
               </View>
             </ScrollView>
      )

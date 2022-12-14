@@ -12,6 +12,7 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
 const ViewPic = ({info, exit, setDisplay, share, finDelete, currentMode}) => {
      const [me, setMe] = useContext(CheckAuth)
+     const [created_at, setDate] = useState()
 
      const ConfirmDelete = () => {
           Alert.alert(
@@ -37,15 +38,21 @@ const ViewPic = ({info, exit, setDisplay, share, finDelete, currentMode}) => {
      }
      useEffect(()=>{
           setDisplay(false)
+          setDate(info.created_at.split("T")[0]);
      },[])
 
      return(
           <View style ={styles.view}>
           <Image source = {{uri: `${SERVER}/uploads/${info.key}`}} style={styles.view}/>
+          <Text className='byUser' style={{
+                 width: 150,
+                 fontSize: 20, textAlign: 'right', fontFamily: 'title' , color: 'snow', backgroundColor: 'rgba(50,50,50,0.9)', position: 'absolute', bottom:0,
+              marginBottom: 180, marginRight: 3,}}>
+               {`Photo by.${info.author}${'\n'}${created_at}`}</Text> 
           <Pressable style={styles.btn} onPress={exit} color = {'snow'}>
           <Fontisto name="close-a" size={20} color="white"/></Pressable>
           {info.author === me.nick
-          ? <TouchableOpacity style={styles.btn} onPress={ConfirmDelete} color = {'snow'}>
+          ? <TouchableOpacity style={{...styles.btn, top: 50}} onPress={ConfirmDelete} color = {'snow'}>
           <AntDesign name="delete" size={20} color="white"/></TouchableOpacity>
           : ''} 
           {info.author === me.nick 
@@ -60,7 +67,7 @@ export default ViewPic
 
 const styles =  StyleSheet.create({
      view : {
-          position: 'absolute',
+          position: 'relative',
           width: SCREEN_WIDTH,
           height: SCREEN_HEIGHT,
           justifyContent:'flex-start', 
@@ -69,12 +76,14 @@ const styles =  StyleSheet.create({
      },
 
      btn : {
+          position: 'absolute',
           paddingVertical: 12,
           paddingHorizontal: 32,
           borderRadius: 4,
           elevation: 3,
           marginTop: 20
-     }
+     },
+     
 })
 
 //TODO: BackHandler 공부

@@ -59,4 +59,15 @@ router.patch('/logout',async (req, res)=>{
 
 })
 
+router.patch("/delete_process", 
+async (req, res)=>{
+     try{
+          const user = await UserSchema.findOneAndDelete({id: req.body.id})
+          // await fileUnlink(`./uploads/${image.key}`);
+          res.json({message: '삭제완료'})
+     }catch(err){
+          res.status(400).json({message: err.message})
+     }
+}); // DELETE
+
 module.exports = router

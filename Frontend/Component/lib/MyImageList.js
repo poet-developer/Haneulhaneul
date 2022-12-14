@@ -39,6 +39,7 @@ const MyImageList = ({page, setDisplay, setMode, currentMode}) => {
                     key : item.key,
                     author : item.author,
                     public : item.public,
+                    created_at : item.createdAt
                   })
               setPreview(true);
             }} key ={myImages.indexOf(item)}><Image style={styles.square} source ={{uri : `${SERVER}/uploads/${item.key}`}}/></TouchableOpacity>

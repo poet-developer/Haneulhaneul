@@ -41,6 +41,7 @@ const ALLImageList = ({page, setDisplay, setMode, currentMode}) => {
                 key : item.key,
                 author : item.author,
                 public : item.public,
+                created_at : item.createdAt
               })
               setPreview(true);
             }} key ={images.indexOf(item)}>
@@ -57,10 +58,10 @@ const ALLImageList = ({page, setDisplay, setMode, currentMode}) => {
 
     if(preview){
       return <ViewPic info = {targetData} exit = {()=>{
-      setPreview(false);
-      setDisplay(true)
-      setMode('people')
-      }} 
+        setPreview(false);
+        setDisplay(true)
+        setMode('people')
+        }} 
       finDelete = {()=>{
         setPreview(false);
         setMode('people')
@@ -89,7 +90,7 @@ const ALLImageList = ({page, setDisplay, setMode, currentMode}) => {
     width: SCREEN_WIDTH/2 -2,
     borderRadius : 10,
     margin: 1,
-    borderWidth : 1,
+    borderWidth : 4,
     borderColor: 'gold',
    },
 

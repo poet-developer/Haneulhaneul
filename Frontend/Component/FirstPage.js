@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState, useContext } from 'react';
 import { StyleSheet, View, Dimensions, Image, Text} from 'react-native';
+import getRandomNum from './lib/getRandomNum';
 import { Fontisto } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { CheckAuth } from './lib/CheckAuth';
-import axios from 'axios';
+import axios, { all } from 'axios';
 import {SERVER} from '@env';
 
 
@@ -75,15 +76,17 @@ const FirstPage = ({city, desc, temp, weather, rendered}) => {
      const [imagesInfo , setInfo] = useState();
      const [me, setMe] = useContext(CheckAuth)
      const [cover, setCover] = useState({})
+     const [coverDate, setCoverDate] = useState();
      let allCovers = [];
 
      const getCoverImage = async() => {
       const covers = await axios.get(`${SERVER}/images/readImages`)
       allCovers =  covers.data.map(item => {
-        return { key : item.key, author: item.author }
+        return { key : item.key, author: item.author, created_at : item.createdAt }
       })
-      const num = Math.floor(Math.random() * allCovers.length);
+      const num = getRandomNum(allCovers.length);
       setCover(allCovers[num])
+      setCoverDate(allCovers[num].created_at.split("T")[0]);
      }
 
      const GetTime = () => {
@@ -138,7 +141,7 @@ const FirstPage = ({city, desc, temp, weather, rendered}) => {
                  width: 135,
                  fontSize: 16, textAlign: 'right', fontFamily: 'title' , color: 'snow', backgroundColor: 'rgba(50,50,50,0.9)',
               marginBottom: 180, marginRight: 3,}}>
-               {`Photo by.${cover.author}${'\n'}2022년 10월 21일 `}</Text> 
+               {`Photo by.${cover.author}${'\n'}${coverDate}`}</Text> 
                </View>
             </View>
         </View>

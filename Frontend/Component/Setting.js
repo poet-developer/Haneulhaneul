@@ -16,11 +16,22 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
      const LogoutHandler = async() =>{
           try{
-               console.log(me)
                await axios.patch(`${SERVER}/users/logout`,{} //req.body자리
                ,{headers : {sessionid : me.sessionId}}).then(alert("Logout!")).then(setMe())
                setDisplay(true)
                setMode('home')
+          }catch(err){
+               console.log(err);
+               alert(err.message);
+          }
+     }
+
+     const DeleteHandler = async() => {
+          try{
+               console.log(me.name)
+               // await axios.patch(`${SERVER}/users/delete_process`,{id : me.id}).then(alert("Deleted!")).then(setMe())
+               // setDisplay(true)
+               // setMode('home')
           }catch(err){
                console.log(err);
                alert(err.message);
@@ -45,6 +56,7 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
                     <Text style={styles.btnText}>로그아웃</Text> 
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>{
+                         DeleteHandler()
                          setMode('home')
                          setMe()
                          alert('계정이 삭제 되었습니다.')

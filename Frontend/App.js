@@ -25,7 +25,6 @@ export default function App() {
   // const [clock, setClock] = useState("...Loading")
   const [ok, setOk] = useState(true);
   const [rendered, setRenderState] = useState(false);
-  const [logined, setLogined] = useState()
 
   const GetWeather = async() => {
     try{
@@ -93,7 +92,7 @@ export default function App() {
         }}> 
         {/* Content */}
         { mode === 'signup' ?
-          <SingupPage setLogined ={setLogined} setDisplay={displayHandler} 
+          <SingupPage setDisplay={displayHandler} 
           setMode = {modeHandler}/>
           : ''
         }
