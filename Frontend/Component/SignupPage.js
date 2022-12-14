@@ -57,6 +57,7 @@ const SignupPage = ({setDisplay, setMode}) => {
                setMode('home');
                setDisplay(true);
           }catch(err){
+               alert('이미 가입된 회원입니다.')
                console.log(err);
           }
      }

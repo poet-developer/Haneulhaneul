@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { TouchableOpacity, StyleSheet, View, Dimensions, Text,} from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Dimensions, Text, Alert} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { CheckAuth } from './lib/CheckAuth';
 import axios from 'axios';
@@ -26,16 +26,25 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
           }
      }
 
-     const DeleteHandler = async() => {
-          try{
-               console.log(me.name)
-               // await axios.patch(`${SERVER}/users/delete_process`,{id : me.id}).then(alert("Deleted!")).then(setMe())
-               // setDisplay(true)
-               // setMode('home')
-          }catch(err){
-               console.log(err);
-               alert(err.message);
-          }
+     const DeleteHandler = () => {
+               Alert.alert(
+                    "Are your sure?",
+                    "정말 떠나실건가요??",
+                    [
+                      {
+                        text: "네",
+                        onPress: async () => {
+                         await axios.patch(`${SERVER}/users/delete_process`,{id : me.name}).then(res => {alert("Deleted!")}).then(setMe()).catch(console.log)
+                         setDisplay(true)
+                         setMode('home')
+                    // TODO: AWS cloud 사용
+                        },
+                      },
+                      {
+                        text: "다음에요",
+                      },
+                    ]
+                  );
      }
      
       return(
@@ -48,20 +57,14 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
                     <Ionicons name="chevron-back" size={40} color="snow" /></TouchableOpacity>
                     {me?
                     <>
-                    <View style={{flex:1, paddingTop: 100}}>
-                     <Text style={{fontSize:20, color: 'teal', marginBottom: 20}}>회원 닉네임 : {me.nick || ''}</Text>
-                     <Text style={{fontSize:20, color: 'teal', marginBottom: 20}}>회원 아이디 : {me.name || ''}</Text>
+                    <View style={styles.infoContainer}>
+                     <Text style={styles.infoText}>내 닉네임 | {me.nick || ''}</Text>
+                     <Text style={styles.infoText}>내 아이디 | {me.name || ''}</Text>
                     </View>
                     <TouchableOpacity onPress={LogoutHandler} style={styles.logBtn}>
                     <Text style={styles.btnText}>로그아웃</Text> 
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>{
-                         DeleteHandler()
-                         setMode('home')
-                         setMe()
-                         alert('계정이 삭제 되었습니다.')
-                         //TODO: Use Alert Comp 
-                    }}
+                    <TouchableOpacity onPress={DeleteHandler}
                     style={styles.logBtn}>
                     <Text style={styles.btnText}>계정삭제</Text> 
                     </TouchableOpacity>
@@ -93,7 +96,7 @@ const styles = StyleSheet.create({
           flex: 1,
           alignItems : 'center',
           justifyContent : 'flex-end',
-          backgroundColor : 'pink',
+          backgroundColor : 'teal',
           width : SCREEN_WIDTH,
           height: SCREEN_HEIGHT,
           
@@ -105,13 +108,33 @@ const styles = StyleSheet.create({
           borderRadius: 10,
           justifyContent: 'center',
           alignItems : 'center',
-          backgroundColor: 'teal',
+          backgroundColor: 'snow',
           color: 'snow',
-          marginBottom: 100,
+          marginBottom: 80,
      },
 
      btnText : {
-          color: 'snow',
-          fontSize: 20,
+          color: 'teal',
+          fontSize: 22,
+          fontFamily: 'main',
+     },
+
+     infoContainer : {
+               marginBottom: 90, 
+               borderWidth: 3,
+               width: SCREEN_WIDTH/1.2,
+               borderRadius: 20,
+               borderColor: 'gold',
+               height:220, 
+               paddingTop:20,
+               justifyContent: 'center',
+               alignItems: 'center',
+               borderStyle :'dashed'
+     },
+     infoText : {
+          fontSize:25, 
+          color: 'snow', 
+          marginBottom: 20,
+          fontFamily: 'main'
      }
 })

@@ -84,7 +84,7 @@ const CameraView = () => {
             </View>
           </Camera>
             
-          :<View style={styles.modal} ><Text style={styles.text}>로그인이 필요해요!</Text></View>
+          :<View style={styles.modal} ><Text style={styles.text}>{`카메라를 사용하시려면${'\n'}로그인이 필요해요!`}</Text></View>
         }
           </>
      )
@@ -126,6 +126,8 @@ const styles = StyleSheet.create({
   text:{
     fontSize: 20,
     color: 'snow',
+    textAlign: 'center',
+    lineHeight: 40,
   }
 })
 

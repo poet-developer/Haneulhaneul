@@ -29,8 +29,13 @@ const Signin = ({setDisplay, setMode}) => {
 
      const submitHandler = async(data) => {
           try {
-               if(data.name.length < 3 || data.password.length<6) throw new Error ("입력하신 정보가 올바르지 않습니다.")
-               const result = await axios.patch(`${SERVER}/users/login`,{data})
+               if(data.name.length < 3 || data.password.length<6) {
+                    alert("입력하신 정보가 올바르지 않습니다.")
+                    throw new Error ("입력하신 정보가 올바르지 않습니다.")
+               }
+               const result = await axios.patch(`${SERVER}/users/login`,{data}).catch(res=>{
+                    alert("존재하지 않는 아이디거나 잘못된 입력 정보입니다.")
+               })
                setMe({
                     name: result.data.name,
                     sessionId : result.data.sessionId,

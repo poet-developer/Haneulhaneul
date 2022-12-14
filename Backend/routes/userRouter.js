@@ -4,7 +4,6 @@ const UserSchema = require("../models/userSchema")
 const { compare, hash } = require("bcryptjs");
 
 router.post('/signup', async (req, res) => {
-     console.log(req.body.data)
      try{
           if(req.body.data.name.lenght<3) throw new Error("아이디는 최소 3자 이상으로 등록")
           if(req.body.data.nick.lenght<2) throw new Error("닉네임은 최소 2자 이상으로 등록")
@@ -62,8 +61,9 @@ router.patch('/logout',async (req, res)=>{
 router.patch("/delete_process", 
 async (req, res)=>{
      try{
-          const user = await UserSchema.findOneAndDelete({id: req.body.id})
-          // await fileUnlink(`./uploads/${image.key}`);
+          // console.log(req.body.id)
+          await UserSchema.findOneAndDelete({name: req.body.id})
+          await fileUnlink(`./uploads/${image.key}`);
           res.json({message: '삭제완료'})
      }catch(err){
           res.status(400).json({message: err.message})
