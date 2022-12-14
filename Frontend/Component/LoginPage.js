@@ -1,25 +1,24 @@
-import { useCallback, useEffect, useState, useContext } from 'react';
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity, SafeAreaView,TextInput, } from 'react-native';
+import { useCallback, useState, useContext } from 'react';
+import { StyleSheet, Text, View, Dimensions, SafeAreaView, TouchableOpacity, TextInput } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { Ionicons } from '@expo/vector-icons';
-import axios from 'axios'
-import {SERVER} from '@env';
-import { CheckAuth } from '../Component/lib/CheckAuth';
-
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
+import axios from 'axios';
+import { CheckAuth } from './lib/CheckAuth';
+import {SERVER} from '@env';
 
-const SignupPage = ({setDisplay, setMode}) => {
+const Signin = ({setDisplay, setMode}) => {
+     
      const [data, setData] = useState({
           name: '',
-          nick: '',
           password: '',
-          re_password: '',
-        });
-     const [me, setMe] = useContext(CheckAuth);
-     useEffect(()=>{
-          setDisplay(false);
-     },[])
+     });
+     const [me, setMe] = useContext(CheckAuth)
+
+     const [fontsLoaded] = useFonts({
+          'main' : require('../assets/Fonts/Pak_Yong_jun.ttf'),
+        })
 
      const inputHandler = (key, value) => {
           setData(prevState => ({
@@ -30,29 +29,13 @@ const SignupPage = ({setDisplay, setMode}) => {
 
      const submitHandler = async(data) => {
           try {
-               if(data.name.length < 3) {
-                    alert("아이디는 3자 이상입니다.")
-                    throw new Error("아이디는 3자 이상입니다.")
-               }
-               if(data.nick.length < 2 ) {
-                    alert("별명은 2자 이상입니다.")
-                    throw new Error("별명은 2자 이상입니다.")
-               }
-               if(data.password.length < 6 || data.re_password.length <6){
-                    alert("비밀번호는 6자 이상입니다.")
-                    throw new Error ("비밀번호는 6자 이상입니다.")
-               } 
-               if(data.password !== data.re_password){
-                    alert('비밀번호 확인 오류')
-                    throw new Error ("비밀번호 확인 오류.")
-               }
-               const result = await axios.post(`${SERVER}/users/signup`,{data})
-
+               if(data.name.length < 3 || data.password.length<6) throw new Error ("입력하신 정보가 올바르지 않습니다.")
+               const result = await axios.patch(`${SERVER}/users/login`,{data})
                setMe({
                     name: result.data.name,
                     sessionId : result.data.sessionId
                })
-               alert("회원가입 완료!")
+               alert("로그인 성공!")
                setMode('home');
                setDisplay(true);
           }catch(err){
@@ -60,9 +43,6 @@ const SignupPage = ({setDisplay, setMode}) => {
           }
      }
 
-     const [fontsLoaded] = useFonts({
-          'main' : require('../assets/Fonts/Pak_Yong_jun.ttf'),
-        })
       
      const onLayoutRootView = useCallback(async () => {
      if (fontsLoaded) {
@@ -71,7 +51,6 @@ const SignupPage = ({setDisplay, setMode}) => {
      }, [fontsLoaded]); 
      
      if (!fontsLoaded) return null;
-
 
      return ( 
           <SafeAreaView style={styles.container} onLayout = {onLayoutRootView}>
@@ -82,7 +61,7 @@ const SignupPage = ({setDisplay, setMode}) => {
                     <Ionicons name="chevron-back" size={40} color="teal" /></TouchableOpacity>
                <View style={styles.titleContainer}>
                <Text style={styles.title}>하늘하늘</Text>
-               <Text style={styles.title}>계정 만들기</Text>
+               <Text style={styles.title}>접속</Text>
                </View>
                <TextInput
                style={styles.input}
@@ -93,39 +72,24 @@ const SignupPage = ({setDisplay, setMode}) => {
                />
                <TextInput
                style={styles.input}
-               placeholder={'nickname'}
-               defaultValue={data.nick || ''}
-               onChangeText={(text) => {inputHandler('nick',text)}}
-               // value={text}
-               />
-               <TextInput
-               style={styles.input}
                placeholder={'password'}
                secureTextEntry
                defaultValue={''}
                onChangeText={(text) => {inputHandler('password',text)}}
                // value={number}
                />
-               <View style={styles.titleContainer}>
-                    <Text style={{...styles.title, fontSize: 20}}>비밀번호 확인</Text>
-                    </View>
-                    <TextInput
-                    defaultValue={''}
-                    style={styles.input}
-                    secureTextEntry
-                    clearTextOnFocus
-                    onChangeText={(text) => {inputHandler('re_password',text)}}
-                    placeholder={'Check password'}
-                    />
                     <TouchableOpacity style={styles.button} onPress={() => {
                               submitHandler(data);
-               }}><Text style={styles.btnText}> 가입하기 </Text>
+               }}><Text style={styles.btnText}> 로그인 </Text>
+               </TouchableOpacity>
+               <TouchableOpacity style={styles.hideText} onPress={() => {setMode('signup')
+               }}><Text style={{color: 'tomato', fontFamily : 'main', fontSize: 15}}> 회원가입 </Text>
                </TouchableOpacity>
     </SafeAreaView>
      )
 }
 
-export default SignupPage
+export default Signin
 
 const styles = StyleSheet.create({
      container : {
@@ -168,5 +132,9 @@ const styles = StyleSheet.create({
 
      btnText :{
           fontFamily:'main', fontSize: 20, color: 'snow',
+     },
+
+     hideText : {
+          marginTop: 20
      }
 })

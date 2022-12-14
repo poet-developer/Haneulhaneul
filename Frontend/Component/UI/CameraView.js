@@ -1,10 +1,11 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useContext } from 'react';
 import { StyleSheet, Text, View, Dimensions, ActivityIndicator, TouchableOpacity, Button, SafeAreaView, Image } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library'
 import { shareAsync } from 'expo-sharing';
 import axios from 'axios';
 import {SERVER} from '@env';
+import { CheckAuth } from '../lib/CheckAuth';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
@@ -12,6 +13,8 @@ const CameraView = () => {
      const [cameraOk, setCameraOk] = useState();
      const [libraryOk, setLibraryOk] = useState();
      const [photo, setPhoto] = useState();
+     const [me, setMe] = useContext(CheckAuth)
+
      let cameraRef = useRef();
      
      useEffect(()=>{
@@ -70,6 +73,8 @@ const CameraView = () => {
         }
      
      return(
+         <>
+        {me?
           <Camera
             style={{flex: 1,width:"100%"}}
             ref ={cameraRef}
@@ -78,6 +83,10 @@ const CameraView = () => {
               <Button style={styles.buttonContainer} title="Take Pic" onPress={takePic}/>
             </View>
           </Camera>
+            
+          :<View style={styles.modal} ><Text style={styles.text}>로그인이 필요해요!</Text></View>
+        }
+          </>
      )
 }
 
@@ -101,6 +110,22 @@ const styles = StyleSheet.create({
     left: 0,
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
+  },
+
+  modal : {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'midnightblue',
+  },
+
+  text:{
+    fontSize: 20,
+    color: 'snow',
   }
 })
 

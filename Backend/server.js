@@ -9,8 +9,6 @@ const imageRouter = require('./routes/imageRouter')
 const userRouter = require('./routes/userRouter');
 const {authenticate} = require("./middleware/authentication")
 
-
-
 const storage = multer.diskStorage({
      destination : (req, file, cb) => cb(null, "./uploads"),
      filename : (req, res, cb) => cb(null, `${uuid()}.${mime.extension(file.mimetype)}`)

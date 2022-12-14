@@ -1,54 +1,51 @@
-import { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, ScrollView, View, Text, Dimensions, Image} from 'react-native';
-import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
+import { useContext } from 'react';
+import { StyleSheet, ScrollView, View, Text, Dimensions, SafeAreaView } from 'react-native';
 import ImageList from './lib/ImageList';
-import { AutoFocus } from 'expo-camera';
+import { CheckAuth } from './lib/CheckAuth';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
-const styles = StyleSheet.create({
-     page : {
-      //  position: 'relative',
-       flexDirection : 'row',
-       flexWrap : 'wrap',
-      //  height : 'auto',
-      // flex : 1,
-     },
-     photoContainer : {
-      flex: 1,
-     },
-     slider: {
-      flexGrow: 1,
-     },
-})
-
 const SecondPage = ({setDisplay, setMode}) => {
-  const [images, setImages] = useState([]) // Array
-    useEffect(()=>{
-    }, [])
 
-    const [fontsLoaded] = useFonts({
-      'title' : require('../assets/Fonts/Pak_Yong_jun.ttf'),
-    })
-  
-    const onLayoutRootView = useCallback(async () => {
-      if (fontsLoaded) {
-        await SplashScreen.hideAsync();
-      } // 글꼴 파일을 미리 렌더
-    }, [fontsLoaded]); 
-  
-    if (!fontsLoaded) return null;
+  const [me, setMe] = useContext(CheckAuth)
 
      return(
        <ScrollView>
         <View style={styles.page}>
+          {me 
+          ?
         <ImageList page={'second'} setDisplay={setDisplay} setMode = {setMode}/>
+          :
+          <SafeAreaView style={styles.modal} ><Text style={styles.text}>로그인이 필요해요!</Text></SafeAreaView>
+          }
         </View>
       </ScrollView>   
      )
 
 }
 
-
 export default SecondPage
+
+const styles = StyleSheet.create({
+  page : {
+    flexDirection : 'row',
+    flexWrap : 'wrap',
+    position: 'relative'
+  },
+
+  modal : {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'teal',
+  },
+
+  text:{
+    fontSize: 20,
+    color: 'snow',
+  }
+})

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Dimensions, ActivityIndicator, TouchableOpacity} from 'react-native';
 import * as Location from 'expo-location';
@@ -10,7 +10,7 @@ import CameraView from './Component/UI/CameraView';
 import Setting from './Component/Setting';
 import { Ionicons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
-import SinginPage from './Component/SigninPage';
+import LoginPage from './Component/LoginPage';
 import SingupPage from './Component/SignupPage'
 import {API_KEY} from '@env';
 import { AuthProvidder} from './Component/lib/CheckAuth';
@@ -18,7 +18,7 @@ import { AuthProvidder} from './Component/lib/CheckAuth';
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
 export default function App() {
-  const [mode, setMode] = useState( ''|| 'signup');
+  const [mode, setMode] = useState( ''|| 'login');
   const [city, setCity] = useState("...Loading");
   const [days, setDays] = useState([]);
   const [display, setDisplay] = useState('auto');
@@ -49,7 +49,7 @@ export default function App() {
 
   useEffect(()=>{
     GetWeather();
-    setDisplay('auto');
+    displayHandler(false);
   }, [])
 
   const OnCameraMode = () => {
@@ -97,8 +97,8 @@ export default function App() {
           setMode = {modeHandler}/>
           : ''
         }
-        { mode === 'signin' ?
-          <SinginPage setDisplay={displayHandler} 
+        { mode === 'login' ?
+          <LoginPage setDisplay={displayHandler} 
           setMode = {modeHandler}/>
           : ''
         }

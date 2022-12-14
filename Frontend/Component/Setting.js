@@ -36,14 +36,24 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
                     }} style={{position:'absolute', top: 30, left: 10,}}>
                     <Ionicons name="chevron-back" size={40} color="snow" /></TouchableOpacity>
                     {me?
+                    <>
                     <TouchableOpacity onPress={LogoutHandler} style={styles.logBtn}>
                     <Text style={styles.btnText}>로그아웃</Text> 
                     </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>{
+                         setMode('home')
+                         setMe()
+                         alert('계정이 삭제 되었습니다.')
+                         //TODO: Use Alert Comp 
+                    }}
+                    style={styles.logBtn}>
+                    <Text style={styles.btnText}>계정삭제</Text> 
+                    </TouchableOpacity>
+                    </>
                     :
                     <>
                     <TouchableOpacity onPress={()=>{
-                         setMode('signin')
-                         console.log('login')
+                         setMode('login')
                     }}
                     style={styles.logBtn}>
                     <Text style={styles.btnText}>로그인</Text> 

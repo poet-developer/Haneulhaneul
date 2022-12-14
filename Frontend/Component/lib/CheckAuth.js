@@ -5,6 +5,7 @@ export const CheckAuth = createContext();
 
 export const AuthProvidder = ({children}) => {
      const [me, setMe] = useState() 
+
      return (
      <CheckAuth.Provider value={[me, setMe]}>
           {children}

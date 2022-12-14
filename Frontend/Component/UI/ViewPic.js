@@ -103,3 +103,5 @@ const styles =  StyleSheet.create({
           alignItems : 'center',
      }
 })
+
+//TODO: BackHandler 공부

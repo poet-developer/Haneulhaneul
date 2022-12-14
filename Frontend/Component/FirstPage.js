@@ -71,6 +71,7 @@ const FirstPage = ({city, desc, temp, weather, rendered}) => {
      const [clock, setClock] = useState()
      const [me, setMe] = useContext(CheckAuth)
 
+
      const GetTime = () => {
           const date = new Date();
           const hours = date.getHours();
