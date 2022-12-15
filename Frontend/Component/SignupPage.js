@@ -6,6 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios'
 import {SERVER} from '@env';
 import { CheckAuth } from '../Component/lib/CheckAuth';
+import Toastify from './lib/Toastify';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
@@ -31,19 +32,19 @@ const SignupPage = ({setDisplay, setMode}) => {
      const submitHandler = async(data) => {
           try {
                if(data.name.length < 3) {
-                    alert("아이디는 3자 이상입니다.")
+                    Toastify("아이디는 3자 이상입니다.",'red')
                     throw new Error("아이디는 3자 이상입니다.")
                }
                if(data.nick.length < 2 ) {
-                    alert("별명은 2자 이상입니다.")
+                    Toastify("별명은 2자 이상입니다.",'red')
                     throw new Error("별명은 2자 이상입니다.")
                }
                if(data.password.length < 6 || data.re_password.length <6){
-                    alert("비밀번호는 6자 이상입니다.")
+                    Toastify("비밀번호는 6자 이상입니다.",'red')
                     throw new Error ("비밀번호는 6자 이상입니다.")
                } 
                if(data.password !== data.re_password){
-                    alert('비밀번호 확인 오류')
+                    Toastify('비밀번호 확인 오류','red')
                     throw new Error ("비밀번호 확인 오류.")
                }
                const result = await axios.post(`${SERVER}/users/signup`,{data})
@@ -54,11 +55,11 @@ const SignupPage = ({setDisplay, setMode}) => {
                     nick : result.data.nick,
                     id : result.data.id,
                })
-               alert("회원가입 완료!")
+               Toastify("회원가입 완료!",'teal')
                setMode('home');
                setDisplay(true);
           }catch(err){
-               alert('이미 가입된 회원입니다.')
+               Toastify('이미 가입된 회원입니다.','red')
                console.log(err);
           }
      }

@@ -1,8 +1,9 @@
 import axios from "axios";
-import React,{ useEffect, useContext} from "react";
+import React,{ useEffect} from "react";
 import { StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import {SERVER} from "@env"
+import Toastify from "../lib/Toastify";
 
 const ShareButton = ({finDelete, info}) => {
      useEffect(()=>{
@@ -18,7 +19,7 @@ const ShareButton = ({finDelete, info}) => {
                    onPress: async() => {
                     await axios
                     .patch(`${SERVER}/images/public_process`, {info})
-                    .then(alert('공유 완료!'))
+                    .then(Toastify('공유 완료!','teal'))
                     .then(finDelete)
                     .catch(console.log)
                // TODO: AWS cloud 사용
@@ -41,7 +42,7 @@ const ShareButton = ({finDelete, info}) => {
                    onPress: async() => {
                     await axios
                     .patch(`${SERVER}/images/public_process`, {info})
-                    .then(alert('공유 취소!'))
+                    .then(Toastify('공유 취소!','teal'))
                     .then(finDelete)
                     .catch(console.log)}
                 },

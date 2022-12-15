@@ -7,6 +7,7 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 import axios from 'axios';
 import { CheckAuth } from './lib/CheckAuth';
 import {SERVER} from '@env';
+import Toastify from './lib/Toastify';
 
 const Signin = ({setDisplay, setMode}) => {
      
@@ -30,11 +31,11 @@ const Signin = ({setDisplay, setMode}) => {
      const submitHandler = async(data) => {
           try {
                if(data.name.length < 3 || data.password.length<6) {
-                    alert("입력하신 정보가 올바르지 않습니다.")
+                    Toastify("입력하신 정보가 올바르지 않습니다.",'red')
                     throw new Error ("입력하신 정보가 올바르지 않습니다.")
                }
                const result = await axios.patch(`${SERVER}/users/login`,{data}).catch(res=>{
-                    alert("존재하지 않는 아이디거나 잘못된 입력 정보입니다.")
+                    Toastify("존재하지 않는 아이디거나 잘못된 입력 정보입니다.",'red')
                })
                setMe({
                     name: result.data.name,
@@ -42,7 +43,7 @@ const Signin = ({setDisplay, setMode}) => {
                     nick : result.data.nick,
                     id : result.data.id
                })
-               alert("로그인 성공!")
+               Toastify("로그인 성공!",'teal')
                setMode('home');
                setDisplay(true);
           }catch(err){

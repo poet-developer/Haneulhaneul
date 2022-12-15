@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, useContext } from 'react';
-import { StyleSheet, Text, View, Dimensions, ActivityIndicator, TouchableOpacity, Button, SafeAreaView, Image, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, SafeAreaView, Image, Pressable } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library'
 import { shareAsync } from 'expo-sharing';
@@ -8,7 +8,7 @@ import {SERVER} from '@env';
 import { Ionicons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { CheckAuth } from '../lib/CheckAuth';
-import Toast from 'react-native-root-toast';
+import Toastify from '../lib/Toastify';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
@@ -17,24 +17,13 @@ const CameraView = ({setDisplay, setMode}) => {
      const [libraryOk, setLibraryOk] = useState();
      const [photo, setPhoto] = useState();
      const [me, setMe] = useContext(CheckAuth)
-     const [notification, setNotificatin] = useState(false)
 
      let cameraRef = useRef();
      
      useEffect(()=>{
       GetCamera();
       setDisplay(false)
-
-      let toast = Toast.show(`지금 256명이 같은 하늘을 보고 있어요:)`, {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.CENTER,
-        shadow: true,
-        animation: true,
-        hideOnPress: true,
-        backgroundColor: 'teal',
-        shadowColor: "rgba(0, 0, 0, 0.5)",
-        delay: 0,
-    });
+      Toastify(`지금 256명이 같은 하늘을 보고 있어요:)`,'teal');
     // 접속자 수, user.length
      },[])
 
@@ -43,8 +32,8 @@ const CameraView = ({setDisplay, setMode}) => {
           const { status : libraryState } = await MediaLibrary.requestPermissionsAsync();
           setCameraOk(cameraState === 'granted');
           setLibraryOk(libraryState === 'granted')
-          if(!cameraState) alert('Please Allow to use Your Camera.');
-          if(!libraryState) alert('Please Allow to use Your Library.');
+          if(!cameraState) Toastify('사진 접속 권한이 필요해요.','red');
+          if(!libraryState) Toastify('앨범 접속 권한이 필요해요.','red');
         }
       
         const takePic = async () => {
@@ -55,8 +44,6 @@ const CameraView = ({setDisplay, setMode}) => {
           };
            let newPhoto = await cameraRef.current.takePictureAsync(options)
            setPhoto(newPhoto);
-
-           
         }
 
         const Exit = () => {
@@ -73,10 +60,9 @@ const CameraView = ({setDisplay, setMode}) => {
       
           let savePhoto = async () => {
             let uri = photo.base64;
-            // 사이즈를 줄여야만 전송이 가능
             try {
               await axios.post(`${SERVER}/images/create_process`, {uri, author: me.nick})
-                .then (alert('저장'))
+                .then (Toastify('저장했어요!','teal'))
                 .catch(console.log)
                 .then(setPhoto(undefined))
               }catch (err) {
@@ -98,13 +84,10 @@ const CameraView = ({setDisplay, setMode}) => {
               <TouchableOpacity style={styles.carmeraBtn} onPress={savePhoto}>
               <Fontisto name="save" size={40} color="snow" style ={{paddingLeft: 5, top: 5}} />
               </TouchableOpacity> 
-              {/* // save */}
               <TouchableOpacity style={styles.btn} onPress={()=>{
-                setPhoto(undefined);
+                setPhoto(undefined); ///SAVE
               }} color = {'snow'}>
               <Fontisto name="close-a" size={20} color="snow"/></TouchableOpacity>
-              {/* <TouchableOpacity onPress={showToasts}>
-              <Text style={{color: 'snow',}}>SHOW SOME AWESOMENESS!</Text></TouchableOpacity> */}
             </SafeAreaView>
           )
         }

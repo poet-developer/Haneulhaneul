@@ -7,6 +7,7 @@ import {SERVER} from '@env';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toastify from './lib/Toastify';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
@@ -20,7 +21,7 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
      const LogoutHandler = async() =>{
           try{
                await axios.patch(`${SERVER}/users/logout`,{} //req.body자리
-               ,{headers : {sessionid : me.sessionId}}).then(alert("Logout!")).then(setMe()).then(AsyncStorage.removeItem("sessionId"))
+               ,{headers : {sessionid : me.sessionId}}).then(Toastify(`꼭 다시 봐요!`,'teal')).then(setMe()).then(AsyncStorage.removeItem("sessionId"))
                setDisplay(true)
                setMode('home')
           }catch(err){
@@ -37,7 +38,7 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
                       {
                         text: "네",
                         onPress: async () => {
-                         await axios.patch(`${SERVER}/users/delete_process`,{id : me.name}).then(res => {alert("Deleted!")}).then(setMe()).then(AsyncStorage.removeItem("sessionId")).catch(console.log)
+                         await axios.patch(`${SERVER}/users/delete_process`,{id : me.name}).then(Toastify(`다음에 또 봐요!`,'teal')).then(setMe()).then(AsyncStorage.removeItem("sessionId")).catch(console.log)
                          setDisplay(true)
                          setMode('home')
                     // TODO: AWS cloud 사용
@@ -104,7 +105,6 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>{
                          setMode('signup')
-                         console.log('signup')
                     }}
                     style={styles.logBtn}>
                     <Text style={styles.btnText}>회원가입</Text> 
@@ -125,7 +125,6 @@ const styles = StyleSheet.create({
           backgroundColor : 'teal',
           width : SCREEN_WIDTH,
           height: SCREEN_HEIGHT,
-          
         },
 
      logBtn : {

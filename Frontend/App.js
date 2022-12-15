@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Dimensions, ActivityIndicator, TouchableOpacity} from 'react-native';
 import * as Location from 'expo-location';
@@ -9,7 +9,6 @@ import ThirdPage from './Component/ThirdPage';
 import CameraView from './Component/UI/CameraView';
 import Setting from './Component/Setting';
 import { Ionicons } from '@expo/vector-icons';
-import { Fontisto } from '@expo/vector-icons';
 import LoginPage from './Component/LoginPage';
 import SingupPage from './Component/SignupPage'
 import {API_KEY} from '@env';
@@ -23,7 +22,6 @@ export default function App() {
   const [city, setCity] = useState("...Loading");
   const [days, setDays] = useState([]);
   const [display, setDisplay] = useState('auto');
-  // const [clock, setClock] = useState("...Loading")
   const [ok, setOk] = useState(true);
   const [rendered, setRenderState] = useState(false);
 
@@ -64,17 +62,12 @@ export default function App() {
 
   const GetStorage = async() => {
     const storage = await AsyncStorage.getItem("sessionId")
-    if(!storage){
-      setMode('setting')
-    }
+    if(!storage) setMode('setting')
   }
 
   const displayHandler = (target) => {
-      if(target){
-        setDisplay('auto');
-      }else{
-        setDisplay('none');
-      }
+      if(target) setDisplay('auto')
+      else setDisplay('none')
   }
 
   const modeHandler = (mode) => {
@@ -163,7 +156,6 @@ const styles = StyleSheet.create({
       paddingLeft: 3,
       margin: 10,
   }
-  
 });
 
 // TODO: 스크롤 위치로 스크롤 위치 세는 함수 작성 -> 랜덤 하늘 사진, slider indicator

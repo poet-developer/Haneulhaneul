@@ -6,6 +6,7 @@ import { AntDesign } from '@expo/vector-icons';
 import {SERVER} from "@env"
 import { CheckAuth } from "../lib/CheckAuth";
 import ShareButton from "./ShareButton";
+import Toastify from "../lib/Toastify";
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
@@ -23,7 +24,7 @@ const ViewPic = ({info, exit, setDisplay, finDelete, currentMode}) => {
                    onPress: async () => {
                     await axios
                          .post(`${SERVER}/images/delete_process`, {id : info.id})
-                         .then(alert('삭제완료'))
+                         .then(Toastify('삭제완료!','teal'))
                          .then(finDelete)
                          .catch(console.log)
                // TODO: AWS cloud 사용
@@ -60,7 +61,6 @@ const ViewPic = ({info, exit, setDisplay, finDelete, currentMode}) => {
           </View>
      )
 }
-// FIXME: 하늘나누기 기능 , footer camera btn 제거
 // 하늘 나누기 : aws CRUD
 export default ViewPic
 
@@ -83,5 +83,3 @@ const styles =  StyleSheet.create({
      },
      
 })
-
-//TODO: BackHandler 공부

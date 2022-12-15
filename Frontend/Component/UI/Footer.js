@@ -1,7 +1,51 @@
 import {useContext, useEffect, useState} from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Animated} from 'react-native';
+import { StyleSheet, View, TouchableOpacity} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { CheckAuth } from '../lib/CheckAuth'
+
+
+const Footer = ({ chaingingMode, display, mode}) => {
+     const [me, setMe] = useContext(CheckAuth)
+     const [on, setOn] = useState(false)
+     
+     const modeText = ['home', 'album', 'people']
+     const ChangeMode = (mode) => {
+          chaingingMode(mode);
+     }
+
+     useEffect(()=>{
+          modeText.forEach((item)=>{if(item === mode) setOn(modeText.indexOf(item))})
+     },[mode])
+
+     return(
+          <View style={{...styles.footer, display: display}}>
+               <View style={styles.container}>
+                    <View style={styles.sliderBar}>
+                         <TouchableOpacity onPress={()=>{
+                              ChangeMode(modeText[0])
+                         }} style={on === 0 ? {opacity:1} : {opacity:0.5}}>
+                         <View style={styles.sliderBtn}>
+                              <Ionicons name="home-sharp" size={24} color="snow"/>
+                         </View>
+                         </TouchableOpacity>
+                         <TouchableOpacity onPress={()=>{
+                              ChangeMode(modeText[1])
+                         }} style={on === 1 ? {opacity:1} : {opacity:0.5}}>
+                         <View style={styles.sliderBtn}>
+                              <Ionicons name="albums" size={24} color="snow" />
+                         </View></TouchableOpacity>
+                         <TouchableOpacity onPress={()=>{
+                              ChangeMode(modeText[2])
+                         }} style={on === 2 ? {opacity:1} : {opacity:0.5}}>
+                         <View style={styles.sliderBtn}>
+                              <Ionicons name="ios-people" size={24} color="snow" />
+                         </View></TouchableOpacity>
+                    </View>
+               </View>
+          </View>
+     )
+
+}
 
 const styles = StyleSheet.create({
      footer : {
@@ -34,53 +78,6 @@ const styles = StyleSheet.create({
      }
 })
 
-const modeText = ['home', 'album', 'people']
-
-const Footer = ({ chaingingMode, display, mode}) => {
-     const [me, setMe] = useContext(CheckAuth)
-     const [on, setOn] = useState(false)
-
-     const ChangeMode = (mode) => {
-          chaingingMode(mode);
-     }
-
-     useEffect(()=>{
-          modeText.forEach((item)=>{
-               if(item === mode){
-                    setOn(modeText.indexOf(item))
-               }
-          })
-     },[mode])
-
-     return(
-          <View style={{...styles.footer, display: display}}>
-               <View style={styles.container}>
-                    <View style={styles.sliderBar}>
-                         <TouchableOpacity onPress={()=>{
-                              ChangeMode(modeText[0])
-                         }} style={on === 0 ? {opacity:1} : {opacity:0.5}}>
-                         <View style={styles.sliderBtn}>
-                              <Ionicons name="home-sharp" size={24} color="snow"/>
-                         </View>
-                         </TouchableOpacity>
-                         <TouchableOpacity onPress={()=>{
-                              ChangeMode(modeText[1])
-                         }} style={on === 1 ? {opacity:1} : {opacity:0.5}}>
-                         <View style={styles.sliderBtn}>
-                              <Ionicons name="albums" size={24} color="snow" />
-                         </View></TouchableOpacity>
-                         <TouchableOpacity onPress={()=>{
-                              ChangeMode(modeText[2])
-                         }} style={on === 2 ? {opacity:1} : {opacity:0.5}}>
-                         <View style={styles.sliderBtn}>
-                              <Ionicons name="ios-people" size={24} color="snow" />
-                         </View></TouchableOpacity>
-                    </View>
-               </View>
-          </View>
-     )
-
-}
 
 
 export default Footer
