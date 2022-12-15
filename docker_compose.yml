@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+    hanuel:
+        container_name: "haneul"
+        build: .
+        image: hanuel:1
+        restart: always
+
+    #/etc/init.d/nginx restart
+
+
+    # PROBLEM! 계속해서 프록시가 말썽
+    # 모두 잇기기 어려움
+    # 리액트-nginx는 됨
