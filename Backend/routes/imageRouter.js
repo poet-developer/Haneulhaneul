@@ -9,7 +9,7 @@ const fileUnlink = promisify(fs.unlink)
 
 router.get("/readImages", async(req, res) => {
     try{
-     const images = await ImageSchema.find()
+     const images = await ImageSchema.find({public : true})
      res.status(200).json(images);
      //  });
     }catch(err){
@@ -49,6 +49,24 @@ async (req, res)=>{
           res.json({message: '삭제완료'})
      }catch(err){
           res.status(400).json({message: err.message})
+     }
+}); // DELETE
+
+router.patch("/public_process", 
+async (req, res)=>{
+     try{
+          let _public;
+          if(req.body.info.public)
+               _public = false
+          else _public = true
+          await ImageSchema.updateOne({_id: req.body.info.id}, 
+               {$set:{public : 
+               _public}}
+               )
+          res.json({message: "Public Complete."})
+     }catch(err){
+          console.log(err)
+          res.status(400).json({message : err.message})
      }
 }); // DELETE
 

@@ -37,7 +37,7 @@ const ALLImageList = ({page, setDisplay, setMode, currentMode}) => {
         imageList = images.map(item => {
             return <TouchableOpacity style = {{position:'relative'}}onPress={()=>{
               setTargetData({
-                id : item.id,
+                id : item._id,
                 key : item.key,
                 author : item.author,
                 public : item.public,

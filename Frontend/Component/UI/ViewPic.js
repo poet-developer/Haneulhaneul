@@ -2,7 +2,6 @@ import axios from "axios";
 import React,{ useState, useEffect, useContext } from "react";
 import { StyleSheet, Image, Dimensions, View , TouchableOpacity, Text, Pressable, Alert } from "react-native";
 import { Fontisto } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { AntDesign } from '@expo/vector-icons';
 import {SERVER} from "@env"
 import { CheckAuth } from "../lib/CheckAuth";
@@ -56,7 +55,7 @@ const ViewPic = ({info, exit, setDisplay, share, finDelete, currentMode}) => {
           <AntDesign name="delete" size={20} color="white"/></TouchableOpacity>
           : ''} 
           {info.author === me.nick 
-          ? <ShareButton currentMode={currentMode}/>
+          ? <ShareButton finDelete={finDelete} info = {info} currentMode={currentMode}/>
           : '' }
           </View>
      )

@@ -1,5 +1,5 @@
 import axios from "axios";
-import React,{ useState, useEffect, useContext } from "react";
+import React,{ useState, useEffect, useContext, useReducer } from "react";
 import { StyleSheet, Image, Dimensions, View , TouchableOpacity, Text, Pressable, Alert } from "react-native";
 import { Fontisto } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
@@ -7,8 +7,11 @@ import { AntDesign } from '@expo/vector-icons';
 import {SERVER} from "@env"
 import { CheckAuth } from "../lib/CheckAuth";
 
-const ShareButton = ({currentMode}) => {
+const ShareButton = ({finDelete, info}) => {
      const [me, setMe] = useContext(CheckAuth)
+
+     useEffect(()=>{
+     },[])
 
      const ShareModal = () => {
           Alert.alert(
@@ -17,9 +20,13 @@ const ShareButton = ({currentMode}) => {
                [
                  {
                    text: "네",
-                   onPress: () => {
-                    // share(); 
-                    alert('공유 완료!')
+                   onPress: async() => {
+                    await axios
+                    .patch(`${SERVER}/images/public_process`, {info})
+                    .then(alert('공유 완료!'))
+                    .then(finDelete)
+                    //Latest Order
+                    .catch(console.log)
                // TODO: AWS cloud 사용
                    },
                  },
@@ -37,11 +44,14 @@ const ShareButton = ({currentMode}) => {
                [
                  {
                    text: "네",
-                   onPress: () => {
-                    alert("공유 취소")
-               // TODO: AWS cloud 사용
-                   },
-                 },
+                   onPress: async() => {
+                    await axios
+                    .patch(`${SERVER}/images/public_process`, {info})
+                    .then(alert('공유 취소!'))
+                    .then(finDelete)
+                    //Latest Order
+                    .catch(console.log)}
+                },
                  {
                    text: "다음에요",
                  },
@@ -51,7 +61,7 @@ const ShareButton = ({currentMode}) => {
 
      return(
           <>
-          { currentMode === 'people'
+          { info.public
            ? 
                <TouchableOpacity style={styles.earth} onPress={CancelShareModal} color = {'snow'}>
                <MaterialCommunityIcons name="web-cancel" size={45} color="tomato" />

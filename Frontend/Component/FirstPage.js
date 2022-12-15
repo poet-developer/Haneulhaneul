@@ -25,17 +25,20 @@ const FirstPage = ({city, desc, temp, weather, rendered}) => {
      const [imagesInfo , setInfo] = useState();
      const [me, setMe] = useContext(CheckAuth)
      const [cover, setCover] = useState({})
-     const [coverDate, setCoverDate] = useState();
+     const [coverDate, setCoverDate] = useState('');
      let allCovers = [];
 
      const getCoverImage = async() => {
       const covers = await axios.get(`${SERVER}/images/readImages`)
-      allCovers =  covers.data.map(item => {
-        return { key : item.key, author: item.author, created_at : item.createdAt }
-      })
+      if(covers.data.length !== 0){
+        allCovers =  covers.data.map(item => {
+          return { key : item.key, author: item.author, created_at : item.createdAt }
+        })
+      
       const num = getRandomNum(allCovers.length);
       setCover(allCovers[num])
       setCoverDate(allCovers[num].created_at.split("T")[0]);
+      }
      }
 
      const GetTime = () => {

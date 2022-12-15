@@ -1,5 +1,4 @@
-import React, {createContext, useState, useEffect} from "react"
-import axios from "axios";
+import React, {createContext, useState} from "react"
 //Context 로 전역변수 관리.
 export const CheckAuth = createContext();
 
