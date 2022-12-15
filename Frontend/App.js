@@ -14,11 +14,12 @@ import LoginPage from './Component/LoginPage';
 import SingupPage from './Component/SignupPage'
 import {API_KEY} from '@env';
 import { AuthProvider} from './Component/lib/CheckAuth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
 export default function App() {
-  const [mode, setMode] = useState( ''|| 'setting');
+  const [mode, setMode] = useState( ''|| 'home');
   const [city, setCity] = useState("...Loading");
   const [days, setDays] = useState([]);
   const [display, setDisplay] = useState('auto');
@@ -50,6 +51,7 @@ export default function App() {
     GetWeather();
     displayHandler(false);
     displayHandler(rendered)
+    GetStorage();
   }, [rendered])
 
   const OnCameraMode = () => {
@@ -58,6 +60,13 @@ export default function App() {
 
   const OnSettingMode = () => {
     setMode('setting')
+  }
+
+  const GetStorage = async() => {
+    const storage = await AsyncStorage.getItem("sessionId")
+    if(!storage){
+      setMode('setting')
+    }
   }
 
   const displayHandler = (target) => {

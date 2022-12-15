@@ -22,7 +22,7 @@ router.post('/signup', async (req, res) => {
                }
           ).save()
           const session = user.sessions[0];
-          res.json({message: 'user Signin', sessionId: session._id, name : user.name, nick: user.nick})
+          res.json({message: 'user Signin', sessionId: session._id, name : user.name, nick: user.nick, id: user._id,})
      }catch(err){
           console.log(err)
           res.status(400).json({message : err.message})
@@ -37,7 +37,7 @@ router.patch('/login',async (req, res)=>{
           user.sessions.push({created_at: new Date()});
           const session = user.sessions[user.sessions.length-1]; //최신 선택하는 방법
           await user.save();
-          res.json({message: "Login Success!", sessionId: session._id, name : user.name, nick: user.nick})
+          res.json({message: "Login Success!", sessionId: session._id, name : user.name, nick: user.nick, id: user._id})
      }catch(err){
           res.status(400).json({message : err.message})
      }
@@ -69,5 +69,19 @@ async (req, res)=>{
           res.status(400).json({message: err.message})
      }
 }); // DELETE
+
+router.patch("/me", async(req, res) =>{
+     try{
+          if(!req.user) throw new Error("권한이 없습니다..");
+          res.json({message: 'Success',
+          sessionId: req.headers.sessionid, 
+          name : req.user.name, 
+          id: req.user._id,
+          nick: req.user.nick
+     })
+     }catch(err){
+          res.status(400).json({message: err.message})
+     }
+});
 
 module.exports = router

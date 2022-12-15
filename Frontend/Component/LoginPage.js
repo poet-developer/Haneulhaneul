@@ -39,7 +39,8 @@ const Signin = ({setDisplay, setMode}) => {
                setMe({
                     name: result.data.name,
                     sessionId : result.data.sessionId,
-                    nick : result.data.nick
+                    nick : result.data.nick,
+                    id : result.data.id
                })
                alert("로그인 성공!")
                setMode('home');

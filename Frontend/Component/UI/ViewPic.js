@@ -9,7 +9,7 @@ import ShareButton from "./ShareButton";
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
-const ViewPic = ({info, exit, setDisplay, share, finDelete, currentMode}) => {
+const ViewPic = ({info, exit, setDisplay, finDelete, currentMode}) => {
      const [me, setMe] = useContext(CheckAuth)
      const [created_at, setDate] = useState()
 
@@ -71,7 +71,6 @@ const styles =  StyleSheet.create({
           height: SCREEN_HEIGHT,
           justifyContent:'flex-start', 
           alignItems: 'flex-end',
-          // flex: 1,
      },
 
      btn : {

@@ -6,6 +6,7 @@ import axios from 'axios';
 import {SERVER} from '@env';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
@@ -19,7 +20,7 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
      const LogoutHandler = async() =>{
           try{
                await axios.patch(`${SERVER}/users/logout`,{} //req.body자리
-               ,{headers : {sessionid : me.sessionId}}).then(alert("Logout!")).then(setMe())
+               ,{headers : {sessionid : me.sessionId}}).then(alert("Logout!")).then(setMe()).then(AsyncStorage.removeItem("sessionId"))
                setDisplay(true)
                setMode('home')
           }catch(err){
@@ -160,6 +161,6 @@ const styles = StyleSheet.create({
           fontSize:25, 
           color: 'snow', 
           marginBottom: 20,
-          fontFamily: 'main'
+          // fontFamily: 'main'
      }
 })

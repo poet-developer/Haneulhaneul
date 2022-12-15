@@ -4,7 +4,6 @@ import { StyleSheet, Image, Dimensions, View , TouchableOpacity, Text, ActivityI
 import ViewPic from "../UI/ViewPic";
 import {SERVER} from '@env';
 import { CheckAuth } from "./CheckAuth";
-import { Ionicons } from '@expo/vector-icons';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
@@ -15,15 +14,9 @@ const ALLImageList = ({page, setDisplay, setMode, currentMode}) => {
      const [me, setMe] = useContext(CheckAuth);
      let imageList;
 
-     const ShareHandler = () => {
-       //axios 
-      setMode('people');
-      setDisplay(true)
-     }
      useEffect(()=>{
        setTimeout(() => {
         axios
-        //TODO: .env 처리
           .get(`${SERVER}/images/readImages`)
           .then(res => {
             setImages(res.data.reverse()); //Latest Order
@@ -68,7 +61,6 @@ const ALLImageList = ({page, setDisplay, setMode, currentMode}) => {
         setDisplay(true);
         }} 
       setDisplay ={setDisplay}
-      share = {ShareHandler}
       currentMode = {currentMode}
     />
     }

@@ -1,15 +1,10 @@
 import axios from "axios";
-import React,{ useState, useEffect, useContext, useReducer } from "react";
-import { StyleSheet, Image, Dimensions, View , TouchableOpacity, Text, Pressable, Alert } from "react-native";
-import { Fontisto } from '@expo/vector-icons';
+import React,{ useEffect, useContext} from "react";
+import { StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-import { AntDesign } from '@expo/vector-icons';
 import {SERVER} from "@env"
-import { CheckAuth } from "../lib/CheckAuth";
 
 const ShareButton = ({finDelete, info}) => {
-     const [me, setMe] = useContext(CheckAuth)
-
      useEffect(()=>{
      },[])
 
@@ -25,7 +20,6 @@ const ShareButton = ({finDelete, info}) => {
                     .patch(`${SERVER}/images/public_process`, {info})
                     .then(alert('공유 완료!'))
                     .then(finDelete)
-                    //Latest Order
                     .catch(console.log)
                // TODO: AWS cloud 사용
                    },
@@ -49,7 +43,6 @@ const ShareButton = ({finDelete, info}) => {
                     .patch(`${SERVER}/images/public_process`, {info})
                     .then(alert('공유 취소!'))
                     .then(finDelete)
-                    //Latest Order
                     .catch(console.log)}
                 },
                  {

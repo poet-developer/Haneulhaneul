@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useState, useContext } from 'react';
+import { useCallback, useEffect, useState} from 'react';
 import { StyleSheet, View, Dimensions, Image, Text} from 'react-native';
 import getRandomNum from './lib/getRandomNum';
 import { Fontisto } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import { CheckAuth } from './lib/CheckAuth';
-import axios, { all } from 'axios';
+import axios from 'axios';
 import {SERVER} from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
@@ -22,8 +22,6 @@ const icons = {
 
 const FirstPage = ({city, desc, temp, weather, rendered}) => {
      const [clock, setClock] = useState()
-     const [imagesInfo , setInfo] = useState();
-     const [me, setMe] = useContext(CheckAuth)
      const [cover, setCover] = useState({})
      const [coverDate, setCoverDate] = useState('');
      let allCovers = [];

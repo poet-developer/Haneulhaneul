@@ -14,15 +14,9 @@ const MyImageList = ({page, setDisplay, setMode, currentMode}) => {
      const [me, setMe] = useContext(CheckAuth)
      let myImageList;
 
-     const ShareHandler = () => {
-       //axios 
-      setMode('people');
-      setDisplay(true)
-     }
      useEffect(()=>{
        setTimeout(() => {
         axios
-        //TODO: .env 처리
           .get(`${SERVER}/images/readMyImages`, {params : {author :me.nick}})
           .then(res => {
             setMyImages(res.data.reverse());
@@ -61,7 +55,6 @@ const MyImageList = ({page, setDisplay, setMode, currentMode}) => {
         setDisplay(true);
         }} 
       setDisplay ={setDisplay}
-      share = {ShareHandler}
       currentMode = {currentMode}
     />
     }
