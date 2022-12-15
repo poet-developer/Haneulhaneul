@@ -17,7 +17,7 @@ const ALLImageList = ({page, setDisplay, setMode, currentMode}) => {
      useEffect(()=>{
        setTimeout(() => {
         axios
-          .get(`${SERVER}/images/readImages`)
+          .get(SERVER+`/images/readImages`)
           .then(res => {
             setImages(res.data.reverse()); //Latest Order
           })

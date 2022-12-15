@@ -23,7 +23,7 @@ const ViewPic = ({info, exit, setDisplay, finDelete, currentMode}) => {
                    text: "네",
                    onPress: async () => {
                     await axios
-                         .post(`${SERVER}/images/delete_process`, {id : info.id})
+                         .post(SERVER+`/images/delete_process`, {id : info.id})
                          .then(Toastify('삭제완료!','teal'))
                          .then(finDelete)
                          .catch(console.log)
@@ -43,7 +43,7 @@ const ViewPic = ({info, exit, setDisplay, finDelete, currentMode}) => {
 
      return(
           <View style ={styles.view}>
-          <Image source = {{uri: `${SERVER}/uploads/${info.key}`}} style={styles.view}/>
+          <Image source = {{uri: SERVER+`/uploads/${info.key}`}} style={styles.view}/>
           <Text className='byUser' style={{
                  width: 150,
                  fontSize: 20, textAlign: 'right', fontFamily: 'title' , color: 'snow', backgroundColor: 'rgba(50,50,50,0.9)', position: 'absolute', bottom:0,

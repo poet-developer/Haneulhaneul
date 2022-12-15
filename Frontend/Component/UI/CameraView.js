@@ -61,7 +61,7 @@ const CameraView = ({setDisplay, setMode}) => {
           let savePhoto = async () => {
             let uri = photo.base64;
             try {
-              await axios.post(`${SERVER}/images/create_process`, {uri, author: me.nick})
+              await axios.post(SERVER+`/images/create_process`, {uri, author: me.nick})
                 .then (Toastify('저장했어요!','teal'))
                 .catch(console.log)
                 .then(setPhoto(undefined))

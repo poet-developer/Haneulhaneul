@@ -20,7 +20,7 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
      const LogoutHandler = async() =>{
           try{
-               await axios.patch(`${SERVER}/users/logout`,{} //req.body자리
+               await axios.patch(SERVER+`/users/logout`,{} //req.body자리
                ,{headers : {sessionid : me.sessionId}}).then(Toastify(`꼭 다시 봐요!`,'teal')).then(setMe()).then(AsyncStorage.removeItem("sessionId"))
                setDisplay(true)
                setMode('home')

@@ -18,7 +18,7 @@ const ShareButton = ({finDelete, info}) => {
                    text: "네",
                    onPress: async() => {
                     await axios
-                    .patch(`${SERVER}/images/public_process`, {info})
+                    .patch(SERVER+`/images/public_process`, {info})
                     .then(Toastify('공유 완료!','teal'))
                     .then(finDelete)
                     .catch(console.log)
@@ -41,7 +41,7 @@ const ShareButton = ({finDelete, info}) => {
                    text: "네",
                    onPress: async() => {
                     await axios
-                    .patch(`${SERVER}/images/public_process`, {info})
+                    .patch(SERVER+`/images/public_process`, {info})
                     .then(Toastify('공유 취소!','teal'))
                     .then(finDelete)
                     .catch(console.log)}
