@@ -37,7 +37,7 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
                       {
                         text: "네",
                         onPress: async () => {
-                         await axios.patch(`${SERVER}/users/delete_process`,{id : me.name}).then(res => {alert("Deleted!")}).then(setMe()).catch(console.log)
+                         await axios.patch(`${SERVER}/users/delete_process`,{id : me.name}).then(res => {alert("Deleted!")}).then(setMe()).then(AsyncStorage.removeItem("sessionId")).catch(console.log)
                          setDisplay(true)
                          setMode('home')
                     // TODO: AWS cloud 사용

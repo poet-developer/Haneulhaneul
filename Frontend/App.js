@@ -119,7 +119,7 @@ export default function App() {
             setMode = {modeHandler}
             currentMode = {mode}
             /> : ''}
-            { mode === 'camera' ? <CameraView/> : ''}
+            { mode === 'camera' ? <CameraView setMode={modeHandler} setDisplay={displayHandler}/> : ''}
             { mode === 'setting' ? <Setting setDisplay={displayHandler} setMode ={modeHandler}/> :''}
           
           { mode === 'people' ? <ThirdPage setDisplay={displayHandler} setMode={modeHandler} rendered = {rendered}

@@ -24,7 +24,7 @@ const MyImageList = ({page, setDisplay, setMode, currentMode}) => {
           })
           .catch(console.log)
        }, 1000);
-     },[])
+     },[preview])
      if(myImages.length){
         myImageList = myImages.map(item => {
             return <TouchableOpacity onPress={()=>{

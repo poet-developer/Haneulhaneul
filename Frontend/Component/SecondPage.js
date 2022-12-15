@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { StyleSheet, ScrollView, View, Text, Dimensions, SafeAreaView } from 'react-native';
 import MyImageList from './lib/MyImageList';
 import { CheckAuth } from './lib/CheckAuth';

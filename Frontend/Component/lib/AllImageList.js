@@ -23,8 +23,7 @@ const ALLImageList = ({page, setDisplay, setMode, currentMode}) => {
           })
           .catch(console.log)
        }, 1000);
-
-     },[])
+     },[preview])
      if(images.length){
        if(currentMode === 'people'){
         imageList = images.map(item => {

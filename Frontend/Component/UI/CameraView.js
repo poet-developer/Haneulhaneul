@@ -1,15 +1,17 @@
 import { useEffect, useState, useRef, useContext } from 'react';
-import { StyleSheet, Text, View, Dimensions, ActivityIndicator, TouchableOpacity, Button, SafeAreaView, Image } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, ActivityIndicator, TouchableOpacity, Button, SafeAreaView, Image, Pressable } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library'
 import { shareAsync } from 'expo-sharing';
 import axios from 'axios';
 import {SERVER} from '@env';
+import { Ionicons } from '@expo/vector-icons';
+import { Fontisto } from '@expo/vector-icons';
 import { CheckAuth } from '../lib/CheckAuth';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
-const CameraView = () => {
+const CameraView = ({setDisplay, setMode}) => {
      const [cameraOk, setCameraOk] = useState();
      const [libraryOk, setLibraryOk] = useState();
      const [photo, setPhoto] = useState();
@@ -19,6 +21,7 @@ const CameraView = () => {
      
      useEffect(()=>{
       GetCamera();
+      setDisplay(false)
      },[])
 
      const GetCamera = async() =>{
@@ -38,6 +41,11 @@ const CameraView = () => {
           };
            let newPhoto = await cameraRef.current.takePictureAsync(options)
            setPhoto(newPhoto);
+        }
+
+        const Exit = () => {
+          setDisplay(true)
+          setMode("home")
         }
       
         if(photo){
@@ -61,13 +69,23 @@ const CameraView = () => {
         }; //Create
 
           return (
-            <SafeAreaView>
+            <SafeAreaView style={styles.container}>
               <Image style ={styles.preview} source={{url: `data:image/jpg;base64,${photo.base64}`}}/>
-              <Button title = "Share" onPress={sharePic}/>
-              <Button title = "Save" onPress={savePhoto}/>
-              <Button title = "Cancel" onPress={() => {
-                setPhoto(undefined)
-              }}/>
+              <TouchableOpacity style={{
+                alignItems: 'flex-end',
+                marginTop: 80,
+                marginRight: 30,
+              }} onPress={sharePic}>
+              <Ionicons name="share-social" size={24} color="snow" />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.carmeraBtn} onPress={savePhoto}>
+              <Fontisto name="save" size={40} color="snow" style ={{paddingLeft: 5, top: 5}} />
+              </TouchableOpacity> 
+              {/* // save */}
+              <Pressable style={styles.btn} onPress={()=>{
+                setPhoto(undefined);
+              }} color = {'snow'}>
+              <Fontisto name="close-a" size={20} color="snow"/></Pressable>
             </SafeAreaView>
           )
         }
@@ -80,8 +98,12 @@ const CameraView = () => {
             ref ={cameraRef}
           >
             <View style={styles.container}>
-              <Button style={styles.buttonContainer} title="Take Pic" onPress={takePic}/>
+            <Pressable style={styles.btn} onPress={Exit} color = {'snow'}>
+          <Fontisto name="close-a" size={20} color="snow"/></Pressable>
             </View>
+            <TouchableOpacity style={styles.carmeraBtn} onPress={takePic}>
+            <Ionicons name="md-camera" size={50} color="gold" />
+            </TouchableOpacity>
           </Camera>
             
           :<View style={styles.modal} ><Text style={styles.text}>{`카메라를 사용하시려면${'\n'}로그인이 필요해요!`}</Text></View>
@@ -93,8 +115,8 @@ const CameraView = () => {
 const styles = StyleSheet.create({
   container:{
     flex: 1,
-    alignItems : 'center',
-    justifyContent : 'center',
+    alignItems : 'flex-end',
+    // justifyContent : 'fle',
     width : SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
   },
@@ -128,7 +150,25 @@ const styles = StyleSheet.create({
     color: 'snow',
     textAlign: 'center',
     lineHeight: 40,
-  }
+  },
+
+  carmeraBtn : {
+    position:'absolute', right: 0, bottom: 0, zIndex: 5, backgroundColor:'teal',
+      width: 55, height: 55, 
+      borderRadius: 20,
+      overflow: 'hidden', 
+      paddingLeft: 3,
+      margin: 10,
+  },
+
+  btn : {
+    position: 'absolute',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    marginTop: 20
+},
 })
 
 export default CameraView
