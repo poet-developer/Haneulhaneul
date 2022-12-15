@@ -8,6 +8,7 @@ import {SERVER} from '@env';
 import { Ionicons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { CheckAuth } from '../lib/CheckAuth';
+import Toast from 'react-native-root-toast';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
@@ -16,12 +17,25 @@ const CameraView = ({setDisplay, setMode}) => {
      const [libraryOk, setLibraryOk] = useState();
      const [photo, setPhoto] = useState();
      const [me, setMe] = useContext(CheckAuth)
+     const [notification, setNotificatin] = useState(false)
 
      let cameraRef = useRef();
      
      useEffect(()=>{
       GetCamera();
       setDisplay(false)
+
+      let toast = Toast.show(`지금 256명이 같은 하늘을 보고 있어요:)`, {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.CENTER,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        backgroundColor: 'teal',
+        shadowColor: "rgba(0, 0, 0, 0.5)",
+        delay: 0,
+    });
+    // 접속자 수, user.length
      },[])
 
      const GetCamera = async() =>{
@@ -41,6 +55,8 @@ const CameraView = ({setDisplay, setMode}) => {
           };
            let newPhoto = await cameraRef.current.takePictureAsync(options)
            setPhoto(newPhoto);
+
+           
         }
 
         const Exit = () => {
@@ -68,6 +84,7 @@ const CameraView = ({setDisplay, setMode}) => {
             }
         }; //Create
 
+    
           return (
             <SafeAreaView style={styles.container}>
               <Image style ={styles.preview} source={{url: `data:image/jpg;base64,${photo.base64}`}}/>
@@ -82,10 +99,12 @@ const CameraView = ({setDisplay, setMode}) => {
               <Fontisto name="save" size={40} color="snow" style ={{paddingLeft: 5, top: 5}} />
               </TouchableOpacity> 
               {/* // save */}
-              <Pressable style={styles.btn} onPress={()=>{
+              <TouchableOpacity style={styles.btn} onPress={()=>{
                 setPhoto(undefined);
               }} color = {'snow'}>
-              <Fontisto name="close-a" size={20} color="snow"/></Pressable>
+              <Fontisto name="close-a" size={20} color="snow"/></TouchableOpacity>
+              {/* <TouchableOpacity onPress={showToasts}>
+              <Text style={{color: 'snow',}}>SHOW SOME AWESOMENESS!</Text></TouchableOpacity> */}
             </SafeAreaView>
           )
         }
