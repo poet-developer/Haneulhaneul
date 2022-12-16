@@ -6,6 +6,7 @@ const ImageSchema = new mongoose.Schema(
      author : {type: String, required: true},
      // withYou : {type: Number, required: true}
      public : {type: Boolean, default: false},
+     weather : {type: String},
      },
      { timestamps : true},
      // create_at : {type: Date, required: true},

@@ -33,7 +33,8 @@ const ALLImageList = ({page, setDisplay, setMode, currentMode}) => {
                 key : item.key,
                 author : item.author,
                 public : item.public,
-                created_at : item.createdAt
+                created_at : item.createdAt,
+                weather : item.weather,
               })
               setPreview(true);
             }} key ={images.indexOf(item)}>

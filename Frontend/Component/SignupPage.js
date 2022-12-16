@@ -50,9 +50,9 @@ const SignupPage = ({setDisplay, setMode}) => {
                }
                const result = await axios.post(SERVER+`/users/signup`,{data})
                setMe({
-                    name: result.data.name,
+                    name: result.data.name.toLowerCase(),
                     sessionId : result.data.sessionId,
-                    nick : result.data.nick,
+                    nick : result.data.nick.toLowerCase(),
                     id : result.data.id,
                })
                Toastify("회원가입 완료!",'teal')
@@ -103,17 +103,17 @@ const SignupPage = ({setDisplay, setMode}) => {
                placeholder={'ID'}
                defaultValue={data.name||''}
                autoCapitalize={'none'}
-               onChangeText={(text) => {inputHandler('name',text)}}
+               onChangeText={(text) => {inputHandler('name',text.toLowerCase())}}
                // value={text}
-               /><Text style={styles.infoText}> 아이디는 3자 이상입니다.</Text>
+               /><Text style={styles.infoText}> 아이디는 소문자 3자 이상입니다.</Text>
                <TextInput
                style={styles.input}
                placeholder={'nickname'}
                defaultValue={data.nick || ''}
                autoCapitalize={'none'}
-               onChangeText={(text) => {inputHandler('nick',text)}}
+               onChangeText={(text) => {inputHandler('nick',text.toLowerCase())}}
                // value={text}
-               /><Text style={styles.infoText}> 별명은 2자 이상입니다.</Text>
+               /><Text style={styles.infoText}> 별명은 소문자 2자 이상입니다.</Text>
                <TextInput
                style={styles.input}
                placeholder={'password'}

@@ -45,10 +45,10 @@ const ViewPic = ({info, exit, setDisplay, finDelete, currentMode}) => {
           <View style ={styles.view}>
           <Image source = {{uri: SERVER+`/uploads/${info.key}`}} style={styles.view}/>
           <Text className='byUser' style={{
-                 width: 150,
-                 fontSize: 20, textAlign: 'right', fontFamily: 'title' , color: 'snow', backgroundColor: 'rgba(50,50,50,0.9)', position: 'absolute', bottom:0,
+                 width: 200,
+                 fontSize: 17, textAlign: 'right', fontFamily: 'title' , color: 'snow', backgroundColor: 'rgba(50,50,50,0.9)', position: 'absolute', bottom:0,
               marginBottom: 180, marginRight: 3,}}>
-               {`Photo by.${info.author}${'\n'}${created_at}`}</Text> 
+               {`날씨 | ${info.weather}${'\n'}Photo by.${info.author}${'\n'}${created_at}`}</Text> 
           <Pressable style={styles.btn} onPress={exit} color = {'snow'}>
           <Fontisto name="close-a" size={20} color="white"/></Pressable>
           {info.author === me.nick

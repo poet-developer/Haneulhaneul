@@ -11,15 +11,15 @@ import Setting from './Component/Setting';
 import { Ionicons } from '@expo/vector-icons';
 import LoginPage from './Component/LoginPage';
 import SingupPage from './Component/SignupPage'
+import CameraBtn from './Component/UI/CameraBtn'
 import {API_KEY} from '@env';
 import { AuthProvider} from './Component/lib/CheckAuth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Toastify from './Component/lib/Toastify';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
 export default function App() {
-  const [mode, setMode] = useState( ''|| 'home');
+  const [mode, setMode] = useState( ''|| 'setting');
   const [city, setCity] = useState("...Loading");
   const [days, setDays] = useState([]);
   const [display, setDisplay] = useState('auto');
@@ -54,10 +54,6 @@ export default function App() {
     GetStorage();
   }, [rendered])
 
-  const OnCameraMode = async() => {
-    if(logined) setMode('camera')
-    else Toastify("로그인이 필요해요.",'red')
-  }
 
   const OnSettingMode = () => {
     setMode('setting')
@@ -65,7 +61,7 @@ export default function App() {
 
   const GetStorage = async() => {
     setLogined(await AsyncStorage.getItem("sessionId"))
-    if(logined) setMode('setting')
+    if(logined) setMode('home')
   }
 
   const displayHandler = (target) => {
@@ -83,8 +79,7 @@ export default function App() {
     <View style={styles.container}>
       <TouchableOpacity style={{...styles.setting, display: display}} onPress={OnSettingMode}>
       <Ionicons name="settings-sharp" size={28} color="snow"/></TouchableOpacity>
-      <TouchableOpacity style={{...styles.carmeraBtn, display: display }} onPress={OnCameraMode}>
-      <Ionicons name="md-camera" size={50} color="teal" /></TouchableOpacity>
+      <CameraBtn display={display} setMode={setMode}/>
       <View style = {{flex: 8 , position: 'relative'}}>
         {days.length === 0 ? 
         <View style={{...styles.slider, justifyContent:'center', 
@@ -115,7 +110,7 @@ export default function App() {
             setMode = {modeHandler}
             currentMode = {mode}
             /> : ''}
-            { mode === 'camera' ? <CameraView setMode={modeHandler} setDisplay={displayHandler}/> : ''}
+            { mode === 'camera' ? <CameraView setMode={modeHandler} setDisplay={displayHandler} weather = {days.weather[0].description}/> : ''}
             { mode === 'setting' ? <Setting setDisplay={displayHandler} setMode ={modeHandler}/> :''}
           
           { mode === 'people' ? <ThirdPage setDisplay={displayHandler} setMode={modeHandler} rendered = {rendered}

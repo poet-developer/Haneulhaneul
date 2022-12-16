@@ -32,9 +32,8 @@ async (req, res)=>{
           let _key = uuid();
           let buff = Buffer.from(req.body.uri, 'base64');
           fs.writeFileSync(`./uploads/${_key}.jpg`, buff);
-          await new ImageSchema({key: `${_key}.jpg`, author : req.body.author
+          await new ImageSchema({key: `${_key}.jpg`, author : req.body.author, weather : req.body.weather
           }).save(); // 객체로 커밋, Promise Return.
-          //save to the database.
           res.json()
      }catch(err){
           res.status(400).json({message: err.message})

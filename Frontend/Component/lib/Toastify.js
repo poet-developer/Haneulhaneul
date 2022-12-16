@@ -8,6 +8,7 @@ const Toastify = (text, color) =>{
           animation: true,
           hideOnPress: true,
           backgroundColor: color,
+          textColor: 'gold',
           shadowColor: "rgba(0, 0, 0, 0.5)",
           delay: 0,
       })

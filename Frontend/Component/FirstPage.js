@@ -51,9 +51,7 @@ const FirstPage = ({city, desc, temp, weather, rendered}) => {
         }
      
         useEffect(()=>{
-          if(clock){
-            GetTime();
-          }
+          if(clock) GetTime();
           getCoverImage();
         }, [rendered])
 
@@ -64,9 +62,8 @@ const FirstPage = ({city, desc, temp, weather, rendered}) => {
         })
       
         const onLayoutRootView = useCallback(async () => {
-          if (fontsLoaded) {
-            await SplashScreen.hideAsync();
-          } // 글꼴 파일을 미리 렌더
+          if (fontsLoaded) await SplashScreen.hideAsync();
+          // 글꼴 파일을 미리 렌더
         }, [fontsLoaded]); 
       
         if (!fontsLoaded) return null;
@@ -74,7 +71,6 @@ const FirstPage = ({city, desc, temp, weather, rendered}) => {
      return(
           <View style={styles.page} onLayout = {onLayoutRootView}>
             <Image style={styles.intro} source ={{uri :`${SERVER}/uploads/${cover.key}`}}/>
-            {/* <Text style={styles.title}>하늘하늘</Text> */}
             <View style={styles.weather}>
               <View style={{justifyContent:'flex-end', marginBottom: -10, marginLeft: 10}}>
               <Fontisto style={{paddingLeft:100}} name={icons[weather]} size={82} color="white" />

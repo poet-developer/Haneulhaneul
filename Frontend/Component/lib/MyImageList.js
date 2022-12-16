@@ -33,10 +33,11 @@ const MyImageList = ({page, setDisplay, setMode, currentMode}) => {
                     key : item.key,
                     author : item.author,
                     public : item.public,
-                    created_at : item.createdAt
+                    created_at : item.createdAt,
+                    weather : item.weather,
                   })
               setPreview(true);
-            }} key ={myImages.indexOf(item)}><Image style={styles.square} source ={{uri : `${SERVER}/uploads/${item.key}`}}/></TouchableOpacity>
+            }} key ={myImages.indexOf(item)}><Image style={styles.square} source ={{uri : SERVER+`/uploads/${item.key}`}}/></TouchableOpacity>
         })
      }else{
       myImageList = <View style ={styles.emptyData}><ActivityIndicator size="large" color="white"/><Text style={styles.text}>{page === 'second' ? '당신의 하늘을 채워주세요:)' : '다른 사람들의 하늘을 감상하세요!'}</Text></View>

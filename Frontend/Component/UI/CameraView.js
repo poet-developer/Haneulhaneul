@@ -12,7 +12,7 @@ import Toastify from '../lib/Toastify';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
-const CameraView = ({setDisplay, setMode}) => {
+const CameraView = ({setDisplay, setMode, weather}) => {
      const [cameraOk, setCameraOk] = useState();
      const [libraryOk, setLibraryOk] = useState();
      const [photo, setPhoto] = useState();
@@ -61,7 +61,7 @@ const CameraView = ({setDisplay, setMode}) => {
           let savePhoto = async () => {
             let uri = photo.base64;
             try {
-              await axios.post(SERVER+`/images/create_process`, {uri, author: me.nick})
+              await axios.post(SERVER+`/images/create_process`, {uri, author: me.nick, weather: weather})
                 .then (Toastify('저장했어요!','teal'))
                 .catch(console.log)
                 .then(setPhoto(undefined))
@@ -74,13 +74,13 @@ const CameraView = ({setDisplay, setMode}) => {
           return (
             <SafeAreaView style={styles.container}>
               <Image style ={styles.preview} source={{url: `data:image/jpg;base64,${photo.base64}`}}/>
-              <TouchableOpacity style={{
+              {/* <TouchableOpacity style={{
                 alignItems: 'flex-end',
                 marginTop: 80,
                 marginRight: 30,
               }} onPress={sharePic}>
               <Ionicons name="share-social" size={24} color="snow" />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <TouchableOpacity style={styles.carmeraBtn} onPress={savePhoto}>
               <Fontisto name="save" size={40} color="snow" style ={{paddingLeft: 5, top: 5}} />
               </TouchableOpacity> 

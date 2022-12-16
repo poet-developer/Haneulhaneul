@@ -18,33 +18,15 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
           setDisplay(false);
      },[setMe])
 
-     const LogoutHandler = async() =>{
-          try{
-               await axios.patch(SERVER+`/users/logout`,{} //req.body자리
+     const LogoutHandler = () =>{
+               axios.patch(SERVER+`/users/logout`,{} //req.body자리
                ,{headers : {sessionid : me.sessionId}})
-               Toastify(`꼭 다시 봐요!`,'teal')
-               setMe()
-               AsyncStorage.removeItem("sessionId")
-               setDisplay(true)
-               setMode('home')
-          }catch(err){
-               alert(err.message);
-               console.log(err);
-          }
+               .then(Toastify(`꼭 다시 봐요!`,'teal')).then(setMe()).then(AsyncStorage.removeItem("sessionId")).then(setDisplay(true)).then(setMode('home')).catch(console.log)
      }
 
-     const DeleteHandler = async () => {
-          try{
-               await axios.patch(SERVER+`/users/delete_process`,{id : me.id})
-               Toastify(`다음에 또 봐요!`,'teal')
-               setMe()
-               AsyncStorage.removeItem("sessionId")
-               setDisplay(true)
-               setMode('home')
-          }catch(err){
-               alert(err.message);
-               console.log(err);
-          }
+     const DeleteHandler = () => {
+          axios.patch(SERVER+`/users/delete_process`,{id : me.id})
+          .then(Toastify(`꼭 다시 봐요!`,'teal')).then(setMe()).then(AsyncStorage.removeItem("sessionId")).then(setDisplay(true)).then(setMode('home')).catch(console.log)
                     // TODO: AWS cloud 사용
      }
      const DeleteAlert = () => {
@@ -104,7 +86,7 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
                          fontFamily: 'main',
                          fontSize: 30,
                          color: 'snow'
-                    }}>하늘 바라보는 시간,</Text>
+                    }}>나를 위한 작은 시간,</Text>
                     <Text style={{
                          fontFamily: 'main',
                          fontSize: 70,
