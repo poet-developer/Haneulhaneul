@@ -104,7 +104,7 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
                          fontFamily: 'main',
                          fontSize: 30,
                          color: 'snow'
-                    }}>한 숨 돌리는 시간,</Text>
+                    }}>하늘 바라보는 시간,</Text>
                     <Text style={{
                          fontFamily: 'main',
                          fontSize: 70,

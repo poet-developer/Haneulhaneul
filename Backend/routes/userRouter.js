@@ -26,6 +26,7 @@ router.post('/signup', async (req, res) => {
      }catch(err){
           res.status(400).json({message : err.message})
           throw new Error("중복된 정보.")
+          
      }
 })
 
