@@ -21,27 +21,41 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
      const LogoutHandler = async() =>{
           try{
                await axios.patch(SERVER+`/users/logout`,{} //req.body자리
-               ,{headers : {sessionid : me.sessionId}}).then(Toastify(`꼭 다시 봐요!`,'teal')).then(setMe()).then(AsyncStorage.removeItem("sessionId"))
+               ,{headers : {sessionid : me.sessionId}})
+               Toastify(`꼭 다시 봐요!`,'teal')
+               setMe()
+               AsyncStorage.removeItem("sessionId")
                setDisplay(true)
                setMode('home')
           }catch(err){
-               console.log(err);
                alert(err.message);
+               console.log(err);
           }
      }
 
-     const DeleteHandler = () => {
+     const DeleteHandler = async () => {
+          try{
+               await axios.patch(SERVER+`/users/delete_process`,{id : me.id})
+               Toastify(`다음에 또 봐요!`,'teal')
+               setMe()
+               AsyncStorage.removeItem("sessionId")
+               setDisplay(true)
+               setMode('home')
+          }catch(err){
+               alert(err.message);
+               console.log(err);
+          }
+                    // TODO: AWS cloud 사용
+     }
+     const DeleteAlert = () => {
                Alert.alert(
                     "Are your sure?",
                     "정말 떠나실건가요??",
                     [
                       {
                         text: "네",
-                        onPress: async () => {
-                         await axios.patch(`${SERVER}/users/delete_process`,{id : me.name}).then(Toastify(`다음에 또 봐요!`,'teal')).then(setMe()).then(AsyncStorage.removeItem("sessionId")).catch(console.log)
-                         setDisplay(true)
-                         setMode('home')
-                    // TODO: AWS cloud 사용
+                        onPress: () => {
+                         DeleteHandler()
                         },
                       },
                       {
@@ -78,7 +92,7 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
                     <TouchableOpacity onPress={LogoutHandler} style={styles.logBtn}>
                     <Text style={styles.btnText}>로그아웃</Text> 
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={DeleteHandler}
+                    <TouchableOpacity onPress={DeleteAlert}
                     style={styles.logBtn}>
                     <Text style={styles.btnText}>계정삭제</Text> 
                     </TouchableOpacity>

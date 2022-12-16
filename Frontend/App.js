@@ -14,6 +14,7 @@ import SingupPage from './Component/SignupPage'
 import {API_KEY} from '@env';
 import { AuthProvider} from './Component/lib/CheckAuth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toastify from './Component/lib/Toastify';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
@@ -24,6 +25,7 @@ export default function App() {
   const [display, setDisplay] = useState('auto');
   const [ok, setOk] = useState(true);
   const [rendered, setRenderState] = useState(false);
+  const [logined, setLogined] = useState();
 
   const GetWeather = async() => {
     try{
@@ -52,8 +54,9 @@ export default function App() {
     GetStorage();
   }, [rendered])
 
-  const OnCameraMode = () => {
-    setMode('camera')
+  const OnCameraMode = async() => {
+    if(logined) setMode('camera')
+    else Toastify("로그인이 필요해요.",'red')
   }
 
   const OnSettingMode = () => {
@@ -61,8 +64,8 @@ export default function App() {
   }
 
   const GetStorage = async() => {
-    const storage = await AsyncStorage.getItem("sessionId")
-    if(!storage) setMode('setting')
+    setLogined(await AsyncStorage.getItem("sessionId"))
+    if(logined) setMode('setting')
   }
 
   const displayHandler = (target) => {

@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema(
      {
-     name: {type: String, required: true}, //꼭 필요할 때 입력 형식
-     nick: {type: String, required: true, unique: true}, //중복방지
+     name: {type: String, required: true, unique:true}, //꼭 필요할 때 입력 형식
+     nick: {type: String, required: true, unique:true}, //중복방지
      hashedPassword : {type : String, default: true},
      sessions : [{
           created_at : {type : Date, required: true},

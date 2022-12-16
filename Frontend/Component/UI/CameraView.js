@@ -94,7 +94,6 @@ const CameraView = ({setDisplay, setMode}) => {
      
      return(
          <>
-        {me?
           <Camera
             style={{flex: 1,width:"100%"}}
             ref ={cameraRef}
@@ -107,9 +106,6 @@ const CameraView = ({setDisplay, setMode}) => {
             <Ionicons name="md-camera" size={50} color="gold" />
             </TouchableOpacity>
           </Camera>
-            
-          :<View style={styles.modal} ><Text style={styles.text}>{`카메라를 사용하시려면${'\n'}로그인이 필요해요!`}</Text></View>
-        }
           </>
      )
 }

@@ -17,6 +17,7 @@ const SignupPage = ({setDisplay, setMode}) => {
           password: '',
           re_password: '',
         });
+     const [enrolled, setEnroll] = useState(false);
      const [me, setMe] = useContext(CheckAuth);
      useEffect(()=>{
           setDisplay(false);
@@ -47,8 +48,7 @@ const SignupPage = ({setDisplay, setMode}) => {
                     Toastify('비밀번호 확인 오류','red')
                     throw new Error ("비밀번호 확인 오류.")
                }
-               const result = await axios.post(`${SERVER}/users/signup`,{data})
-
+               const result = await axios.post(SERVER+`/users/signup`,{data})
                setMe({
                     name: result.data.name,
                     sessionId : result.data.sessionId,
@@ -59,9 +59,16 @@ const SignupPage = ({setDisplay, setMode}) => {
                setMode('home');
                setDisplay(true);
           }catch(err){
-               Toastify('이미 가입된 회원입니다.','red')
+               alert('잘못된 정보입니다.')
+               setMode('home');
+               setDisplay(true);
                console.log(err);
+               throw new Error(err);
           }
+     }
+
+     const enrollHandler = () => {
+          setEnroll(true);
      }
 
      const [fontsLoaded] = useFonts({
@@ -84,6 +91,9 @@ const SignupPage = ({setDisplay, setMode}) => {
                          setMode('home')
                     }} style={{position:'absolute', top: 30, left: 10,}}>
                     <Ionicons name="chevron-back" size={40} color="teal" /></TouchableOpacity>
+                    {
+                         !enrolled ?
+               <>
                <View style={styles.titleContainer}>
                <Text style={styles.title}>하늘하늘</Text>
                <Text style={styles.title}>계정 만들기</Text>
@@ -95,7 +105,7 @@ const SignupPage = ({setDisplay, setMode}) => {
                autoCapitalize={'none'}
                onChangeText={(text) => {inputHandler('name',text)}}
                // value={text}
-               />
+               /><Text style={styles.infoText}> 아이디는 3자 이상입니다.</Text>
                <TextInput
                style={styles.input}
                placeholder={'nickname'}
@@ -103,7 +113,7 @@ const SignupPage = ({setDisplay, setMode}) => {
                autoCapitalize={'none'}
                onChangeText={(text) => {inputHandler('nick',text)}}
                // value={text}
-               />
+               /><Text style={styles.infoText}> 별명은 2자 이상입니다.</Text>
                <TextInput
                style={styles.input}
                placeholder={'password'}
@@ -111,7 +121,13 @@ const SignupPage = ({setDisplay, setMode}) => {
                defaultValue={''}autoCapitalize={'none'}
                onChangeText={(text) => {inputHandler('password',text)}}
                // value={number}
-               />
+               /><Text style={styles.infoText}> 비밀번호는 6자 이상입니다.</Text>
+               <TouchableOpacity style={styles.button} onPress={() => {
+                              enrollHandler()
+               }}><Text style={styles.btnText}> 등록</Text>
+               </TouchableOpacity>
+               </>
+               :<>
                <View style={styles.titleContainer}>
                     <Text style={{...styles.title, fontSize: 20}}>비밀번호 확인</Text>
                     </View>
@@ -127,6 +143,8 @@ const SignupPage = ({setDisplay, setMode}) => {
                               submitHandler(data);
                }}><Text style={styles.btnText}> 가입하기 </Text>
                </TouchableOpacity>
+               </>
+               }
     </SafeAreaView>
      )
 }
@@ -174,5 +192,9 @@ const styles = StyleSheet.create({
 
      btnText :{
           fontFamily:'main', fontSize: 20, color: 'snow',
+     },
+
+     infoText : {
+          fontSize: 13, color: 'grey' , marginTop: -10
      }
 })

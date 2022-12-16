@@ -24,8 +24,8 @@ router.post('/signup', async (req, res) => {
           const session = user.sessions[0];
           res.json({message: 'user Signin', sessionId: session._id, name : user.name, nick: user.nick, id: user._id,})
      }catch(err){
-          console.log(err)
           res.status(400).json({message : err.message})
+          throw new Error("중복된 정보.")
      }
 })
 
@@ -61,9 +61,7 @@ router.patch('/logout',async (req, res)=>{
 router.patch("/delete_process", 
 async (req, res)=>{
      try{
-          // console.log(req.body.id)
-          await UserSchema.findOneAndDelete({name: req.body.id})
-          await fileUnlink(`./uploads/${image.key}`);
+          await UserSchema.findOneAndDelete({_id: req.body.id})
           res.json({message: '삭제완료'})
      }catch(err){
           res.status(400).json({message: err.message})

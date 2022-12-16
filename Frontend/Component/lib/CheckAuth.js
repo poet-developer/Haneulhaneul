@@ -25,7 +25,6 @@ const GetStorage = async(me, setMe) => {
                     })
                }).catch(async(err)=>{
                     await AsyncStorage.removeItem("sessionId")
-                    throw new Error(err)
                })
      }
 }
