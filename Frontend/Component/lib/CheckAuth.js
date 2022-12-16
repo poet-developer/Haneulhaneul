@@ -14,7 +14,7 @@ const GetStorage = async(me, setMe) => {
      if(me){
           settingStorage(me)
      }else if(sessionId){
-          axios.patch(SERVER+`/users/me`, {}, {
+          axios.patch(`${SERVER}/users/me`, {}, {
                headers: {sessionid : sessionId}})
                .then(res => {
                     setMe({

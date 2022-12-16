@@ -34,7 +34,7 @@ const Signin = ({setDisplay, setMode}) => {
                     Toastify("입력하신 정보가 올바르지 않습니다.",'red')
                     throw new Error ("입력하신 정보가 올바르지 않습니다.")
                }
-               const result = await axios.patch(SERVER+`/users/login`,{data}).catch(res=>{
+               const result = await axios.patch(`${SERVER}/users/login`,{data}).catch(res=>{
                     Toastify("존재하지 않는 아이디거나 잘못된 입력 정보입니다.",'red')
                })
                setMe({

@@ -48,7 +48,7 @@ const SignupPage = ({setDisplay, setMode}) => {
                     Toastify('비밀번호 확인 오류','red')
                     throw new Error ("비밀번호 확인 오류.")
                }
-               const result = await axios.post(SERVER+`/users/signup`,{data})
+               const result = await axios.post(`${SERVER}/users/signup`,{data})
                setMe({
                     name: result.data.name.toLowerCase(),
                     sessionId : result.data.sessionId,

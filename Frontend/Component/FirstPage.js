@@ -27,7 +27,7 @@ const FirstPage = ({city, desc, temp, weather, rendered}) => {
      let allCovers = [];
 
      const getCoverImage = async() => {
-      const covers = await axios.get(SERVER+`/images/readImages`)
+      const covers = await axios.get(`${SERVER}/images/readImages`)
       if(covers.data.length !== 0){
         allCovers =  covers.data.map(item => {
           return { key : item.key, author: item.author, created_at : item.createdAt }

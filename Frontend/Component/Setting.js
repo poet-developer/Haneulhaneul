@@ -19,13 +19,13 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
      },[setMe])
 
      const LogoutHandler = () =>{
-               axios.patch(SERVER+`/users/logout`,{} //req.body자리
+               axios.patch(`${SERVER}/users/logout`,{} //req.body자리
                ,{headers : {sessionid : me.sessionId}})
                .then(Toastify(`꼭 다시 봐요!`,'teal')).then(setMe()).then(AsyncStorage.removeItem("sessionId")).then(setDisplay(true)).then(setMode('home')).catch(console.log)
      }
 
      const DeleteHandler = () => {
-          axios.patch(SERVER+`/users/delete_process`,{id : me.id})
+          axios.patch(`${SERVER}/users/delete_process`,{id : me.id})
           .then(Toastify(`꼭 다시 봐요!`,'teal')).then(setMe()).then(AsyncStorage.removeItem("sessionId")).then(setDisplay(true)).then(setMode('home')).catch(console.log)
                     // TODO: AWS cloud 사용
      }
