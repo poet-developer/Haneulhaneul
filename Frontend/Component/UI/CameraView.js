@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, useContext } from 'react';
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity, SafeAreaView, Image, Pressable } from 'react-native';
+import { StyleSheet, View, Dimensions, TouchableOpacity, SafeAreaView, Image, Pressable } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library'
 import { shareAsync } from 'expo-sharing';

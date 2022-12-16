@@ -23,7 +23,7 @@ const MyImageList = ({page, setDisplay, setMode, currentMode}) => {
              //Latest Order
           })
           .catch(console.log)
-       }, 1000);
+       }, 800);
      },[preview])
      if(myImages.length){
         myImageList = myImages.map(item => {
@@ -40,7 +40,7 @@ const MyImageList = ({page, setDisplay, setMode, currentMode}) => {
             }} key ={myImages.indexOf(item)}><Image style={styles.square} source ={{uri : SERVER+`/uploads/${item.key}`}}/></TouchableOpacity>
         })
      }else{
-      myImageList = <View style ={styles.emptyData}><ActivityIndicator size="large" color="white"/><Text style={styles.text}>{page === 'second' ? '당신의 하늘을 채워주세요:)' : '다른 사람들의 하늘을 감상하세요!'}</Text></View>
+      myImageList = <View style ={styles.emptyData}><ActivityIndicator size="large" color="#8bd5d0"/><Text style={styles.text}>{page === 'second' ? '당신의 하늘을 채워주세요:)' : '다른 사람들의 하늘을 감상하세요!'}</Text></View>
     }
 
     if(preview){
@@ -79,7 +79,8 @@ const MyImageList = ({page, setDisplay, setMode, currentMode}) => {
 
    text: {
      color: 'snow',
-     fontSize: 20,
+     fontSize: 24,
      marginTop: 20,
+     fontFamily: 'main'
    }
 })

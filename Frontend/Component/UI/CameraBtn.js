@@ -1,7 +1,5 @@
 import React,{ useEffect, useContext} from "react";
 import { StyleSheet, TouchableOpacity, Alert } from "react-native";
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-import {SERVER} from "@env"
 import Toastify from "../lib/Toastify";
 import { Ionicons } from '@expo/vector-icons';
 import { CheckAuth } from "../lib/CheckAuth";

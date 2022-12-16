@@ -48,7 +48,8 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
      }
 
      const [fontsLoaded] = useFonts({
-          'main' : require('../assets/Fonts/Pak_Yong_jun.ttf'),
+          'main' : require('../assets/Fonts/MapoFlowerIsland.ttf'),
+          'sub' : require('../assets/Fonts/Pak_Yong_jun.ttf')
         })
 
      const onLayoutRootView = useCallback(async () => {
@@ -83,14 +84,16 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
                     <>
                     <View style={{flex: 3, justifyContent:'center'}}>
                     <Text style={{
-                         fontFamily: 'main',
-                         fontSize: 30,
+                         fontFamily: 'sub',
+                         fontSize: 25,
                          color: 'snow'
                     }}>나를 위한 작은 시간,</Text>
                     <Text style={{
                          fontFamily: 'main',
-                         fontSize: 70,
-                         color: 'snow'
+                         fontSize: 60,
+                         color: 'snow',
+                         letterSpacing: 4,
+                         marginTop: 7,
                     }}>하늘하늘</Text></View>
                     <View style={{flex:2}}>
                     <TouchableOpacity onPress={()=>{
@@ -137,7 +140,7 @@ const styles = StyleSheet.create({
      btnText : {
           color: 'teal',
           fontSize: 22,
-          fontFamily: 'main',
+          fontFamily: 'sub',
      },
 
      infoContainer : {
@@ -145,7 +148,7 @@ const styles = StyleSheet.create({
                borderWidth: 3,
                width: SCREEN_WIDTH/1.2,
                borderRadius: 20,
-               borderColor: 'gold',
+               borderColor: '#8bd5d0',
                height:220, 
                paddingTop:20,
                justifyContent: 'center',
@@ -156,6 +159,6 @@ const styles = StyleSheet.create({
           fontSize:25, 
           color: 'snow', 
           marginBottom: 20,
-          // fontFamily: 'main'
+          fontFamily: 'main'
      }
 })

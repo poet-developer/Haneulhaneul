@@ -18,7 +18,7 @@ const Signin = ({setDisplay, setMode}) => {
      const [me, setMe] = useContext(CheckAuth)
 
      const [fontsLoaded] = useFonts({
-          'main' : require('../assets/Fonts/Pak_Yong_jun.ttf'),
+          'main' : require('../assets/Fonts/MapoFlowerIsland.ttf'),
         })
 
      const inputHandler = (key, value) => {

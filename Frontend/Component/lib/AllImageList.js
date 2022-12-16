@@ -22,7 +22,7 @@ const ALLImageList = ({page, setDisplay, setMode, currentMode}) => {
             setImages(res.data.reverse()); //Latest Order
           })
           .catch(console.log)
-       }, 1000);
+       }, 800);
      },[preview])
      if(images.length){
        if(currentMode === 'people'){
@@ -46,7 +46,7 @@ const ALLImageList = ({page, setDisplay, setMode, currentMode}) => {
         })
         }
      }else{
-      imageList = <View style ={styles.emptyData}><ActivityIndicator size="large" color="white"/><Text style={styles.text}>{page === 'second' ? '당신의 하늘을 채워주세요:)' : '다른 사람들의 하늘을 감상하세요!'}</Text></View>
+      imageList = <View style ={styles.emptyData}><ActivityIndicator size="large" color="#8bd5d0"/><Text style={styles.text}>{page === 'second' ? '당신의 하늘을 채워주세요:)' : '다른 사람들의 하늘을 감상하세요!'}</Text></View>
     }
 
     if(preview){
@@ -93,7 +93,8 @@ const ALLImageList = ({page, setDisplay, setMode, currentMode}) => {
 
    text: {
      color: 'snow',
-     fontSize: 20,
+     fontSize: 24,
      marginTop: 20,
+     fontFamily: 'main'
    }
 })

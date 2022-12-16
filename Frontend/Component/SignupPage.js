@@ -72,7 +72,7 @@ const SignupPage = ({setDisplay, setMode}) => {
      }
 
      const [fontsLoaded] = useFonts({
-          'main' : require('../assets/Fonts/Pak_Yong_jun.ttf'),
+          'main' : require('../assets/Fonts/MapoFlowerIsland.ttf'),
         })
       
      const onLayoutRootView = useCallback(async () => {
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
      },
 
      btnText :{
-          fontFamily:'main', fontSize: 20, color: 'snow',
+          fontSize: 20, color: 'snow', fontFamily: 'sub'
      },
 
      infoText : {

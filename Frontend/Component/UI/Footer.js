@@ -1,11 +1,9 @@
-import {useContext, useEffect, useState} from 'react';
+import { useEffect, useState} from 'react';
 import { StyleSheet, View, TouchableOpacity} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { CheckAuth } from '../lib/CheckAuth'
 
 
 const Footer = ({ chaingingMode, display, mode}) => {
-     const [me, setMe] = useContext(CheckAuth)
      const [on, setOn] = useState(false)
      
      const modeText = ['home', 'album', 'people']

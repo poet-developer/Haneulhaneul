@@ -84,7 +84,7 @@ export default function App() {
         {days.length === 0 ? 
         <View style={{...styles.slider, justifyContent:'center', 
         alignItems: 'center'}}>
-          <ActivityIndicator size="large" color="white"/>
+          <ActivityIndicator size="large" color="#8bd5d0"/>
         </View>
         :
         <View className = 'ContentLayout' style={{

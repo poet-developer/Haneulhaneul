@@ -58,7 +58,7 @@ const FirstPage = ({city, desc, temp, weather, rendered}) => {
         setTimeout(GetTime,1000) // Live Clock
 
         const [fontsLoaded] = useFonts({
-          'title' : require('../assets/Fonts/Pak_Yong_jun.ttf'),
+          'title' : require('../assets/Fonts/MapoFlowerIsland.ttf'),
         })
       
         const onLayoutRootView = useCallback(async () => {
@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
     marginLeft : 10,
     marginTop : 5,
     fontWeight : "500",
+    fontFamily : 'main',
   },
   temp : {
     color: 'snow',
@@ -126,8 +127,10 @@ const styles = StyleSheet.create({
   },
   desc : {
     color: 'snow',
-    fontSize: 16,
-    marginRight: 9
+    fontSize: 18,
+    marginRight: 9,
+    fontFamily: 'main',
+    fontWeight: 700,
   },
   clock : {
     fontSize: 34,
@@ -149,7 +152,7 @@ const styles = StyleSheet.create({
       width: 135,
       fontSize: 16, 
       textAlign: 'right', 
-      fontFamily: 'title', 
+      fontFamily: 'main', 
       color: 'snow', 
       backgroundColor: 'rgba(50,50,50,0.9)',
       marginBottom: 180,
