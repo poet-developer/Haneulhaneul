@@ -6,7 +6,6 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import axios from 'axios';
 import {SERVER} from '@env';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');

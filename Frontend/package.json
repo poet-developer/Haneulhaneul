@@ -19,6 +19,7 @@
     "expo-sharing": "^11.0.1",
     "expo-splash-screen": "^0.17.5",
     "expo-status-bar": "~1.4.2",
+    "http-proxy-middleware": "^2.0.6",
     "react": "^18.1.0",
     "react-native": "0.70.5",
     "react-native-dotenv": "^3.4.6",
@@ -27,5 +28,6 @@
   "devDependencies": {
     "@babel/core": "^7.12.9"
   },
+  "proxy": "http://192.168.0.26:5000",
   "private": true
 }
