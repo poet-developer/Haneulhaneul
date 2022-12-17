@@ -28,6 +28,5 @@
   "devDependencies": {
     "@babel/core": "^7.12.9"
   },
-  "proxy": "http://192.168.0.26:5000",
   "private": true
 }
