@@ -11,25 +11,36 @@ import Toastify from './lib/Toastify';
 
 const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
- const Setting = ({setDisplay, setMode}) => {
+ /**
+ * SettingPage = mode : setting
+ * 로그인 상태를 확인한다. 로그인되지 않았으면 로그인 버튼과 회원가입 버튼을 띄운다.
+ * 로그인 되어있다면 내 정보(id, nickname)과 로그아웃, 계정삭제 버튼을 띄운다.
+ * REAST API - users/logout(LogoutHandler) , users/delete_process(DeleteHandler)
+ */
+
+ const SettingPage = ({setDisplay, setMode}) => {
       const [me, setMe] = useContext(CheckAuth)
 
      useEffect(()=>{
-          setDisplay(false);
+          setDisplay(false); // footer, cameraBtn 숨김
      },[setMe])
 
      const LogoutHandler = () =>{
                axios.patch(`${SERVER}/users/logout`,{} //req.body자리
                ,{headers : {sessionid : me.sessionId}})
                .then(Toastify(`꼭 다시 봐요!`,'teal')).then(setMe()).then(AsyncStorage.removeItem("sessionId")).then(setDisplay(true)).then(setMode('home')).catch(console.log)
+               // 로그아웃 : AsyncStroage과 로그인정보(me) 비울것 
+               // 화면은 FirstPage로 이동한다(mode: home)
      }
 
      const DeleteHandler = () => {
           axios.patch(`${SERVER}/users/delete_process`,{id : me.id})
           .then(Toastify(`꼭 다시 봐요!`,'teal')).then(setMe()).then(AsyncStorage.removeItem("sessionId")).then(setDisplay(true)).then(setMode('home')).catch(console.log)
-                    // TODO: AWS cloud 사용
+               // 계정삭제 : AsyncStroage과 로그인정보(me) 비울것 
+               // 화면은 FirstPage로 이동한다(mode: home)
      }
      const DeleteAlert = () => {
+          // 계정삭제 전 다시 묻는 모달창.
                Alert.alert(
                     "Are your sure?",
                     "정말 떠나실건가요??",
@@ -46,7 +57,7 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
                     ]
                   );
      }
-
+     // 폰트 호출
      const [fontsLoaded] = useFonts({
           'main' : require('../assets/Fonts/MapoFlowerIsland.ttf'),
           'sub' : require('../assets/Fonts/Pak_Yong_jun.ttf')
@@ -58,30 +69,38 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
           }}, [fontsLoaded]); 
           
           if (!fontsLoaded) return null;
+     // 폰트 호출 
+
       return(
-           <View style={styles.container} onLayout={onLayoutRootView}>
-                
+           <View style={styles.container} onLayout={onLayoutRootView}> 
                 <TouchableOpacity onPress={()=>{
                          setDisplay(true)
                          setMode('home')
                     }} style={{position:'absolute', top: 30, left: 10,}}>
                     <Ionicons name="chevron-back" size={40} color="snow" /></TouchableOpacity>
                     {me?
+                    // 로그인 되어있다면
                     <>
+                    {/* 사용자 아이디 / 닉네임 */}
                     <View style={styles.infoContainer}>
                      <Text style={styles.infoText}>내 닉네임 | {me.nick || ''}</Text>
                      <Text style={styles.infoText}>내 아이디 | {me.name || ''}</Text>
                     </View>
-                    <TouchableOpacity onPress={LogoutHandler} style={styles.logBtn}>
-                    <Text style={styles.btnText}>로그아웃</Text> 
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={DeleteAlert}
-                    style={styles.logBtn}>
-                    <Text style={styles.btnText}>계정삭제</Text> 
-                    </TouchableOpacity>
+                         <TouchableOpacity onPress={LogoutHandler} style={styles.logBtn}>
+                         <Text style={styles.btnText}>로그아웃</Text> 
+                         </TouchableOpacity>
+                    {/* 로그아웃 */}
+                         <TouchableOpacity onPress={DeleteAlert}
+                         style={styles.logBtn}>
+                         <Text style={styles.btnText}>계정삭제</Text> 
+                         </TouchableOpacity>
+                    {/* 계정삭제 */}
+                    {/* */}
                     </>
                     :
+                    // 로그인 되어있지 않다면
                     <>
+                    {/* 로고 타이틀 */}
                     <View style={{flex: 3, justifyContent:'center'}}>
                     <Text style={{
                          fontFamily: 'sub',
@@ -95,6 +114,8 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
                          letterSpacing: 4,
                          marginTop: 7,
                     }}>하늘하늘</Text></View>
+                    {/**/}
+
                     <View style={{flex:2}}>
                     <TouchableOpacity onPress={()=>{
                          setMode('login')
@@ -102,19 +123,21 @@ const {width : SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
                     style={styles.logBtn}>
                     <Text style={styles.btnText}>로그인</Text> 
                     </TouchableOpacity>
+                    {/* mode Changer : login */}
                     <TouchableOpacity onPress={()=>{
                          setMode('signup')
                     }}
                     style={styles.logBtn}>
                     <Text style={styles.btnText}>회원가입</Text> 
                     </TouchableOpacity>
+                    {/* mode Changer : signup */}
                     </View>
                     </>
                     }
           </View>
      )
 }
-export default Setting
+export default SettingPage
 
 const styles = StyleSheet.create({
      container:{

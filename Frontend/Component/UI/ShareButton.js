@@ -5,6 +5,12 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import {SERVER} from "@env"
 import Toastify from "../lib/Toastify";
 
+/**
+ * ViewPic Comp가 활성화 될 때, 보이는 공유 버튼
+ * RestAPI가 해당 이미지 데이터가 public이 true일 때, 공유 취소 버튼이, => CancelShareModal :41
+   public이 false일 때, 공유 승인 버튼이 뜨도록 설계. => ShreModal " 18"
+ */
+
 const ShareButton = ({finDelete, info}) => {
      useEffect(()=>{
      },[])
@@ -18,7 +24,7 @@ const ShareButton = ({finDelete, info}) => {
                    text: "네",
                    onPress: () => {
                     axios
-                    .patch(`${SERVER}/images/public_process`, {info})
+                    .patch(`${SERVER}/images/public_process`, {info}) 
                     .then(Toastify('공유 완료!','teal'))
                     .then(finDelete)
                     .catch(console.log)

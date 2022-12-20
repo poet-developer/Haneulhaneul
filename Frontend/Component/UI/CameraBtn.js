@@ -13,7 +13,7 @@ const CarmeraBtn = ({display ,setMode}) => {
      const [me, setMe] = useContext(CheckAuth)
 
      const OnCameraMode = async() => {
-          if(me) setMode('camera')
+          if(me) setMode('camera') //로그인정보 확인 후 카메라를 켤 수 있다.
           else Toastify("로그인이 필요해요.",'red')
         }
 

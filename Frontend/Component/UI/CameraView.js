@@ -27,7 +27,7 @@ const CameraView = ({setDisplay, setMode, weather}) => {
       GetCamera();
       setDisplay(false)
       Toastify(`지금 256명이 같은 하늘을 보고 있어요:)`,'teal');
-    // 접속자 수, user.length
+    // TODO: 접속자 수를 읽어와서 알람으로 띄울것.
      },[])
 
      const GetCamera = async() =>{
