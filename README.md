@@ -33,7 +33,7 @@ Take Pic This QR Code
 * :camera:카메라&라이브러리 허용 - 사진 촬영 및 저장, 공유 기능
 * :milky_way::busts_in_silhouette:&nbsp; MongoDB & REST Api - Image CRUD, User CRUD
 * :loop:&nbsp;Provider, UseContext, AsyncStorage - 로그인 유지
-* :cloud:&nbsp; Open Weather - 현재 위치 시간, 날씨, 기온 표시
+* :cloud:&nbsp; Open Weather API - 현재 위치 시간, 날씨, 기온 표시
 * :bell:&nbsp;Toastify - Notification
 
 ### :books: 사용 언어
