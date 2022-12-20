@@ -13,7 +13,7 @@ const GetStorage = async(me, setMe) => {
      const sessionId = await AsyncStorage.getItem("sessionId")
      if(me){
           settingStorage(me)
-     }else if(sessionId){
+     }else if(sessionId){ 
           axios.patch(`${SERVER}/users/me`, {}, {
                headers: {sessionid : sessionId}})
                .then(res => {
@@ -23,17 +23,18 @@ const GetStorage = async(me, setMe) => {
                          sessionId: res.data.sessionId,
                          nick : res.data.nick
                     })
+                    // 로그인이 되어있으면 계속해서 setMe에 user 정보를 세팅 -> 로그인 유지
                }).catch(async(err)=>{
                     console.log(err)
                     await AsyncStorage.removeItem("sessionId")
-                    // throw new Error (err)
+                    // 로그인 정보에 오류가 있을때, AsyncStorage 정보를 제거해 보안을 유지한다.
                })
      }
 }
 
 export const AuthProvider = ({children}) => {
      const [me, setMe] = useState() 
-     GetStorage(me, setMe);
+     GetStorage(me, setMe); // 로그인상태 
      return (
      <CheckAuth.Provider value={[me, setMe]}>
           {children}

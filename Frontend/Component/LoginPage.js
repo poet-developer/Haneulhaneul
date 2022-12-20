@@ -42,7 +42,7 @@ const Signin = ({setDisplay, setMode}) => {
                     sessionId : result.data.sessionId,
                     nick : result.data.nick,
                     id : result.data.id
-               })
+               }) // for CheckAuth Provider
                Toastify("로그인 성공!",'teal')
                setMode('home');
                setDisplay(true);

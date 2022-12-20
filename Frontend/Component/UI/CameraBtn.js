@@ -4,6 +4,11 @@ import Toastify from "../lib/Toastify";
 import { Ionicons } from '@expo/vector-icons';
 import { CheckAuth } from "../lib/CheckAuth";
 
+/**
+ *  카메라 버튼 UI COMP
+ *  로그인 상태를 확인하여 로그인이 되지 않았으면 카메라를 사용할 수 없다(Toastify) :17
+ */
+
 const CarmeraBtn = ({display ,setMode}) => {
      const [me, setMe] = useContext(CheckAuth)
 

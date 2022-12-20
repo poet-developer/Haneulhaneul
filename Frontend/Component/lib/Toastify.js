@@ -1,5 +1,9 @@
 import Toast from 'react-native-root-toast';
 
+/**
+ *  App Notification Default Function
+ */
+
 const Toastify = (text, color) =>{
      Toast.show(text, {
           duration: Toast.durations.LONG,

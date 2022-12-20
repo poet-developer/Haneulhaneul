@@ -54,7 +54,7 @@ const SignupPage = ({setDisplay, setMode}) => {
                     sessionId : result.data.sessionId,
                     nick : result.data.nick.toLowerCase(),
                     id : result.data.id,
-               })
+               }) // for CheckAuth Provider
                Toastify("회원가입 완료!",'teal')
                setMode('home');
                setDisplay(true);
